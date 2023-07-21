@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net481</TargetFramework> 
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Class1.fs" />
+    <Compile Include="EnumUtils.fs" />
+    <Compile Include="Constants.fs" />
+    <Compile Include="CustomPropertyManagerUtils.fs" />
+    <Compile Include="FeatureManager.fs" />
+    <Compile Include="FeatureUtils.fs" />
+    <Compile Include="ModelDocUtils.fs" />
+    <Compile Include="PartDocUtils.fs" />
+    <Compile Include="CommandManagerUtils.fs" />
+    <Compile Include="CommandManager.fs" />
+    <Compile Include="SWRoutingLibUtils.fs" />
+    <Compile Include="Component2Utils.fs" />
+    <Compile Include="RecursiveTraverseAssembly.fs" />
+    <Compile Include="CustomPropsConfig1.fs" />
+    <Compile Include="SldWorksUtils.fs" />
+    <Compile Include="批量修改零件材质.fs" />
+    <Compile Include="trainingcylinder.fs" />
+    <Compile Include="training2.fs" />
+    <Compile Include="training2_frmExistingDocs.fs" />
+    <Compile Include="training3.fs" />
+    <Compile Include="training4.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Literals" Version="2.2.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SolidWorks.Interop.sldworks">
+      <HintPath>C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.sldworks.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swconst">
+      <HintPath>C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.swconst.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swpublished">
+      <HintPath>C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.swpublished.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.SWRoutingLib">
+      <HintPath>C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.SWRoutingLib.dll</HintPath>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorksTools">
+      <HintPath>C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\solidworkstools.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="7.0.300" />
+  </ItemGroup>
+</Project>
