@@ -106,11 +106,11 @@
     <Reference Include="FSharp.Core, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\FSharp.Core.7.0.300\lib\netstandard2.0\FSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="FSharp.Idioms, Version=1.2.25.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FSharp.Idioms.1.2.25\lib\netstandard2.0\FSharp.Idioms.dll</HintPath>
+    <Reference Include="FSharp.Idioms, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Idioms.1.3.0\lib\netstandard2.0\FSharp.Idioms.dll</HintPath>
     </Reference>
-    <Reference Include="FSharp.Literals, Version=2.2.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FSharp.Literals.2.2.11\lib\netstandard2.0\FSharp.Literals.dll</HintPath>
+    <Reference Include="FSharp.Literals, Version=2.2.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Literals.2.2.12\lib\netstandard2.0\FSharp.Literals.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="SolidWorks.Interop.sldworks">

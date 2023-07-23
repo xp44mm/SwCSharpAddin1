@@ -388,14 +388,18 @@ namespace SwCSharpAddin1
 			//trainingcylinder.main(iSwApp);
 			//training2.cmdConnect(iSwApp);
 			//training2.cmdNewModel_Part(iSwApp);
-			//training4.rectangularExtrude(iSwApp);
-			//training4.circularExtrude(iSwApp);
 
-			SldWorksUtils.testCutLists(iSwApp);
-			//SldWorksUtils.detectCutLists(iSwApp);
+			//training4.testPartMat(iSwApp);
+            //training4.rectangularExtrude(iSwApp);
+            //training4.circularExtrude(iSwApp);
+			//training4.testDrawCirc(iSwApp);
+			training4.testCircleContourRevolve(iSwApp);
 
+            //SldWorksUtils.testCutLists(iSwApp);
+            //SldWorksUtils.detectCutLists(iSwApp);
+            //SldWorksUtils.setPartWeldment(iSwApp);
 
-		}
+        }
 
 
         public void ShowPMP()

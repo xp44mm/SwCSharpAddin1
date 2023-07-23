@@ -88,5 +88,16 @@ let documentProperties (swApp: ISldWorks) =
     |> sprintf "%b"
     |> swApp.SendMsgToUser
 
+let weldment (swModel: ModelDoc2) =
+    let toggle (v:bool) (x:swUserPreferenceToggle_e) =
+        swModel.Extension.SetUserPreferenceToggle(int x, int swUserPreferenceOption_e.swDetailingNoOptionSpecified, v)
+        |> ignore
 
+    swUserPreferenceToggle_e.swWeldmentEnableAutomaticCutList                |> toggle true
+    swUserPreferenceToggle_e.swWeldmentEnableAutomaticUpdate                 |> toggle true
+    swUserPreferenceToggle_e.swWeldmentRenameCutlistDescriptionPropertyValue |> toggle true
+    swUserPreferenceToggle_e.swWeldmentCollectIdenticalBodies                |> toggle true
+    swUserPreferenceToggle_e.swDisableDerivedConfigurations                  |> toggle false
+
+    ()
 

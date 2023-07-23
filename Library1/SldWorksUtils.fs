@@ -147,3 +147,12 @@ let testCutLists (swApp: ISldWorks) =
     //' Close Document
     swModel.GetPathName()
     |> swApp.CloseDoc
+
+let setPartWeldment (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
+    try
+        training3.weldment swModel
+        swApp.SendMsgToUser "setPartWeldment OK!"
+    with ex ->
+        swApp.SendMsgToUser $"setPartWeldment ex: {ex.Message}"
+
