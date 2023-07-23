@@ -16,6 +16,24 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
+open FSharp.Literals.Literal
+
+
+let testPartMat (swApp: ISldWorks) =
+    let swModel =
+        swApp.ActiveDoc 
+        |> unbox<ModelDoc2>
+    //MATERIAL
+    let swPart = swModel :?> PartDoc
+
+    let setPartMat (mat:string) =
+        /// 设置零件，当前配置，当前材料数据库
+        swPart.SetMaterialPropertyName2("", "", mat)
+        let mat1,db1 = swPart.GetMaterialPropertyName2 ""
+        swApp.SendMsgToUser $"{mat1},{db1}"
+    setPartMat "1060 Alloy"
+    setPartMat "Brass"
+
 let cmdBuild_Click(swApp: ISldWorks) =
     // Get the file path of the default part template
     let partTemplate = swApp.GetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swDefaultTemplatePart)
@@ -32,16 +50,6 @@ let cmdBuild_Click(swApp: ISldWorks) =
 
     //swApp.SendMsgToUser partTemplate
 
-    //MATERIAL
-    let swPart = swModel :?> PartDoc
-
-    let mat = 
-        if true then
-            "1060 Alloy"
-        else
-            "Brass"
-
-    swPart.SetMaterialPropertyName2( "", "", mat)
 
   
     //PROFILE
