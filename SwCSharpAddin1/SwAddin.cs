@@ -1,16 +1,17 @@
 using System;
-using System.Runtime.InteropServices;
 using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swpublished;
 using SolidWorks.Interop.swconst;
 using SolidWorksTools;
 using SolidWorksTools.File;
-using System.Collections.Generic;
-using System.Diagnostics;
 
+using FSharp.SolidWorks;
 
 namespace SwCSharpAddin1
 {
@@ -219,7 +220,7 @@ namespace SwCSharpAddin1
 			//bool getDataResult = iCmdMgr.GetGroupDataFromRegistry(mainCmdGroupID, out registryIDs);
 
 			var registryIDs =
-				CommandManagerUtils.GetGroupDataFromRegistry(mainCmdGroupID, iCmdMgr);
+				CommandManagerUtils.getGroupDataFromRegistry(iCmdMgr,mainCmdGroupID);
 
 			bool ignorePrevious = false;
             if (registryIDs != null)
@@ -234,7 +235,7 @@ namespace SwCSharpAddin1
 			//	iCmdMgr.CreateCommandGroup2(mainCmdGroupID, Title, ToolTip, "", -1, ignorePrevious, ref cmdGroupErr);
 			
 			cmdGroup = 
-				CommandManagerUtils.CreateCommandGroup(
+				CommandManagerUtils.createCommandGroup2(
 				mainCmdGroupID, Title, ToolTip, "", -1, 
 				ignorePrevious, iCmdMgr
 				);
@@ -286,7 +287,7 @@ namespace SwCSharpAddin1
 				if (cmdTab == null)
 				{
 					//cmdTab =
-						CommandManagerUtils.CreateCommandTab(
+						CommandManagerUtils.createCommandTab(
 							type, Title, cmdIndex0, cmdIndex1,
 							cmdGroup,flyGroup,iCmdMgr
                             );
@@ -393,7 +394,8 @@ namespace SwCSharpAddin1
             //training4.rectangularExtrude(iSwApp);
             //training4.circularExtrude(iSwApp);
 			//training4.testDrawCirc(iSwApp);
-			training4.testCircleContourRevolve(iSwApp);
+			//training4.testCircleContourRevolve(iSwApp);
+			training5.testSelectFace(iSwApp);
 
             //SldWorksUtils.testCutLists(iSwApp);
             //SldWorksUtils.detectCutLists(iSwApp);

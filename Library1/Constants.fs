@@ -11,8 +11,8 @@ open SolidWorksTools.File
 open System.Collections.Generic
 open System.Diagnostics
 
-let docTypes = [|
-    int swDocumentTypes_e.swDocASSEMBLY
-    int swDocumentTypes_e.swDocDRAWING
-    int swDocumentTypes_e.swDocPART
-    |]
+//let docTypes = [|
+//    int swDocumentTypes_e.swDocASSEMBLY
+//    int swDocumentTypes_e.swDocDRAWING
+//    int swDocumentTypes_e.swDocPART
+//    |]

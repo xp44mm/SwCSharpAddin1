@@ -15,49 +15,62 @@ open SolidWorks.Interop.swpublished
 open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
+open FSharp.SolidWorks
 
 
 let systemOptions(swApp: ISldWorks) =
-    swApp.SetUserPreferenceToggle(int swUserPreferenceToggle_e.swInputDimValOnCreate, true)
+    swApp
+    |> SldWorksUtils.setUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate true
 
-    swApp.GetUserPreferenceToggle(int swUserPreferenceToggle_e.swInputDimValOnCreate)
+    swApp
+    |> SldWorksUtils.getUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate
     |> sprintf "%b"
     |> swApp.SendMsgToUser
 
-    swApp.SetUserPreferenceToggle(int swUserPreferenceToggle_e.swInputDimValOnCreate, true)
+    swApp
+    |> SldWorksUtils.setUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate true
 
-    swApp.SetUserPreferenceDoubleValue(int swUserPreferenceDoubleValue_e.swDrawingDetailViewScale, 1.5)
-    |> ignore
+    swApp
+    |> SldWorksUtils.setUserPreferenceDoubleValue swUserPreferenceDoubleValue_e.swDrawingDetailViewScale 1.5
 
-    swApp.GetUserPreferenceDoubleValue(int swUserPreferenceDoubleValue_e.swDrawingDetailViewScale)
+    swApp
+    |> SldWorksUtils.getUserPreferenceDoubleValue swUserPreferenceDoubleValue_e.swDrawingDetailViewScale
     |> sprintf "%f"
     |> swApp.SendMsgToUser
 
     let viewportColor = Color.FromArgb(128, 255, 128).ToArgb()
-    swApp.SetUserPreferenceIntegerValue(int swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground, viewportColor)
+    swApp
+    |> SldWorksUtils.setUserPreferenceIntegerValue swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground viewportColor
     |> ignore
 
-    swApp.GetUserPreferenceIntegerValue(int swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground)
+    swApp
+    |> SldWorksUtils.getUserPreferenceIntegerValue swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground
     |> sprintf "%d"
     |> swApp.SendMsgToUser
 
     let value = @"C:\Temp"
-    swApp.SetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swBackupDirectory, value)
+
+    swApp
+    |> SldWorksUtils.setUserPreferenceStringValue swUserPreferenceStringValue_e.swBackupDirectory value
     |> ignore
 
-    swApp.GetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swBackupDirectory)
+    swApp
+    |> SldWorksUtils.getUserPreferenceStringValue swUserPreferenceStringValue_e.swBackupDirectory
     |> swApp.SendMsgToUser
 
-    swApp.SetUserPreferenceIntegerValue(
-        int swUserPreferenceIntegerValue_e.swEdgesHiddenEdgeDisplay,
-        int swEdgesHiddenEdgeDisplay_e.swEdgesHiddenEdgeDisplayDashed)
+    swApp
+    |> SldWorksUtils.setUserPreferenceIntegerValue
+        swUserPreferenceIntegerValue_e.swEdgesHiddenEdgeDisplay
+        (int swEdgesHiddenEdgeDisplay_e.swEdgesHiddenEdgeDisplayDashed)
     |> ignore
-    
+
     // View Rotation - Mouse Speed
     //
     // 0 = Slow
     // 100 = Fast
-    swApp.SetUserPreferenceIntegerValue(int swUserPreferenceIntegerValue_e.swViewRotationMouseSpeed, 50)
+    swApp
+    |> SldWorksUtils.setUserPreferenceIntegerValue
+        swUserPreferenceIntegerValue_e.swViewRotationMouseSpeed 50
     |> ignore
 
     // View Rotation - ViewAnimationSpeed
@@ -68,36 +81,47 @@ let systemOptions(swApp: ISldWorks) =
     // 2.0
     // 2.5
     // 3.0 = Slow
-    swApp.SetUserPreferenceDoubleValue(int swUserPreferenceDoubleValue_e. swViewAnimationSpeed, 2.0)
+    swApp
+    |> SldWorksUtils.setUserPreferenceDoubleValue
+        swUserPreferenceDoubleValue_e.swViewAnimationSpeed 2.0
     |> ignore
 
 /// 先打开一个文档，再运行宏
 let documentProperties (swApp: ISldWorks) =
     let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
 
-    swModel.Extension.SetUserPreferenceToggle(
-        int swUserPreferenceToggle_e.swDetailingDualDimensions,
-        int swUserPreferenceOption_e.swDetailingDimension,
-        true)
+    swModel
+    |> ModelDoc2Utils.setUserPreferenceToggle
+        swUserPreferenceToggle_e.swDetailingDualDimensions
+        swUserPreferenceOption_e.swDetailingDimension
+        true
     |> ignore
 
-    swModel.Extension.GetUserPreferenceToggle(
-        int swUserPreferenceToggle_e.swDetailingDualDimensions,
-        int swUserPreferenceOption_e.swDetailingDimension
-        )
+    swModel
+    |> ModelDoc2Utils.getUserPreferenceToggle
+        swUserPreferenceToggle_e.swDetailingDualDimensions
+        swUserPreferenceOption_e.swDetailingDimension
     |> sprintf "%b"
     |> swApp.SendMsgToUser
 
+// 焊件偏爱值的自动设置
 let weldment (swModel: ModelDoc2) =
     let toggle (v:bool) (x:swUserPreferenceToggle_e) =
-        swModel.Extension.SetUserPreferenceToggle(int x, int swUserPreferenceOption_e.swDetailingNoOptionSpecified, v)
+        swModel
+        |> ModelDoc2Utils.setUserPreferenceToggle
+            x swUserPreferenceOption_e.swDetailingNoOptionSpecified v
         |> ignore
 
-    swUserPreferenceToggle_e.swWeldmentEnableAutomaticCutList                |> toggle true
-    swUserPreferenceToggle_e.swWeldmentEnableAutomaticUpdate                 |> toggle true
-    swUserPreferenceToggle_e.swWeldmentRenameCutlistDescriptionPropertyValue |> toggle true
-    swUserPreferenceToggle_e.swWeldmentCollectIdenticalBodies                |> toggle true
-    swUserPreferenceToggle_e.swDisableDerivedConfigurations                  |> toggle false
+    swUserPreferenceToggle_e.swWeldmentEnableAutomaticCutList
+    |> toggle true
+    swUserPreferenceToggle_e.swWeldmentEnableAutomaticUpdate
+    |> toggle true
+    swUserPreferenceToggle_e.swWeldmentRenameCutlistDescriptionPropertyValue
+    |> toggle true
+    swUserPreferenceToggle_e.swWeldmentCollectIdenticalBodies
+    |> toggle true
+    swUserPreferenceToggle_e.swDisableDerivedConfigurations
+    |> toggle false
 
     ()
 

@@ -191,6 +191,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FSharp.SolidWorks\FSharp.SolidWorks.fsproj">
+      <Project>{aacfa7be-fc2c-4c63-97b4-6f9e788e1435}</Project>
+      <Name>FSharp.SolidWorks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library1\Library1.fsproj">
       <Project>{55c027a0-fb3f-4cdd-830f-f65e70d816a9}</Project>
       <Name>Library1</Name>

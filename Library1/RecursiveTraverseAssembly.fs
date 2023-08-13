@@ -7,6 +7,7 @@ open SolidWorks.Interop.SWRoutingLib
 open System
 open System.Diagnostics
 open System.IO
+open FSharp.SolidWorks
 
 type RecursiveTraverseAssembly(swApp: ISldWorks) = 
     let logfile = "d:/RecursiveTraverseAssembly.txt"

@@ -1,4 +1,4 @@
-﻿module EnumUtils
+﻿module FSharp.SolidWorks.EnumUtils
 
 open System
 open System.Runtime.InteropServices
@@ -19,8 +19,17 @@ open System.Diagnostics
 /// 丢弃布尔型返回值，其代表执行的成功与否，始终认为是执行成功的。
 /// 检测文本常量，是否typo.
 
+let enumString (enums:string seq)(input:string) =
+    let es = HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    for e in enums do 
+        es.Add e |> ignore
+    
+    es.IntersectWith [input]
+    try Seq.exactlyOne es with
+    | _ -> raise(ArgumentOutOfRangeException($"{es},{input}"))
+
 let selecttype (selecttype:string) =
-    let tps = set [
+    [
         "ADVSTRUCTMEMBER"
         "ANNOTATIONTABLES"
         "ANNVIEW"
@@ -149,9 +158,6 @@ let selecttype (selecttype:string) =
         "WELDMENT"
         "WELDMENTTABLE"
         "ZONES"
-        ]
-    if tps.Contains selecttype then
-        selecttype
-    else 
-        raise(new ArgumentOutOfRangeException())
+    ]
+    |> enumString <| selecttype
 

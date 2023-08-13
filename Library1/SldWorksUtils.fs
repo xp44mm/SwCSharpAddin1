@@ -9,32 +9,22 @@ open System.Reflection
 open System.Text.RegularExpressions
 open System.IO
 
-open FSharp.Literals
-
-
 open SolidWorks.Interop.sldworks
 open SolidWorks.Interop.swpublished
 open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-let ActiveDoc (swApp: ISldWorks) = 
-    swApp.ActiveDoc 
-    |> unbox<ModelDoc2>
-
-/// Open
-let OpenDoc (filename:string) (tp:swDocumentTypes_e) (opts:swOpenDocOptions_e) (config:string) (swApp: ISldWorks) =
-    let mutable longstatus = 0
-    let mutable longwarnings = 0
-    swApp.OpenDoc6(filename, int tp, int opts, config, &longstatus, &longwarnings)
+open FSharp.SolidWorks
+open FSharp.Literals
 
 let testGetFeatures (swApp: ISldWorks) =
     let logfile = "d:/partmat.txt"
     let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
     if File.Exists(logfile) then File.Delete logfile
 
-    swModel
-    |> ModelDocUtils.TraverseModelFeatures
+    swModel.FirstFeature()
+    |> FeatureUtils.getFeatureSeq
     |> Seq.iter(fun swFeat ->
         let nm = swFeat.Name
         let tp = swFeat.GetTypeName2()
@@ -49,16 +39,8 @@ let testPipeBom (swApp: ISldWorks) =
 
     if File.Exists(logfile) then File.Delete logfile
 
-    swModel
-    |> ModelDocUtils.TraverseModelFeatures
-    //|> Seq.filter(fun swFeat ->
-    //    let nm = swFeat.Name
-    //    let tp = swFeat.GetTypeName2()
-    //    tp = "Reference" && Regex.IsMatch(nm,"^Pipe_")
-    //)
-    //|> Seq.collect(fun pc ->
-    //    FeatureUtils.TraverseSubFeatures pc
-    //)
+    swModel.FirstFeature()
+    |> FeatureUtils.getFeatureSeq
     |> Seq.iter(fun swFeat ->
         let nm = swFeat.Name
         let tp = swFeat.GetTypeName2()
@@ -88,7 +70,7 @@ let detectCutLists (swApp: ISldWorks) =
     let props =
         let hs = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         
-        CustomPropertyManagerUtils.cutListItemFieldNames
+        CutList.cutListItemFieldNames
         |> Seq.concat
         |> Seq.iter(fun e -> hs.Add e |> ignore)
         hs
@@ -120,7 +102,7 @@ let testCutLists (swApp: ISldWorks) =
     let head = 
         [
             "文件"
-            yield! CustomPropertyManagerUtils.cutListItemFieldNames |> List.map List.head
+            yield! CutList.cutListItemFieldNames |> List.map List.head
         ]
         |> String.concat "\t"
     File.AppendAllText(logfile,$"{head}\n")
@@ -134,10 +116,10 @@ let testCutLists (swApp: ISldWorks) =
     for fl in files do
     let swModel =
         swApp 
-        |> OpenDoc fl swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+        |> SldWorksUtils.openDoc6 fl swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
     let part = swModel :?> PartDoc
     if part.IsWeldment() then
-        let mat,db = PartDocUtils.GetMaterialPropertyName "" part
+        let mat,db = PartDocUtils.getMaterialPropertyName2 "" part
         if mat <> "" && db <> "" then
             ModelDocUtils.printCutLists logfile swModel
         else

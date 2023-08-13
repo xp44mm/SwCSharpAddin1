@@ -1,4 +1,4 @@
-﻿module CustomPropertyManagerUtils
+﻿module FSharp.SolidWorks.CustomPropertyManagerUtils
 
 open System
 open System.Collections
@@ -15,26 +15,28 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-///
-let getCustomPropertyNames (custPrpMgr: CustomPropertyManager) =
+/// 获取不区分大小写的自定义属性名称集合
+let getCustomPropertyNames (custPrpMgr: ICustomPropertyManager) =
         let hs = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         custPrpMgr.GetNames()
         |> unbox<string[]>
         |> Array.iter(fun e -> hs.Add e |> ignore)
         hs
-
-let contains (prpName: string) (custPrpMgr:CustomPropertyManager) =
+/// 
+let contains (prpName: string) (custPrpMgr:ICustomPropertyManager) =
     let prpNames = getCustomPropertyNames custPrpMgr
     prpNames.Contains prpName
 
-let Get (fieldName: string) (custPrpMgr: CustomPropertyManager) =
+/// 
+let Get6 (fieldName:string) (useCached:bool) (custPrpMgr:ICustomPropertyManager) =
     let mutable valOut = ""
     let mutable resolvedValOut = ""
     let mutable wasResolved = true
     let mutable linkToProperty = true
 
     /// https://help.solidworks.com/2023/english/api/swconst/SOLIDWORKS.Interop.swconst~SOLIDWORKS.Interop.swconst.swCustomInfoGetResult_e.html
-    let reti = custPrpMgr.Get6(fieldName, false, 
+    //问题：Get6是否不区分大小写？
+    let reti = custPrpMgr.Get6(fieldName, useCached, 
         &valOut, &resolvedValOut, &wasResolved,&linkToProperty)
 
     {|
@@ -45,15 +47,8 @@ let Get (fieldName: string) (custPrpMgr: CustomPropertyManager) =
        customInfoGetResult = enum<swCustomInfoGetResult_e> reti // swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue
     |}
 
-let detectCutListItemFields (custPrpMgr: CustomPropertyManager) =
-    let prpNames = getCustomPropertyNames custPrpMgr
-    prpNames
-    |> Seq.map(fun name -> 
-        name, Get name custPrpMgr
-    )
-
-let tryResolvedValOut (fieldName: string) (custPrpMgr: CustomPropertyManager) =
-    let rcd = Get fieldName custPrpMgr
+let tryResolvedValOut (fieldName:string) (custPrpMgr:ICustomPropertyManager) =
+    let rcd = Get6 fieldName false custPrpMgr
     match rcd.customInfoGetResult with
     | swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue
         -> Some rcd.resolvedValOut
@@ -61,18 +56,8 @@ let tryResolvedValOut (fieldName: string) (custPrpMgr: CustomPropertyManager) =
     | swCustomInfoGetResult_e.swCustomInfoGetResult_CachedValue
     | _ -> None
 
-let detectCutListItemFields2 (custPrpMgr: CustomPropertyManager) =
-    let prpNames = getCustomPropertyNames custPrpMgr
-    prpNames
-    |> Seq.map(fun name -> 
-        let x =
-            tryResolvedValOut name custPrpMgr
-        x
-        |> Option.map(fun v -> name, v)
-    )
-
-let resolvedValOut (fieldName: string) (custPrpMgr: CustomPropertyManager) =
-    let rcd = Get fieldName custPrpMgr
+let resolvedValOut (fieldName: string) (custPrpMgr: ICustomPropertyManager) =
+    let rcd = Get6 fieldName false custPrpMgr
     match rcd.customInfoGetResult with
     | swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue
         -> rcd.resolvedValOut
@@ -80,39 +65,23 @@ let resolvedValOut (fieldName: string) (custPrpMgr: CustomPropertyManager) =
     | swCustomInfoGetResult_e.swCustomInfoGetResult_CachedValue
     | _ -> failwith $"{rcd}"
 
-
 //拾取第一个成功读取到非空值的属性，从fieldNames序列中。
-let pickResolvedValOut (fieldNames: seq<string>) (custPrpMgr: CustomPropertyManager) =
-    let ss =
+let pickResolvedValOut (fieldNames: seq<string>) (custPrpMgr: ICustomPropertyManager) =
+    let custPrpNames =
         custPrpMgr
         |> getCustomPropertyNames
+    //注意ss本身被IntersectWith修改为交集,已经验证ss剩下的是ss中的元素
+    custPrpNames.IntersectWith fieldNames
 
-    ss.IntersectWith fieldNames
+    match custPrpNames.Count with
+    | 1 -> resolvedValOut (Seq.head custPrpNames) custPrpMgr
+    | c -> 
+        let AllNames = 
+            custPrpMgr.GetNames()
+            |> unbox<string[]>
+            |> Array.toList
+        failwith $"{c}!=1,\n{fieldNames|>Seq.toList}\n{AllNames}"
 
-    match ss.Count with
-    | 1 -> resolvedValOut (Seq.head ss) custPrpMgr
-    | 0 -> failwith $"{fieldNames} not in {custPrpMgr.GetNames() |> unbox<string[]> |> Array.toList}"
-    | _ -> failwith $"{ss |> Seq.toList}"
-
-let cutListItemFieldNames =
-    [
-        ["材料";"MATERIAL"]
-        ["说明";"Description"]
-        ["长度";"LENGTH"]
-        ["数量";"QUANTITY"]
-    ]
-
-/// 长度，说明，材料，数量等属性的值列表
-let GetCutListItemFields (custPrpMgr: CustomPropertyManager) =
-    cutListItemFieldNames
-    |> List.map(fun ce ->        
-        pickResolvedValOut ce custPrpMgr
-    )
-
-//let GetCutListItemString (custPrpMgr: CustomPropertyManager) =
-//    custPrpMgr
-//    |> GetCutListItemFields
-//    |> List.map (Option.defaultValue "")
-//    |> String.concat "\t"
-
+let add3 fieldName (fieldType:swCustomInfoType_e) fieldValue (overwriteExisting:swCustomPropertyAddOption_e) (custPrpMgr: CustomPropertyManager) =
+    custPrpMgr.Add3(fieldName, int fieldType, fieldValue, int overwriteExisting)
 

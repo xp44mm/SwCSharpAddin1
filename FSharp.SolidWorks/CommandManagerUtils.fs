@@ -1,4 +1,4 @@
-﻿module CommandManagerUtils
+﻿module FSharp.SolidWorks.CommandManagerUtils
 
 open System
 open System.Runtime.InteropServices
@@ -13,15 +13,12 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-let GetGroupDataFromRegistry (userGroupId) (iCmdMgr:ICommandManager) =
-    let mutable registryIDs = null
-    //get the ID information stored in the registry
-    let success = iCmdMgr.GetGroupDataFromRegistry(userGroupId, &registryIDs)
-    if success then
-        (registryIDs:?>int[])
-    else null
+let getGroupDataFromRegistry (iCmdMgr:ICommandManager) (userGroupId) =
+    match iCmdMgr.GetGroupDataFromRegistry(userGroupId) with
+    | true,registryIDs -> registryIDs|>unbox<int[]>
+    | _ -> null
 
-let CreateCommandGroup
+let createCommandGroup2
     (userID : int )
     (title : string )
     (toolTip : string )
@@ -33,7 +30,7 @@ let CreateCommandGroup
     let mutable err = 0
     instance.CreateCommandGroup2(userID, title, toolTip, hint, position, ignorePreviousVersion, &err)
 
-let CreateCommandTab
+let createCommandTab
     (typ:int)
     (title:string)
     (cmdIndex0:int)
@@ -41,23 +38,18 @@ let CreateCommandTab
     (cmdGroup:ICommandGroup)
     (flyGroup:IFlyoutGroup)
     (iCmdMgr : ICommandManager )
-
     =
-
     let cmdTab = iCmdMgr.AddCommandTab(typ, title)
-
     let cmdBox = cmdTab.AddCommandTabBox()
-
     let cmdIDs = [|
         cmdGroup.get_CommandID(cmdIndex0);
         cmdGroup.get_CommandID(cmdIndex1);
         cmdGroup.ToolbarId;
     |]
     let TextType = [|
-        (int)swCommandTabButtonTextDisplay_e.swCommandTabButton_TextHorizontal;       
-        (int)swCommandTabButtonTextDisplay_e.swCommandTabButton_TextHorizontal;
+        int swCommandTabButtonTextDisplay_e.swCommandTabButton_TextHorizontal;       
+        int swCommandTabButtonTextDisplay_e.swCommandTabButton_TextHorizontal;
         (int swCommandTabButtonTextDisplay_e.swCommandTabButton_TextHorizontal) ||| (int swCommandTabButtonFlyoutStyle_e.swCommandTabButton_ActionFlyout);
-        
     |]
 
     let _ = cmdBox.AddCommands(cmdIDs, TextType);
@@ -67,8 +59,8 @@ let CreateCommandTab
         flyGroup.CmdID;
     |]
     let TextType = [|
-        (int)swCommandTabButtonTextDisplay_e.swCommandTabButton_TextBelow ||| 
-        (int)swCommandTabButtonFlyoutStyle_e.swCommandTabButton_ActionFlyout
+        int swCommandTabButtonTextDisplay_e.swCommandTabButton_TextBelow ||| 
+        int swCommandTabButtonFlyoutStyle_e.swCommandTabButton_ActionFlyout
     |]
 
     let _ = cmdBox1.AddCommands(cmdIDs, TextType)

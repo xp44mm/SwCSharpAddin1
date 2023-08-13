@@ -15,6 +15,7 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
+open FSharp.SolidWorks
 
 let TRAININGDIR = @"C:\Users\cuisl\Documents\"
 let TEMPLATEDIR = @"C:\ProgramData\SOLIDWORKS\SOLIDWORKS 2022\templates\"
@@ -24,15 +25,19 @@ let partpath = Path.Combine(TRAININGDIR, "cstick.SLDPRT")
 let cmdConnect_Click (swApp: ISldWorks) =
 
     //If chkOpen.Value = True Then
-    let mutable fileerror = 0
-    let mutable filewarning = 0
     let _ =
-        swApp.OpenDoc6(partpath, int swDocumentTypes_e.swDocPART, int swOpenDocOptions_e.swOpenDocOptions_Silent, "", &fileerror, &filewarning)
+        swApp
+        |> SldWorksUtils.openDoc6 partpath
+            swDocumentTypes_e.swDocPART 
+            swOpenDocOptions_e.swOpenDocOptions_Silent
+            ""
 
     //If chkLoad.Value = True Then
-    let mutable errors = 0
+    //let mutable errors = 0
     let ImportedModelDoc =
-        swApp.LoadFile4(Path.Combine(TRAININGDIR, "cstick.igs"), "", null, &errors)
+        let path = Path.Combine(TRAININGDIR, "cstick.igs")
+        swApp
+        |> SldWorksUtils.loadFile4 path "" null
 
     //If chkNewWindow.Value = True Then
     swApp.CreateNewWindow()
@@ -54,11 +59,16 @@ let cmdNewModel_Click(swApp: ISldWorks) =
 
     toolbars
     |> Seq.iter(fun tb ->
-        swModel.SetToolbarVisibility(int tb,false)
+        swModel
+        |> ModelDoc2Utils.setToolbarVisibility tb false
     )
 
     let custPropMan = swModel.Extension.CustomPropertyManager("")
-    let _ = custPropMan.Add3("MyInfo", int swCustomInfoType_e.swCustomInfoText, "MyData", int swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd)
+    let _ = 
+        custPropMan
+        |> CustomPropertyManagerUtils.add3
+            "MyInfo" swCustomInfoType_e.swCustomInfoText
+            "MyData" swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd
     ()
 
 //注意：源零件不能只有焊件
@@ -69,11 +79,13 @@ let cmdPart_Click(swApp: ISldWorks) =
     //执行之前保存原文件名
     let partname = swModel.GetTitle()
 
-
-    let _ = swModel.Extension.SelectByID2("Top", "PLANE", 0, 0, 0, false, 0, null, 0)
+    let x = 
+        swModel
+        |> ModelDoc2Utils.selectByID2 "Top" "PLANE" (0.0,0.0,0.0) false 0 swSelectOption_e.swSelectOptionDefault
 
     let mirFeat,mirModel =
-        swPart.MirrorPart2(false,int swMirrorPartOptions_e.swMirrorPartOptions_ImportSolids)
+        swPart
+        |> PartDocUtils.mirrorPart2 false swMirrorPartOptions_e.swMirrorPartOptions_ImportSolids
 
     mirModel.ShowNamedView2("*Isometric", 7)
     mirModel.ViewZoomtofit2()
@@ -82,44 +94,52 @@ let cmdPart_Click(swApp: ISldWorks) =
 
     // 重新选中源文件
     let swModel =
-        let mutable errors = 0
-        swApp.ActivateDoc3(partname, false,int swRebuildOnActivation_e.swRebuildActiveDoc, &errors)
+        swApp
+        |> SldWorksUtils.activateDoc3 partname false swRebuildOnActivation_e.swRebuildActiveDoc
         |> unbox<ModelDoc2>
 
-    let _ = swModel.DeSelectByID("Top", "PLANE", 0.0, 0.0, 0.0)
+    let _ = 
+        swModel
+        |> ModelDoc2Utils.deSelectByID "Top" "PLANE" (0.0, 0.0, 0.0)
     ()
 
 let cmdAssy_Click(swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
-    let swAssy = swModel :?> AssemblyDoc
+    let swModel = 
+        swApp.ActiveDoc
+        |> unbox<ModelDoc2>
+
+    let swAssy = 
+        swModel :?> AssemblyDoc
 
     let assyname = Path.GetFileNameWithoutExtension(swModel.GetTitle())
     
     // EditPart2 sheetmetalsample-1
     let boolstatus =
-        swModel.Extension.SelectByID2(
-        $"sheetmetalsample-1@{assyname}", "COMPONENT", 0, 0, 0, 
-        false, 0, null, 0)
+        swModel
+        |> ModelDoc2Utils.selectByID2 $"sheetmetalsample-1@{assyname}" "COMPONENT" (0., 0., 0.)
+            false 0 swSelectOption_e.swSelectOptionDefault
 
-    let mutable info = 0
-    let _ = swAssy.EditPart2(true, false, &info)
+    let status = 
+        //let mutable info = 0
+        swAssy
+        |> AssemblyDocUtils.editPart2 true false
 
     // InsertCavity4 plug-1
     swModel.ClearSelection2 true
 
     let boolstatus =
-        swModel.Extension.SelectByID2(
-        $"plug-1@{assyname}", "COMPONENT", 0, 0, 0, 
-        true, 0, null, 0)
+        swModel
+        |> ModelDoc2Utils.selectByID2 $"plug-1@{assyname}" "COMPONENT" (0., 0., 0.)
+            false 0 swSelectOption_e.swSelectOptionDefault
 
     swAssy.InsertCavity4(10, 10, 10, true, 1, -1)
 
     // EditSuppress2 plug-1
     swAssy.EditAssembly()
     let _ =
-        swModel.Extension.SelectByID2(
-        "plug-1@sheetmetalsample", "COMPONENT", 0, 0, 0, 
-        true, 0, null, 0)
+        swModel
+        |> ModelDoc2Utils.selectByID2 "plug-1@sheetmetalsample" "COMPONENT" (0., 0., 0.)
+            false 0 swSelectOption_e.swSelectOptionDefault
 
     swModel.EditSuppress2()
     |> ignore

@@ -6,38 +6,6 @@
 		<WarnOn>3390;$(WarnOn)</WarnOn>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<Compile Include="CustomPropsConfig1.fs" />
-		<Compile Include="trainingcylinder.fs" />
-		<Compile Include="training2.fs" />
-		<Compile Include="training2_frmExistingDocs.fs" />
-		<Compile Include="training3.fs" />
-		<Compile Include="training4.fs" />
-		<Compile Include="training5.fs" />
-		<Compile Include="Preselection.fs" />
-		<Compile Include="BodyFaceTraversal.fs" />
-		<Compile Include="FeatMgrTraversal.fs" />
-		<Compile Include="CustomProps.fs" />
-		<Compile Include="CustomFileSummary.fs" />
-		<Compile Include="DocumentAttributes.fs" />
-		<Compile Include="CNCDrilling.fs" />
-		<Compile Include="ModelDocUtils.fs" />
-		<Compile Include="SldWorksUtils.fs" />
-		<Compile Include="批量修改零件材质.fs" />
-		<Compile Include="RecursiveTraverseAssembly.fs" />
-		<Compile Include="CommandManager.fs" />
-		<Compile Include="Constants.fs" />
-		<Compile Include="SWRoutingLibUtils.fs" />
-		<Compile Include="Class1.fs" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="FSharp.Literals" Version="2.2.12" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\FSharp.SolidWorks\FSharp.SolidWorks.fsproj" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="SolidWorks.Interop.sldworks">
@@ -67,7 +35,34 @@
 		</Reference>
 	</ItemGroup>
 
+
+
+
 	<ItemGroup>
-		<PackageReference Update="FSharp.Core" Version="7.0.300" />
+		<Compile Include="EnumUtils.fs" />
+		<Compile Include="CustomPropertyManagerUtils.fs" />
+		<Compile Include="CutList.fs" />
+		<Compile Include="EntityUtils.fs" />
+		<Compile Include="Face2Utils.fs" />
+		<Compile Include="Loop2Module.fs" />
+		<Compile Include="EdgeUtils.fs" />
+		<Compile Include="CurveUtils.fs" />
+		<Compile Include="SketchManagerUtils.fs" />
+		<Compile Include="SelectionMgrUtils.fs" />
+		<Compile Include="FeatureManagerUtils.fs" />
+		<Compile Include="FeatureUtils.fs" />
+		<Compile Include="MathUtilityUtils.fs" />
+		<Compile Include="MathPointUtils.fs" />
+		<Compile Include="Component2Utils.fs" />
+		<Compile Include="AssemblyDocUtils.fs" />
+		<Compile Include="PartDocUtils.fs" />
+		<Compile Include="ModelDoc2Utils.fs" />
+		<Compile Include="SldWorksUtils.fs" />
+		<Compile Include="CommandManagerUtils.fs" />
+		<None Include="Script.fsx" />
 	</ItemGroup>
+
+
+
+
 </Project>

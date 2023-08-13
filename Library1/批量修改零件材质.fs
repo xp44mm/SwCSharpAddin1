@@ -7,6 +7,7 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 open System.IO
+open FSharp.SolidWorks
 
 type 批量修改零件材质(swApp: ISldWorks) = 
     let currentDir = "D:/崔胜利/凯帝隆/湖北武穴锂宝/solidworks/"
@@ -18,7 +19,7 @@ type 批量修改零件材质(swApp: ISldWorks) =
 
         let swModel = 
             swApp
-            |> SldWorksUtils.OpenDoc path swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+            |> SldWorksUtils.openDoc6 path swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
                 
         //' 修改所有配置的材质
         let vConfNameArr = 
@@ -31,13 +32,13 @@ type 批量修改零件材质(swApp: ISldWorks) =
             swPart.SetMaterialPropertyName2(configName, matDB, matname)
 
         swModel
-        |> ModelDocUtils.Save 1
+        |> ModelDoc2Utils.save3 swSaveAsOptions_e.swSaveAsOptions_Silent
 
         //'打印所有配置的材质
         for configName:string in vConfNameArr do
             let sMatName = 
                 swPart
-                |> PartDocUtils.GetMaterialPropertyName (configName)
+                |> PartDocUtils.getMaterialPropertyName2 (configName)
                 |> fst
             let title = swModel.GetTitle()
             let s = title + "(" + configName + ")" + sMatName + "\n"
