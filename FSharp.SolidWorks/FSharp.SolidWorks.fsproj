@@ -41,8 +41,12 @@
 	<ItemGroup>
 		<Compile Include="EnumUtils.fs" />
 		<Compile Include="CustomPropertyManagerUtils.fs" />
-		<Compile Include="CutList.fs" />
+		<Compile Include="ParameterUtils.fs" />
+		<Compile Include="AttributeUtils.fs" />
+		<Compile Include="AttributeDefUtils.fs" />
+		<Compile Include="CalloutUtils.fs" />
 		<Compile Include="EntityUtils.fs" />
+		<Compile Include="Body2Utils.fs" />
 		<Compile Include="Face2Utils.fs" />
 		<Compile Include="Loop2Module.fs" />
 		<Compile Include="EdgeUtils.fs" />
@@ -54,12 +58,22 @@
 		<Compile Include="MathUtilityUtils.fs" />
 		<Compile Include="MathPointUtils.fs" />
 		<Compile Include="Component2Utils.fs" />
+		<Compile Include="ConfigurationUtils.fs" />
 		<Compile Include="AssemblyDocUtils.fs" />
 		<Compile Include="PartDocUtils.fs" />
 		<Compile Include="ModelDoc2Utils.fs" />
+		<Compile Include="CutList.fs" />
 		<Compile Include="SldWorksUtils.fs" />
+		<Compile Include="CommandGroupUtils.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
 		<None Include="Script.fsx" />
+	</ItemGroup>
+
+
+
+
+	<ItemGroup>
+	  <PackageReference Update="FSharp.Core" Version="7.0.400" />
 	</ItemGroup>
 
 

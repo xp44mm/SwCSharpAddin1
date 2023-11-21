@@ -17,33 +17,22 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 open FSharp.Literals.Literal
-
-let getFeatureSeq (swModel: ModelDoc2) =
-    let rec loop (o:obj) =
-        seq {
-            match o with
-            | null -> ()
-            | :? Feature as f ->
-                yield f
-                yield! loop (f.GetNextFeature())
-            | _ -> failwith $"{o.GetType()}"
-        }
-    swModel.FirstFeature() |> loop
+open FSharp.SolidWorks
 
 /// 7.4.2
 let msg
-    (swApp: SldWorks)
     (swModel: ModelDoc2)
+    (swApp: SldWorks)
     =
 
     swModel
-    |> getFeatureSeq
+    |> ModelDoc2Utils.getFeatureSeq
     |> Seq.iter(fun swFeature ->
         let FeatName = swFeature.Name
         let FeatType = swFeature.GetTypeName2()
-        swFeature.Select2( false, 0)
+        swFeature.Select2(false, 0)
         |> ignore
-        swApp.SendMsgToUser("Feature screen name = " + FeatName + ";Feature type name = " + FeatType)
+        swApp.SendMsgToUser($"Feature screen name = {FeatName};Feature type name = {FeatType}")
     )
 
 /// 7.4.3
@@ -53,7 +42,7 @@ let suppr
     =
 
     swModel
-    |> getFeatureSeq
+    |> ModelDoc2Utils.getFeatureSeq
     |> Seq.iter(fun swFeature ->
         let FeatName = swFeature.Name
         let FeatType = swFeature.GetTypeName2()
@@ -61,11 +50,11 @@ let suppr
         //swFeature.Select2( false, 0)
         //|> ignore
         if FeatType = "Fillet" then
-          let suppressSet =
-            swFeature.SetSuppression2(
-                int swFeatureSuppressionAction_e.swUnSuppressFeature,
-                int swInConfigurationOpts_e.swThisConfiguration, "")
-          ()
+            let suppressSet =
+                swFeature.SetSuppression2(
+                    int swFeatureSuppressionAction_e.swUnSuppressFeature,
+                    int swInConfigurationOpts_e.swThisConfiguration, "")
+            ()
     )
 
 
@@ -76,13 +65,13 @@ let hid
     =
 
     swModel
-    |> getFeatureSeq
+    |> ModelDoc2Utils.getFeatureSeq
     |> Seq.iter(fun swFeature ->
-        swFeature.SetUIState(int swUIStates_e.swIsHiddenInFeatureMgr, true)
+        swFeature
+        |> FeatureUtils.setUIState swUIStates_e.swIsHiddenInFeatureMgr true
     )
 
     swModel.FeatureManager.UpdateFeatureTree()
-
 
 /// 7.4.5
 let pos
@@ -94,4 +83,4 @@ let pos
         |> unbox<Feature>
     let FeatName = swFeature.Name
     let FeatType = swFeature.GetTypeName2()
-    swApp.SendMsgToUser("Feature screen name = " + FeatName + ";Feature type name = " + FeatType)
+    swApp.SendMsgToUser($"Feature screen name = {FeatName};Feature type name = {FeatType}")

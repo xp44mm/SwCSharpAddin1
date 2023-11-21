@@ -71,6 +71,15 @@ let getUserPreferenceInteger (userPref:swUserPreferenceIntegerValue_e) (userPref
     swModel.Extension.GetUserPreferenceInteger(
         int userPref,int userPrefOption)
 
+let setUserPreferenceDouble (userPref:swUserPreferenceDoubleValue_e) (userPrefOption:swUserPreferenceOption_e) (value:float) (swModel: IModelDoc2) =
+    swModel.Extension.SetUserPreferenceDouble(
+        int userPref, int userPrefOption,value)
+    |> ignore
+
+let getUserPreferenceDouble (userPref:swUserPreferenceDoubleValue_e) (userPrefOption:swUserPreferenceOption_e) (swModel: IModelDoc2) =
+    swModel.Extension.GetUserPreferenceDouble(
+        int userPref, int userPrefOption)
+
 let setToolbarVisibility (tb:swToolbar_e) (visible:bool) (swModel:IModelDoc2) =
     swModel.SetToolbarVisibility(int tb,visible)
 
@@ -86,3 +95,14 @@ let addHorizontalDimension2 (x1,y1,z1) (swModel:IModelDoc2) =
     swModel.AddHorizontalDimension2 (x1,y1,z1)
     :?> IDisplayDimension
 
+let activeView (swModel:IModelDoc2) = swModel.ActiveView :?> ModelView
+
+let getSummaryInfo (field:swSummInfoField_e)(swModel:IModelDoc2) =
+    swModel.SummaryInfo(int field)
+
+let setSummaryInfo (field:swSummInfoField_e) (text:string) (swModel:IModelDoc2) =
+    swModel.SummaryInfo(int field) <- text
+
+let getConfigurationNames (swModel:IModelDoc2) =
+    swModel.GetConfigurationNames()
+    |> unbox<string[]>

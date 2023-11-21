@@ -15,36 +15,36 @@ type 批量修改零件材质(swApp: ISldWorks) =
     let logfile = "d:/partmat.txt"
 
     let ChangeMaterialOfPart (filename: string) (matname: string) =
-        let path = currentDir + filename + ".SLDPRT"
+        let path = Path.Combine( currentDir, filename + ".SLDPRT")
 
         let swModel = 
             swApp
             |> SldWorksUtils.openDoc6 path swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
                 
-        //' 修改所有配置的材质
+        // 修改所有配置的材质
         let vConfNameArr = 
-            swModel.GetConfigurationNames()
-            |> unbox<string[]>
+            swModel
+            |> ModelDoc2Utils.getConfigurationNames
 
         let swPart = swModel :?> PartDoc
 
-        for configName:string in vConfNameArr do
+        for configName in vConfNameArr do
             swPart.SetMaterialPropertyName2(configName, matDB, matname)
 
         swModel
         |> ModelDoc2Utils.save3 swSaveAsOptions_e.swSaveAsOptions_Silent
 
-        //'打印所有配置的材质
+        // 打印所有配置的材质
         for configName:string in vConfNameArr do
             let sMatName = 
                 swPart
-                |> PartDocUtils.getMaterialPropertyName2 (configName)
+                |> PartDocUtils.getMaterialPropertyName2 configName
                 |> fst
             let title = swModel.GetTitle()
-            let s = title + "(" + configName + ")" + sMatName + "\n"
+            let s = $"{title}({configName}){sMatName}\n"
             File.AppendAllText(logfile,s)
 
-        //' Close Document
+        // Close Document
         swModel.GetPathName()
         |> swApp.CloseDoc
     

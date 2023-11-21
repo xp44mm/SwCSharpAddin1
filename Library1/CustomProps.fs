@@ -17,7 +17,7 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 open FSharp.Literals.Literal
-
+open FSharp.SolidWorks
 
 //let swApp: SldWorks.SldWorks
 //let swModel: SldWorks.ModelDoc2
@@ -31,51 +31,114 @@ let main
     //Set swApp = Application.SldWorks
     //Set swModel = swApp.ActiveDoc
     let CusPropMgr = swModel.Extension.CustomPropertyManager("")
-    let AddStatus = CusPropMgr.Add3("MyTest",int swCustomInfoType_e.swCustomInfoText, "This is a test.",int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
+    let AddStatus = 
+        CusPropMgr
+        |> CustomPropertyManagerUtils.add3 
+            "MyTest"
+            swCustomInfoType_e.swCustomInfoText
+            "This is a test."
+            swCustomPropertyAddOption_e.swCustomPropertyReplaceValue
+
     // Retrieve the value of a custom property called MyTest
-    let _,Value,ResValue,_ = CusPropMgr.Get5("MyTest", false)
-    swApp.SendMsgToUser2(Value, int swMessageBoxIcon_e.swMbInformation, int swMessageBoxBtn_e.swMbOk)
+    //let _,Value,ResValue,_ = 
+    let rcd =
+        CusPropMgr
+        |> CustomPropertyManagerUtils.get6 "MyTest" false
+    
+    swApp
+    |> SldWorksUtils.sendMsgToUser2
+        rcd.resolvedValOut
+        swMessageBoxIcon_e.swMbInformation
+        swMessageBoxBtn_e.swMbOk
     |> ignore
 
     // Change the value of a custom property called MyTest
     let Value = "Test has now changed!"
-    let SetStatus = CusPropMgr.Set2("MyTest", Value)
+    let SetStatus = 
+        CusPropMgr 
+        |> CustomPropertyManagerUtils.set2 "MyTest" Value
+
     // Retrieve the new value
     //Value = ""
     //ResValue = ""
-    let _,Value,ResValue,_ = CusPropMgr.Get5("MyTest", false)
-    swApp.SendMsgToUser2(Value, int swMessageBoxIcon_e.swMbInformation, int swMessageBoxBtn_e.swMbOk)
+    let rcd = 
+        CusPropMgr
+        |> CustomPropertyManagerUtils.get6 "MyTest" false
+        //CusPropMgr
+        //.Get5()
+
+    swApp
+    |> SldWorksUtils.sendMsgToUser2
+        rcd.resolvedValOut
+        swMessageBoxIcon_e.swMbInformation
+        swMessageBoxBtn_e.swMbOk
     |> ignore
 
 let CustomPropertyTraversal
     (swApp: SldWorks)
     (swModel: ModelDoc2)
     =
-
-
     //Set swApp = Application.SldWorks
     //Set swModel = swApp.ActiveDoc
     let CusPropMgr = swModel.Extension.CustomPropertyManager("")
-    let AddStatus = CusPropMgr.Add3("MyProp1", int swCustomInfoType_e.swCustomInfoNumber, "1", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-    let AddStatus = CusPropMgr.Add3("MyProp2", int swCustomInfoType_e.swCustomInfoNumber, "2", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-    let AddStatus = CusPropMgr.Add3("MyProp3", int swCustomInfoType_e.swCustomInfoNumber, "3", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-    let AddStatus = CusPropMgr.Add3("MyProp4", int swCustomInfoType_e.swCustomInfoNumber, "4", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-  
-    //let retval(): String
-    //let i: int
+
+    let AddStatus = 
+        CusPropMgr
+        |> CustomPropertyManagerUtils.add3 
+            "MyProp1"
+            swCustomInfoType_e.swCustomInfoNumber
+            "1"
+            swCustomPropertyAddOption_e.swCustomPropertyReplaceValue
+
+    let AddStatus = 
+        CusPropMgr
+        |> CustomPropertyManagerUtils.add3 
+            "MyProp2"
+            swCustomInfoType_e.swCustomInfoNumber
+            "2"
+            swCustomPropertyAddOption_e.swCustomPropertyReplaceValue
+
+    let AddStatus = 
+        CusPropMgr
+        |> CustomPropertyManagerUtils.add3 
+            "MyProp3"
+            swCustomInfoType_e.swCustomInfoNumber
+            "3"
+            swCustomPropertyAddOption_e.swCustomPropertyReplaceValue
+
+    let AddStatus = 
+        CusPropMgr
+        |> CustomPropertyManagerUtils.add3 
+            "MyProp4"
+            swCustomInfoType_e.swCustomInfoNumber
+            "4"
+            swCustomPropertyAddOption_e.swCustomPropertyReplaceValue
+
     let names = 
-        CusPropMgr.GetNames() 
-        |> unbox<string[]>
+        CusPropMgr
+        |> CustomPropertyManagerUtils.getNames
 
     for name in names do
-        swApp.SendMsgToUser2(name, int swMessageBoxIcon_e.swMbInformation, int swMessageBoxBtn_e.swMbOk)
+        swApp
+        |> SldWorksUtils.sendMsgToUser2
+            name
+            swMessageBoxIcon_e.swMbInformation
+            swMessageBoxBtn_e.swMbOk
         |> ignore
+
+        //swApp.SendMsgToUser2(name, int swMessageBoxIcon_e.swMbInformation, int swMessageBoxBtn_e.swMbOk)
+        //|> ignore
     let Count = CusPropMgr.Count
-    swApp.SendMsgToUser2($"You have {Count} custom properties.", int swMessageBoxIcon_e.swMbInformation, int swMessageBoxBtn_e.swMbOk)
+    swApp
+    |> SldWorksUtils.sendMsgToUser2
+        $"You have {Count} custom properties."
+        swMessageBoxIcon_e.swMbInformation
+        swMessageBoxBtn_e.swMbOk
+    |> ignore
 
 let CustomPropsConfig 
-    (swApp: SldWorks)
     (swModel: ModelDoc2)
+    (swApp: SldWorks)
     =
 
 //let swApp: SldWorks.SldWorks
@@ -88,33 +151,35 @@ let CustomPropsConfig
     //Set swApp = Application.SldWorks
     //Set swModel = swApp.ActiveDoc
     let density = 2700.0
-    swModel.Extension.SetUserPreferenceDouble(
-        int swUserPreferenceDoubleValue_e.swMaterialPropertyDensity, 
-        int swUserPreferenceOption_e.swDetailingNoOptionSpecified, density)
+    swModel
+    |> ModelDoc2Utils.setUserPreferenceDouble
+        swUserPreferenceDoubleValue_e.swMaterialPropertyDensity
+        swUserPreferenceOption_e.swDetailingNoOptionSpecified
+        density
     |> ignore
 
-    let retval = 
-        swModel.GetConfigurationNames()
-        |> unbox<string[]>
+    //let retval = 
+    //    swModel.GetConfigurationNames()
+    //    |> unbox<string[]>
 
-    for configname in retval do
-        //swApp.SendMsgToUser2 configname, swMbInformation, swMbOk
-        swModel.ShowConfiguration2 configname
-        |> ignore
-        //let massprops: Variant
-        let mutable status = 0
-        let massprops = 
-            swModel.Extension.GetMassProperties2(1, &status, false)
-            |> unbox<float[]>
-        let CusPropMgr = swModel.Extension.CustomPropertyManager(configname)
-        let AddStatus = CusPropMgr.Add3("Density - " + configname, 
-            int swCustomInfoType_e.swCustomInfoText, $"{density / 1000.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-        let AddStatus = CusPropMgr.Add3("Mass - " + configname, 
-            int swCustomInfoType_e.swCustomInfoText, $"{massprops.[5] * 1000.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-        let AddStatus = CusPropMgr.Add3("Volume - " + configname, 
-            int swCustomInfoType_e.swCustomInfoText, $"{massprops.[3] * 1000.0 * 1000.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-        let AddStatus = CusPropMgr.Add3("Area - " + configname, 
-            int swCustomInfoType_e.swCustomInfoText, $"{massprops.[4] * 100.0 * 100.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-        ()
+    //for configname in retval do
+    //    //swApp.SendMsgToUser2 configname, swMbInformation, swMbOk
+    //    swModel.ShowConfiguration2 configname
+    //    |> ignore
+    //    //let massprops: Variant
+    //    let mutable status = 0
+    //    let massprops = 
+    //        swModel.Extension.GetMassProperties2(1, &status, false)
+    //        |> unbox<float[]>
+    //    let CusPropMgr = swModel.Extension.CustomPropertyManager(configname)
+    //    let AddStatus = CusPropMgr.Add3("Density - " + configname, 
+    //        int swCustomInfoType_e.swCustomInfoText, $"{density / 1000.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
+    //    let AddStatus = CusPropMgr.Add3("Mass - " + configname, 
+    //        int swCustomInfoType_e.swCustomInfoText, $"{massprops.[5] * 1000.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
+    //    let AddStatus = CusPropMgr.Add3("Volume - " + configname, 
+    //        int swCustomInfoType_e.swCustomInfoText, $"{massprops.[3] * 1000.0 * 1000.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
+    //    let AddStatus = CusPropMgr.Add3("Area - " + configname, 
+    //        int swCustomInfoType_e.swCustomInfoText, $"{massprops.[4] * 100.0 * 100.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
+    //    ()
 
 

@@ -31,6 +31,29 @@ let openDoc6
     let mutable longwarnings = 0
     swApp.OpenDoc6(filename, int tp, int opts, config, &longstatus, &longwarnings)
 
+
+let documentVisible (visible:bool) (documentType:swDocumentTypes_e) (swApp: ISldWorks) = 
+    swApp.DocumentVisible(visible, int documentType)
+
+//swDwgPaperSizes_e
+let newDocument (template) (paperSize:swDwgPaperSizes_e) (w) (h) (swApp: ISldWorks) =
+    swApp.NewDocument(template, int paperSize, w, h)
+    |> unbox<ModelDoc2>
+
+let activateDoc3 name usePrefs (opts:swRebuildOnActivation_e) (swApp: ISldWorks) =
+    let mutable errors = 0
+    try
+        swApp.ActivateDoc3(name, usePrefs,int opts, &errors)
+        |> unbox<ModelDoc2>
+    with _ -> failwith $"{enum<swActivateDocError_e>errors}"
+
+let loadFile4 fileName argString importData (swApp: ISldWorks) =
+    let mutable errors = 0
+    try
+        swApp.LoadFile4(fileName, argString, importData, &errors)
+    with _ -> failwith $"{enum<swFileLoadError_e>errors}"
+
+
 let getMathUtility (swApp: ISldWorks) = 
     swApp.GetMathUtility()
     |> unbox<MathUtility>
@@ -62,15 +85,6 @@ let setUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (value:str
 let getUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (swApp: ISldWorks) = 
     swApp.GetUserPreferenceStringValue(int pref)
 
-let documentVisible (visible:bool) (documentType:swDocumentTypes_e) (swApp: ISldWorks) = 
-    swApp.DocumentVisible(visible, int documentType)
-
-//swDwgPaperSizes_e
-let newDocument (template) (paperSize:swDwgPaperSizes_e) (w) (h) (swApp: ISldWorks) =
-    swApp.NewDocument(template, int paperSize, w, h)
-    |> unbox<ModelDoc2>
-
-
 //用默认模板新建一个零件文件
 let newPartDoc (swApp: ISldWorks) = 
     let dir = 
@@ -89,26 +103,20 @@ let newAssemblyDoc (swApp: ISldWorks) =
     |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
     :?> AssemblyDoc
 
-let activateDoc3 name usePrefs (opts:swRebuildOnActivation_e) (swApp: ISldWorks) =
-    let mutable errors = 0
-    try
-        swApp.ActivateDoc3(name, usePrefs,int opts, &errors)
-        |> unbox<ModelDoc2>
-    with _ -> failwith $"{enum<swActivateDocError_e>errors}"
+let sendMsgToUser2
+    (message:string)
+    (icon:swMessageBoxIcon_e)
+    (buttons:swMessageBoxBtn_e)
+    (swApp:ISldWorks)
+    =
+    swApp.SendMsgToUser2(
+        message,
+        int icon,
+        int buttons)
+    |> enum<swMessageBoxResult_e> 
 
-let loadFile4 fileName argString importData (swApp: ISldWorks) =
-    let mutable errors = 0
-    try
-        swApp.LoadFile4(fileName, argString, importData, &errors)
-    with _ -> failwith $"{enum<swFileLoadError_e>errors}"
+let defineAttribute (name:string) (swApp:ISldWorks) =
+    swApp.DefineAttribute name
+    |> unbox<AttributeDef>
 
-//swModel.DeSelectByID(
-
-//swDraw.CreateLayer2(
-
-//swAssy.AddComponent5(
-//swAssy.EditPart2(
-//swAssy.InsertCavity4(
-
-
-
+//iCmdMgr = iSwApp.GetCommandManager(cookie);

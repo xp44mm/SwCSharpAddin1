@@ -28,7 +28,7 @@ let contains (prpName: string) (custPrpMgr:ICustomPropertyManager) =
     prpNames.Contains prpName
 
 /// 
-let Get6 (fieldName:string) (useCached:bool) (custPrpMgr:ICustomPropertyManager) =
+let get6 (fieldName:string) (useCached:bool) (custPrpMgr:ICustomPropertyManager) =
     let mutable valOut = ""
     let mutable resolvedValOut = ""
     let mutable wasResolved = true
@@ -36,7 +36,8 @@ let Get6 (fieldName:string) (useCached:bool) (custPrpMgr:ICustomPropertyManager)
 
     /// https://help.solidworks.com/2023/english/api/swconst/SOLIDWORKS.Interop.swconst~SOLIDWORKS.Interop.swconst.swCustomInfoGetResult_e.html
     //问题：Get6是否不区分大小写？
-    let reti = custPrpMgr.Get6(fieldName, useCached, 
+    let reti = 
+        custPrpMgr.Get6(fieldName, useCached, 
         &valOut, &resolvedValOut, &wasResolved,&linkToProperty)
 
     {|
@@ -48,7 +49,7 @@ let Get6 (fieldName:string) (useCached:bool) (custPrpMgr:ICustomPropertyManager)
     |}
 
 let tryResolvedValOut (fieldName:string) (custPrpMgr:ICustomPropertyManager) =
-    let rcd = Get6 fieldName false custPrpMgr
+    let rcd = get6 fieldName false custPrpMgr
     match rcd.customInfoGetResult with
     | swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue
         -> Some rcd.resolvedValOut
@@ -57,7 +58,7 @@ let tryResolvedValOut (fieldName:string) (custPrpMgr:ICustomPropertyManager) =
     | _ -> None
 
 let resolvedValOut (fieldName: string) (custPrpMgr: ICustomPropertyManager) =
-    let rcd = Get6 fieldName false custPrpMgr
+    let rcd = get6 fieldName false custPrpMgr
     match rcd.customInfoGetResult with
     | swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue
         -> rcd.resolvedValOut
@@ -80,8 +81,27 @@ let pickResolvedValOut (fieldNames: seq<string>) (custPrpMgr: ICustomPropertyMan
             custPrpMgr.GetNames()
             |> unbox<string[]>
             |> Array.toList
-        failwith $"{c}!=1,\n{fieldNames|>Seq.toList}\n{AllNames}"
+        failwith $"{c}!=1,\n{fieldNames |> Seq.toList}\n{AllNames}"
 
-let add3 fieldName (fieldType:swCustomInfoType_e) fieldValue (overwriteExisting:swCustomPropertyAddOption_e) (custPrpMgr: CustomPropertyManager) =
+let add3
+    fieldName
+    (fieldType: swCustomInfoType_e)
+    fieldValue
+    (overwriteExisting: swCustomPropertyAddOption_e)
+    (custPrpMgr: CustomPropertyManager)
+    =
     custPrpMgr.Add3(fieldName, int fieldType, fieldValue, int overwriteExisting)
+
+let set2 fieldName fieldValue (custPrpMgr:ICustomPropertyManager) = 
+    let SetStatus = custPrpMgr.Set2(fieldName, fieldValue)
+    ()
+
+let getNames (custPrpMgr: ICustomPropertyManager) =
+    custPrpMgr.GetNames() 
+    |> unbox<string[]>
+
+let count (custPrpMgr: ICustomPropertyManager) =
+    custPrpMgr.Count
+
+
 

@@ -15,6 +15,41 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
+/// 疑问：这个程序获取得是SolidBodyFolder文件夹，还是其中的body？
+let updateCutList (swModel: IModelDoc2) =
+    let swBodyFolder =
+        swModel
+        |> ModelDoc2Utils.getFeatureSeq
+        |> Seq.pick(fun feat ->
+            if feat.GetTypeName2() = "SolidBodyFolder" then
+                let swBodyFolder = feat.GetSpecificFeature2():?> BodyFolder
+                Some swBodyFolder
+            else None
+        )
+    swBodyFolder.UpdateCutList()
+    |> ignore
+
+let getCutList(swModel: IModelDoc2) =
+    swModel
+    |> ModelDoc2Utils.getFeatureSeq
+    |> Seq.filter(fun feat -> feat.GetTypeName2() = "CutListFolder")
+
+let getSubCutLists(swModel: ModelDoc2) =
+    swModel
+    |> getCutList
+    |> Seq.collect(fun feat ->
+        let sq = FeatureUtils.getSubFeatureSeq feat
+        //if Seq.isEmpty sq then
+        //    Seq.singleton feat
+        //else sq
+        sq
+    )
+
+let getCutListCustomPropertyManager (swModel:ModelDoc2) =
+    swModel
+    |> getCutList
+    |> Seq.map(fun feat -> feat.CustomPropertyManager)
+
 let cutListItemFieldNames =
     [
         ["材料";"MATERIAL"]
@@ -27,7 +62,7 @@ let detectCutListItemFields (custPrpMgr: ICustomPropertyManager) =
     let prpNames = CustomPropertyManagerUtils.getCustomPropertyNames custPrpMgr
     prpNames
     |> Seq.map(fun name -> 
-        name, custPrpMgr |> CustomPropertyManagerUtils.Get6 name false
+        name, custPrpMgr |> CustomPropertyManagerUtils.get6 name false
     )
 
 let detectCutListItemFields2 (custPrpMgr: CustomPropertyManager) =
@@ -46,5 +81,26 @@ let GetCutListItemFields (custPrpMgr: CustomPropertyManager) =
         CustomPropertyManagerUtils.pickResolvedValOut ce custPrpMgr
     )
 
+// 焊件偏爱值的自动设置
+let setWeldmentUserPreference (swModel: ModelDoc2) =
+    let toggle (v:bool) (x:swUserPreferenceToggle_e) =
+        swModel
+        |> ModelDoc2Utils.setUserPreferenceToggle
+            x swUserPreferenceOption_e.swDetailingNoOptionSpecified v
+        |> ignore
 
+    swUserPreferenceToggle_e.swWeldmentEnableAutomaticCutList
+    |> toggle true
+
+    swUserPreferenceToggle_e.swWeldmentEnableAutomaticUpdate
+    |> toggle true
+
+    swUserPreferenceToggle_e.swWeldmentRenameCutlistDescriptionPropertyValue
+    |> toggle true
+
+    swUserPreferenceToggle_e.swWeldmentCollectIdenticalBodies
+    |> toggle true
+
+    swUserPreferenceToggle_e.swDisableDerivedConfigurations
+    |> toggle false
 

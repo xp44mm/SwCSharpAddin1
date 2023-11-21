@@ -17,8 +17,31 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 //open FSharp.Literals.Literal
+type Mark =
+    | All
+    | WithoutMark
+    | OtherMark of int
 
-let getSelectedObjectType3 index mark (swSelMgr: SelectionMgr) =
+    member this.value =
+        match this with
+        | All -> -1
+        | WithoutMark -> 0
+        | OtherMark m -> m
+
+
+let getSelectedObjectCount2 (mark:Mark) (swSelMgr: SelectionMgr) =
+    mark.value
+    |> swSelMgr.GetSelectedObjectCount2
+
+let getSelectedObjectType3 index (mark:Mark) (swSelMgr: SelectionMgr) =
     //https://help.solidworks.com/2023/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.iselectionmgr~getselectedobjecttype3.html
-    swSelMgr.GetSelectedObjectType3(index, mark)
+    swSelMgr.GetSelectedObjectType3(index, mark.value)
     |> enum<swSelectType_e>
+
+let getSelectedObject6
+    (index: int  )
+    (mark: Mark   )
+    (swSelMgr: ISelectionMgr)
+    = 
+    swSelMgr.GetSelectedObject6(index, mark.value)
+

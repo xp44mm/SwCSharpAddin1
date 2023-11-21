@@ -24,7 +24,7 @@ let PrintProperties (custPrpMgr:CustomPropertyManager) (useCached:bool) (indent:
         writefile $"{indent}-No Properties-"
     | _ ->
         for prpName in vPrpNames do
-            let retval =  CustomPropertyManagerUtils.Get6 prpName useCached custPrpMgr
+            let retval =  CustomPropertyManagerUtils.get6 prpName useCached custPrpMgr
             writefile $"{indent}Property: {prpName}"
             writefile $"{indent}Value/Text Expression: {retval.valOut}"
             writefile $"{indent}Evaluated Value: {retval.resolvedValOut}"

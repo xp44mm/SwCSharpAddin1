@@ -12,85 +12,85 @@ open FSharp.SolidWorks
 type RecursiveTraverseAssembly(swApp: ISldWorks) = 
     let logfile = "d:/RecursiveTraverseAssembly.txt"
 
-    let rec TraverseFeatureFeatures(swFeat:Feature) (nLevel:int) =
-        //Feature swSubFeat
-        //Feature swSubSubFeat
-        //Feature swSubSubSubFeat
-        let mutable sPadStr = " "
-        for i in [ 0 .. nLevel] do
-            sPadStr <- sPadStr + " "
-        //1
-        while swFeat <> null do
-            File.AppendAllText(logfile,sPadStr + swFeat.Name + " [" + swFeat.GetTypeName2() + "]")
-            let swSubFeat = swFeat.GetFirstSubFeature() |> unbox<Feature>
-            //2
-            while swSubFeat <> null do
-                File.AppendAllText(logfile,sPadStr + "  " + swSubFeat.Name + " [" + swSubFeat.GetTypeName() + "]")
-                let swSubSubFeat = swSubFeat.GetFirstSubFeature() |> unbox<Feature>
-                //3
-                while swSubSubFeat <> null do
-                    File.AppendAllText(logfile,sPadStr + "    " + swSubSubFeat.Name + " [" + swSubSubFeat.GetTypeName() + "]");
-                    let swSubSubSubFeat = swSubSubFeat.GetFirstSubFeature() |> unbox<Feature>
-                    //4
-                    while swSubSubSubFeat <> null do
-                        File.AppendAllText(logfile,sPadStr + "      " + swSubSubSubFeat.Name + " [" + swSubSubSubFeat.GetTypeName() + "]")
-                        let swSubSubSubFeat = swSubSubSubFeat.GetNextSubFeature() |> unbox<Feature>
-                        ()
+    let traverseComponent (swComp:Component2) =
+        let getPipeInfo (swComp:Component2)  =
+            let swModel = 
+                swComp
+                |> Component2Utils.getModelDoc2
 
-                    let swSubSubFeat = swSubSubFeat.GetNextSubFeature() |> unbox<Feature>
-                    ()
-
-                let swSubFeat = swSubFeat.GetNextSubFeature() |> unbox<Feature> 
-                ()
-
-            let swFeat = swFeat.GetNextFeature() |> unbox<Feature>
-            ()
-    let TraverseComponentFeatures (swComp:Component2) (nLevel:int) =
-        let swFeat = swComp.FirstFeature() |> unbox<Feature>
-        TraverseFeatureFeatures swFeat nLevel
-
-    let TraverseModelFeatures (swModel:ModelDoc2) (nLevel:int) =
-        let swFeat = swModel.FirstFeature() |> unbox<Feature>
-        TraverseFeatureFeatures swFeat nLevel
-
-    let rec TraverseComponent (swComp:Component2) (nLevel:int) =
-        let sPadStr = String.replicate nLevel "    "
-
-        match Component2Utils.GetChildren swComp with
-        | [||] ->
-            let swCustPrpMgr = 
-                let swModel = 
-                    swComp.GetModelDoc2() 
-                    |> unbox<ModelDoc2>
-                let config = swModel.ConfigurationManager.ActiveConfiguration
-                swModel.Extension.CustomPropertyManager(config.Name)
+                //|> unbox<ModelDoc2>
+            let config = swModel.ConfigurationManager.ActiveConfiguration
+            let swCustPrpMgr = swModel.Extension.CustomPropertyManager(config.Name)
             let prpName = "SWPipeLength"
 
             if CustomPropertyManagerUtils.contains prpName swCustPrpMgr then
                 //属性值带单位
                 let pipeLength = CustomPropertyManagerUtils.resolvedValOut prpName swCustPrpMgr
-                File.AppendAllText(logfile,$"pipeLength = {pipeLength}\n")
+                $"pipeLength = {pipeLength}\n"
+            else "其他零件：弯头，三通，大小头"
 
-        | children ->
-            for swChildComp in children do
-                File.AppendAllText(logfile,$"{sPadStr}+{Component2Utils.renderComponent2 swChildComp}\n")
-                TraverseComponent swChildComp (nLevel + 1)
+        ///打印树
+        let rec loop (nLevel:int) (swCompNode:Component2Utils.Component2Node) =
+            let pad = String.replicate nLevel "    "
+
+            [
+                match swCompNode with
+                | Component2Utils.Component2Node(swComp,[||]) ->
+                    $"{pad}+{getPipeInfo swComp}\n"
+                | Component2Utils.Component2Node(swComp,children) ->
+                    $"{pad}+{Component2Utils.renderComponent2 swComp}\n"
+                    for child in children do
+                        yield! loop (nLevel + 1) child
+            ]
+
+        swComp
+        |> Component2Utils.traverseComponent2Node
+        |> loop 0
+        |> String.concat "\n"
+
+    let TraverseFeatureFeatures(swFeat:Feature) =
+        let rec loop (nLevel:int) (swFeatNode:FeatureUtils.FeatureNode) =
+            let pad = String.replicate nLevel "    "
+            [
+                match swFeatNode with
+                | FeatureUtils.FeatureNode(x,[||]) ->
+                    $"{pad}+{x}\n"
+                | FeatureUtils.FeatureNode(x,children) ->
+                    $"{pad}+{x}\n"
+                    for child in children do
+                        yield! loop (nLevel + 1) child
+            ]
+
+        swFeat
+        |> FeatureUtils.traverseFeatureNodes
+        |> Seq.collect(loop 0)
+        |> String.concat "\n"
+
+
+    let TraverseComponentFeatures (swComp:Component2) (nLevel:int) =
+        let swFeat = swComp.FirstFeature() |> unbox<Feature>
+        TraverseFeatureFeatures swFeat
+
+    let TraverseModelFeatures (swModel:ModelDoc2) (nLevel:int) =
+        let swFeat = swModel.FirstFeature() |> unbox<Feature>
+        TraverseFeatureFeatures swFeat
+
 
     member _.Main() =
+        if File.Exists(logfile) then File.Delete logfile
+
         let swModel = 
-            swApp.ActiveDoc 
-            |> unbox<ModelDoc2>
+            swApp
+            |> SldWorksUtils.activeDoc 
 
         let swConfMgr = swModel.ConfigurationManager
         let swConf = swConfMgr.ActiveConfiguration
         let swRootComp = 
-            swConf.GetRootComponent() 
-            |> unbox<Component2>
+            swConf
+            |> ConfigurationUtils.getRootComponent
 
-        if File.Exists(logfile) then File.Delete logfile
-
-        File.AppendAllText(logfile,"File = " + swModel.GetPathName()+"\n")
+        File.AppendAllText(logfile,$"File ={ swModel.GetPathName() }\n")
         File.AppendAllText(logfile,$"{Component2Utils.renderComponent2 swRootComp}\n")
 
-        TraverseComponent swRootComp 1
+        traverseComponent swRootComp
 

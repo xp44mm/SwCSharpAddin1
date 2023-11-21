@@ -44,10 +44,10 @@ let ExportPipeData (swApp:ISldWorks) =
     let count = rtRouteManager.GetAllRouteSegmentCount()
     swApp.SendMsgToUser $"{count}"
 
-    //let count = rtRouteManager.GetAdvancedRouteSelector()
-    //swApp.SendMsgToUser $"{count}"
+    let count = rtRouteManager.GetAdvancedRouteSelector()
+    swApp.SendMsgToUser $"{count}"
 
-    let ids = rtRouteManager.GetAllRouteSegmentIDs():?> int[]
+    let ids = rtRouteManager.GetAllRouteSegmentIDs() :?> int[]
     swApp.SendMsgToUser (sprintf "%A" ids)
 
     //let count = rtRouteManager.GetRoutingComponentFromSearchpath("")

@@ -17,55 +17,14 @@ open SolidWorksTools
 open SolidWorksTools.File
 open FSharp.SolidWorks
 
-let UpdateCutList (model: ModelDoc2) =
-    let swBodyFolder =
-        model.FirstFeature()
-        |> FeatureUtils.getFeatureSeq
-        |> Seq.pick(fun feat ->
-            if feat.GetTypeName2() = "SolidBodyFolder" then
-                let swBodyFolder = feat.GetSpecificFeature2():?> BodyFolder
-                Some swBodyFolder
-            else None
-        )
-    swBodyFolder.UpdateCutList()
-    |> ignore
-
-let GetCutListCustomPropertyManager (swModel:ModelDoc2) =
-    swModel.FirstFeature()
-    |> FeatureUtils.getFeatureSeq
-    |> Seq.filter(fun feat -> 
-        let tp = feat.GetTypeName2()
-        tp = "CutListFolder")
-    |> Seq.map(fun feat ->
-        let swCutListPrpMgr = feat.CustomPropertyManager
-        swCutListPrpMgr
-    )
-
-let GetCutLists(model: ModelDoc2) =
-    let parentCutlists =
-        model.FirstFeature()
-        |> FeatureUtils.getFeatureSeq
-        |> Seq.filter(fun feat -> feat.GetTypeName2() = "CutListFolder")
-
-    parentCutlists
-    |> Seq.collect(fun feat ->
-        let sq = FeatureUtils.getSubFeatureSeq feat
-        if Seq.isEmpty sq then 
-            Seq.singleton feat
-        else sq
-    )
-
 let printCutLists logfile (swModel:ModelDoc2) =    
     swModel 
-    |> UpdateCutList
+    |> CutList.updateCutList
 
     let partfile = Path.GetFileNameWithoutExtension(swModel.GetTitle())
 
-    swModel.FirstFeature()
-    |> FeatureUtils.getFeatureSeq
-    |> Seq.filter(fun feat -> 
-        let tp = feat.GetTypeName2()
-        tp = "CutListFolder")
+    swModel
+    |> CutList.getCutList
     |> Seq.iter(fun feat ->
         let swCutListPrpMgr = feat.CustomPropertyManager
         let outp = 

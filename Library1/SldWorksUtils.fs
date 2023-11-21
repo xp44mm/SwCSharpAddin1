@@ -77,7 +77,7 @@ let detectCutLists (swApp: ISldWorks) =
 
     let txt = 
         swModel
-        |> ModelDocUtils.GetCutListCustomPropertyManager
+        |> CutList.getCutListCustomPropertyManager
         |> Seq.map(fun cpm ->
             cpm.GetNames() |> unbox<string[]>
             |> Array.filter(props.Contains)
@@ -133,7 +133,7 @@ let testCutLists (swApp: ISldWorks) =
 let setPartWeldment (swApp: ISldWorks) =
     let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
     try
-        training3.weldment swModel
+        CutList.setWeldmentUserPreference swModel
         swApp.SendMsgToUser "setPartWeldment OK!"
     with ex ->
         swApp.SendMsgToUser $"setPartWeldment ex: {ex.Message}"

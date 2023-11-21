@@ -17,6 +17,7 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 //open FSharp.Literals.Literal
+open FSharp.SolidWorks
 
 let getLoopSeq (swSelFace:Face2) =
     let rec loop (swLoop:obj) =

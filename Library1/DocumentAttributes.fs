@@ -17,6 +17,7 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 open FSharp.Literals.Literal
+open FSharp.SolidWorks
 
 
 let main
@@ -25,24 +26,36 @@ let main
     =
 
     let swAttDef = 
-        swApp.DefineAttribute ("pubMyDocAttributeDef")
-        |> unbox<AttributeDef>
+        swApp
+        |> SldWorksUtils.defineAttribute "pubMyDocAttributeDef"
 
-    swAttDef.AddParameter("MyFirstParameter", int swParamType_e.swParamTypeDouble, 10.0, 0)
+    swAttDef
+    |> AttributeDefUtils.addParameter "MyFirstParameter" swParamType_e.swParamTypeDouble 10.0
+
+    swAttDef
+    |> AttributeDefUtils.addParameter "MySecondParameter" swParamType_e.swParamTypeDouble 20.0
+
+    swAttDef.Register()
     |> ignore
 
-    swAttDef.AddParameter("MySecondParameter", int swParamType_e.swParamTypeDouble, 20.0, 0)
-    |> ignore
+    let swAtt = 
+        swAttDef
+        |> AttributeDefUtils.createInstance5 
+            swModel null "MyDocAttribute" 0 swInConfigurationOpts_e.swAllConfiguration
 
-    swAttDef.Register() |> ignore
-    let swAtt = swAttDef.CreateInstance5(swModel, null, "MyDocAttribute", 0, int swInConfigurationOpts_e.swAllConfiguration)
-    let swParam1 = swAtt.GetParameter("MyFirstParameter") |> unbox<Parameter>
-    let swParam2 = swAtt.GetParameter("MySecondParameter")|> unbox<Parameter>
+    let swParam1 = 
+        swAtt
+        |> AttributeUtils.getParameter "MyFirstParameter"
+
+    let swParam2 = 
+        swAtt
+        |> AttributeUtils.getParameter "MySecondParameter"
+
     let text = 
         [
             "There is one attribute on this file, "
             "with two parameters."
-            $"Parameter 1 = {swParam1.GetDoubleValue()}"
+            $"Parameter 1 = {swParam1.GetDoubleValue()}" //返回值类型不可以作为泛型参数输入。
             $"Parameter 2 = {swParam2.GetDoubleValue()}"
         ] |> String.concat "\n"
 

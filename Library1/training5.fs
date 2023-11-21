@@ -34,16 +34,18 @@ let testSelectFace (swApp: ISldWorks) =
     //Do some validation before running routines....
     let SelObjType = 
         swSelMgr
-        |> SelectionMgrUtils.getSelectedObjectType3 1 -1
+        |> SelectionMgrUtils.getSelectedObjectType3 1 SelectionMgrUtils.Mark.All
 
     match SelObjType with
     | swSelectType_e.swSelFACES ->
         //Get the selected face, ignore marks
-        let swSelFace = swSelMgr.GetSelectedObject6(1, -1)
+        let swSelFace =
+            swSelMgr
+            |> SelectionMgrUtils.getSelectedObject6 1 SelectionMgrUtils.Mark.All
+            |> unbox<Entity>
         //Create a Safe Entity so we can select it when the face
         //becomes invalid
-        let swEntity = swSelFace |> unbox<Entity>
-        let swSafeSelFace = swEntity.GetSafeEntity()
+        let swSafeSelFace = swSelFace.GetSafeEntity()
         swApp.SendMsgToUser $"{swSafeSelFace}"
     | _ ->
         swApp.SendMsgToUser "You did not select a face."
@@ -77,10 +79,12 @@ let OpenComponentModelToAddToAssembly (assemblyTitle:string) (strCompModelname :
     swApp
     |> SldWorksUtils.documentVisible false swDocumentTypes_e.swDocPART
                                                 
-    //let mutable errors = 0
-    //let mutable warnings = 0
+    //Open the component. This must be open or the AddComponent method will fail
     swApp
-    |> SldWorksUtils.openDoc6 strCompModelname swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""  //Open the component. This must be open or the AddComponent method will fail
+    |> SldWorksUtils.openDoc6 
+        strCompModelname 
+        swDocumentTypes_e.swDocPART 
+        swOpenDocOptions_e.swOpenDocOptions_Silent ""  
     |> ignore
 
     swApp

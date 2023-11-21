@@ -1,17 +1,17 @@
 ﻿module CommandManager
 
-//open System
-//open System.Collections
-//open System.Collections.Generic
-//open System.Diagnostics
-//open System.Reflection
-//open System.Runtime.InteropServices
+open System
+open System.Collections
+open System.Collections.Generic
+open System.Diagnostics
+open System.Reflection
+open System.Runtime.InteropServices
 
-//open SolidWorks.Interop.sldworks
-//open SolidWorks.Interop.swpublished
-//open SolidWorks.Interop.swconst
-//open SolidWorksTools
-//open SolidWorksTools.File
+open SolidWorks.Interop.sldworks
+open SolidWorks.Interop.swpublished
+open SolidWorks.Interop.swconst
+open SolidWorksTools
+open SolidWorksTools.File
 
 //let mainCmdGroupID = 5
 //let mainItemID1 = 0

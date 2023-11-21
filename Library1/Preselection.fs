@@ -17,39 +17,50 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 open FSharp.Literals.Literal
-
+open FSharp.SolidWorks
 
 let cmdGenerate_Click
-  (swApp: SldWorks   )
-  (swModel: ModelDoc2)
-  (factor: float     )
-  () = 
-  
-    //Factor = CInt(txtDepth.Text)
-    //Set swApp = Application.SldWorks
-    //Set swModel = swApp.ActiveDoc
-    let swSelMgr = 
+    (swApp: SldWorks)
+    (swModel: ModelDoc2)
+    (factor: float)
+    =
+    let swSelMgr =
         swModel.SelectionManager
-            |> unbox<SelectionMgr>
+        |> unbox<SelectionMgr>
 
-    let count = swSelMgr.GetSelectedObjectCount2(-1)
+    let count =
+        swSelMgr
+        |> SelectionMgrUtils.getSelectedObjectCount2 SelectionMgrUtils.Mark.All
+
     if count <> 1 then
-        swApp.SendMsgToUser2("Please select only Extrude1.",int swMessageBoxIcon_e.swMbWarning, int swMessageBoxBtn_e.swMbOk)
-        //Exit Sub
+        swApp
+        |> SldWorksUtils.sendMsgToUser2
+            "Please select only Extrude1."
+            swMessageBoxIcon_e.swMbWarning
+            swMessageBoxBtn_e.swMbOk
+        |> ignore
     else
-        let Feature = 
-            swSelMgr.GetSelectedObject6(count, -1)
+        let feat =
+            swSelMgr
+            |> SelectionMgrUtils.getSelectedObject6 1 SelectionMgrUtils.Mark.All
             |> unbox<Feature>
-        if Feature.GetTypeName2() <> "Extrusion" then
-            swApp.SendMsgToUser2("Please select only Extrude1.", int swMessageBoxIcon_e.swMbWarning, int swMessageBoxBtn_e.swMbOk)
-            //Exit Sub
+
+        if feat.GetTypeName2() <> "Extrusion" then
+            swApp
+            |> SldWorksUtils.sendMsgToUser2
+                "Please select only Extrude1."
+                swMessageBoxIcon_e.swMbWarning
+                swMessageBoxBtn_e.swMbOk
+            |> ignore
+
         else
-            let extrudeFeatureData = 
-                Feature.GetDefinition()
+            //修改特征的代码
+            let extrudeFeatureData =
+                feat.GetDefinition()
                 |> unbox<ExtrudeFeatureData2>
 
             let depth = extrudeFeatureData.GetDepth(true)
             extrudeFeatureData.SetDepth(true, depth * factor)
-            Feature.ModifyDefinition(extrudeFeatureData, swModel, null)
+
+            feat.ModifyDefinition(extrudeFeatureData, swModel, null)
             |> ignore
-            0

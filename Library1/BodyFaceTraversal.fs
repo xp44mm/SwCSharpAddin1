@@ -17,28 +17,14 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 open FSharp.Literals.Literal
+open FSharp.SolidWorks
 
-let getFaceSeq (body:Body2) =
-    let rec loop (face:obj) =
-        seq {
-            match face with
-            | null -> ()
-            | :? Face2 as face ->
-                yield face
-                yield! loop (face.GetNextFace())
-            | _ -> failwith $"{face.GetType()}"
-        }
-    body.GetFirstFace() |> loop
 
 let main
 
-    (swApp: SldWorks    )
-    (swModel: ModelDoc2 )
-    (swPart: PartDoc    )
-    //(retval: Variant             )
-    (i: int                      )
     (swFace: Face2      )
-    (matProps: float[]          )
+    (swModel: ModelDoc2 )
+    (swApp: SldWorks    )
     =
 
     //Notice the Explicit Type Casting
@@ -57,9 +43,8 @@ let main
     |]
 
     let bodies = 
-        swPart.GetBodies2(int swBodyType_e.swSolidBody, true)
-        |> unbox<obj[]>
-        |> Array.map(unbox<Body2>)
+        swPart
+        |> PartDocUtils.getBodies2 swBodyType_e.swSolidBody true
 
     bodies
     |> Seq.iter(fun bd ->
