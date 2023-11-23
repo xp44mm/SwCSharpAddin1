@@ -156,12 +156,9 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EventHandling.cs" />
-    <Compile Include="PMPHandler.cs" />
     <Compile Include="SwAddin.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UserPMPage.cs" />
     <EmbeddedResource Include="ToolbarLarge.bmp" />
     <EmbeddedResource Include="ToolbarSmall.bmp" />
     <EmbeddedResource Include="MainIconLarge.bmp" />

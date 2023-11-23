@@ -13,21 +13,8 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-type CommandItemParameter = {
-    name:string
-    position:int
-    hintString:string
-    toolTip:string
-    imageListIndex:int
-    callbackFunction:string
-    enableMethod:string
-    userID:int
-    menuTBOption:swCommandItemType_e //bitmask
-}
-
 let addCommandItem2
     (name:string)
-    (position:int)
     (hintString:string)
     (toolTip:string)
     (imageListIndex:int)
@@ -38,7 +25,7 @@ let addCommandItem2
     (cmdGroup:ICommandGroup)
 
     = 
-
+    let position = -1 // Specify 0 to add this item to the beginning of the CommandGroup, or specify -1 to add it to the end of the CommandGroup. This argument specifies the position of the item in relation to its immediate parent item.    
     cmdGroup.AddCommandItem2(
         name,
         position,

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -15,354 +16,181 @@ using FSharp.SolidWorks;
 
 namespace SwCSharpAddin1
 {
-	/// <summary>
-	/// Summary description for SwCSharpAddin1.
-	/// </summary>
-	[Guid("43f85157-13ec-476b-a57e-02fb5973e8bb"), ComVisible(true)]
-	[SwAddin(
-			Description = "SwCSharpAddin1 description",
-			Title = "SwCSharpAddin1",
-			LoadAtStartup = true
-			)]
-	public class SwAddin : ISwAddin
-	{
-		#region Local Variables
-		ISldWorks iSwApp = null;
-		ICommandManager iCmdMgr = null;
-		int addinID = 0;
-		BitmapHandler iBmp;
+    [ComVisible(true)]
+    [Guid("43f85157-13ec-476b-a57e-02fb5973e8bb")]
+    [SwAddin(
+            Description = "SwCSharpAddin1 description",
+            Title = "SwCSharpAddin1",
+            LoadAtStartup = true
+            )]
+    public class SwAddin : ISwAddin
+    {
+        public SwAddin()
+        {
+            this.iBmp = new BitmapHandler();
+        }
 
-		public const int mainCmdGroupID = 5;
-		public const int mainItemID1 = 0;
-		public const int mainItemID2 = 1;
-		public const int mainItemID3 = 2;
-		public const int flyoutGroupID = 91;
+        public const int cmdGroupID = 5;
+        public const int cmdItemID1 = 0;
+        public const int cmdItemID2 = 1;
 
-		//#region Event Handler Variables
-		Hashtable openDocs = new Hashtable();
-		SolidWorks.Interop.sldworks.SldWorks SwEventPtr = null;
-		//#endregion
+        ISldWorks iSwApp;
+        public ISldWorks SwApp { get { return this.iSwApp; } }
 
-		//#region Property Manager Variables
-		UserPMPage ppage = null;
-		//#endregion
+        ICommandManager iCmdMgr;
+        public ICommandManager CmdMgr { get { return this.iCmdMgr; } }
+
+        BitmapHandler iBmp;
+
+        [ComRegisterFunction]
+        public static void RegisterFunction(Type t)
+        {
+            SwAddinAttribute SWattr = null;
+            var typ = typeof(SwAddin);
+
+            foreach (System.Attribute attr in typ.GetCustomAttributes(false).Cast<System.Attribute>()) {
+                if (attr is SwAddinAttribute) {
+                    SWattr = attr as SwAddinAttribute;
+                    break;
+                }
+            }
+
+            try {
+                var hklm = Microsoft.Win32.Registry.LocalMachine;
+                var hkcu = Microsoft.Win32.Registry.CurrentUser;
+
+                var keyname = "SOFTWARE\\SolidWorks\\Addins\\{" + t.GUID.ToString() + "}";
+                var addinkey = hklm.CreateSubKey(keyname);
+                addinkey.SetValue(null, 0);
+
+                addinkey.SetValue("Description", SWattr.Description);
+                addinkey.SetValue("Title", SWattr.Title);
+
+                keyname = "Software\\SolidWorks\\AddInsStartup\\{" + t.GUID.ToString() + "}";
+                addinkey = hkcu.CreateSubKey(keyname);
+                addinkey.SetValue(null, Convert.ToInt32(SWattr.LoadAtStartup), Microsoft.Win32.RegistryValueKind.DWord);
+            }
+            catch (System.NullReferenceException nl) {
+                //Console.WriteLine("There was a problem registering this dll: SWattr is null. \n\"" + nl.Message + "\"");
+                System.Windows.Forms.MessageBox.Show("There was a problem registering this dll: SWattr is null.\n\"" + nl.Message + "\"");
+            }
+            catch (System.Exception e) {
+                //Console.WriteLine(e.Message);
+                System.Windows.Forms.MessageBox.Show("There was a problem registering the function: \n\"" + e.Message + "\"");
+            }
+        }
+
+        [ComUnregisterFunction]
+        public static void UnregisterFunction(Type t)
+        {
+            try {
+                var hklm = Microsoft.Win32.Registry.LocalMachine;
+                var hkcu = Microsoft.Win32.Registry.CurrentUser;
+
+                var keyname = "SOFTWARE\\SolidWorks\\Addins\\{" + t.GUID.ToString() + "}";
+                hklm.DeleteSubKey(keyname);
+
+                keyname = "Software\\SolidWorks\\AddInsStartup\\{" + t.GUID.ToString() + "}";
+                hkcu.DeleteSubKey(keyname);
+            }
+            catch (System.NullReferenceException nl) {
+                //Console.WriteLine("There was a problem unregistering this dll: " + nl.Message);
+                System.Windows.Forms.MessageBox.Show("There was a problem unregistering this dll: \n\"" + nl.Message + "\"");
+            }
+            catch (System.Exception e) {
+                //Console.WriteLine("There was a problem unregistering this dll: " + e.Message);
+                System.Windows.Forms.MessageBox.Show("There was a problem unregistering this dll: \n\"" + e.Message + "\"");
+            }
+        }
 
 
-		// Public Properties
-		public ISldWorks SwApp
-		{
-			get { return iSwApp; }
-		}
-		public ICommandManager CmdMgr
-		{
-			get { return iCmdMgr; }
-		}
+        public bool ConnectToSW(object ThisSW, int cookie)
+        {
+            this.iSwApp = (ISldWorks)ThisSW;
+            this.iSwApp.SetAddinCallbackInfo(0, this, cookie);
 
-		public Hashtable OpenDocs
-		{
-			get { return openDocs; }
-		}
+            this.iCmdMgr = this.iSwApp.GetCommandManager(cookie);
+            this.AddCommandMgr();
 
-		#endregion
+            return true;
+        }
 
-		#region SolidWorks Registration
-		[ComRegisterFunctionAttribute]
-		public static void RegisterFunction(Type t)
-		{
-			#region Get Custom Attribute: SwAddinAttribute
-			SwAddinAttribute SWattr = null;
-			Type type = typeof(SwAddin);
+        public bool DisconnectFromSW()
+        {
+            this.RemoveCommandMgr();
 
-			foreach (System.Attribute attr in type.GetCustomAttributes(false))
-			{
-				if (attr is SwAddinAttribute)
-				{
-					SWattr = attr as SwAddinAttribute;
-					break;
-				}
-			}
+            Marshal.ReleaseComObject(this.iCmdMgr);
+            this.iBmp.Dispose();
+            Marshal.ReleaseComObject(this.iSwApp);
 
-			#endregion
+            //The addin _must_ call GC.Collect() here in order to retrieve all managed code pointers 
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
 
-			try
-			{
-				Microsoft.Win32.RegistryKey hklm = Microsoft.Win32.Registry.LocalMachine;
-				Microsoft.Win32.RegistryKey hkcu = Microsoft.Win32.Registry.CurrentUser;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
 
-				string keyname = "SOFTWARE\\SolidWorks\\Addins\\{" + t.GUID.ToString() + "}";
-				Microsoft.Win32.RegistryKey addinkey = hklm.CreateSubKey(keyname);
-				addinkey.SetValue(null, 0);
+            return true;
+        }
 
-				addinkey.SetValue("Description", SWattr.Description);
-				addinkey.SetValue("Title", SWattr.Title);
+        public void AddCommandMgr()
+        {
+            var thisAssembly = Assembly.GetAssembly(this.GetType());
 
-				keyname = "Software\\SolidWorks\\AddInsStartup\\{" + t.GUID.ToString() + "}";
-				addinkey = hkcu.CreateSubKey(keyname);
-				addinkey.SetValue(null, Convert.ToInt32(SWattr.LoadAtStartup), Microsoft.Win32.RegistryValueKind.DWord);
-			}
-			catch (System.NullReferenceException nl)
-			{
-				Console.WriteLine("There was a problem registering this dll: SWattr is null. \n\"" + nl.Message + "\"");
-				System.Windows.Forms.MessageBox.Show("There was a problem registering this dll: SWattr is null.\n\"" + nl.Message + "\"");
-			}
+            // 命令项目id
+            var itemIDs = new HashSet<int> { cmdItemID1 };
 
-			catch (System.Exception e)
-			{
-				Console.WriteLine(e.Message);
-				System.Windows.Forms.MessageBox.Show("There was a problem registering the function: \n\"" + e.Message + "\"");
-			}
-		}
+            //ICommandGroup cmdGroup;
+            var cmdGroup = CommandManagerUtils.createCommandGroup2(
+                    userID: cmdGroupID,
+                    title: "CuiShengLi",
+                    toolTip: "CuiShengLi tool tip",
+                    hint: "hint",
+                    ignorePreviousVersion: CommandManagerUtils.ignorePreviousVersion(cmdGroupID, itemIDs, this.iCmdMgr),
+                    cmdMgr: this.iCmdMgr
+                );
 
-		[ComUnregisterFunctionAttribute]
-		public static void UnregisterFunction(Type t)
-		{
-			try
-			{
-				Microsoft.Win32.RegistryKey hklm = Microsoft.Win32.Registry.LocalMachine;
-				Microsoft.Win32.RegistryKey hkcu = Microsoft.Win32.Registry.CurrentUser;
+            cmdGroup.LargeMainIcon = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconLarge.bmp", thisAssembly);
+            cmdGroup.SmallMainIcon = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconSmall.bmp", thisAssembly);
 
-				string keyname = "SOFTWARE\\SolidWorks\\Addins\\{" + t.GUID.ToString() + "}";
-				hklm.DeleteSubKey(keyname);
+            cmdGroup.LargeIconList = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.ToolbarLarge.bmp", thisAssembly);
+            cmdGroup.SmallIconList = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.ToolbarSmall.bmp", thisAssembly);
 
-				keyname = "Software\\SolidWorks\\AddInsStartup\\{" + t.GUID.ToString() + "}";
-				hkcu.DeleteSubKey(keyname);
-			}
-			catch (System.NullReferenceException nl)
-			{
-				Console.WriteLine("There was a problem unregistering this dll: " + nl.Message);
-				System.Windows.Forms.MessageBox.Show("There was a problem unregistering this dll: \n\"" + nl.Message + "\"");
-			}
-			catch (System.Exception e)
-			{
-				Console.WriteLine("There was a problem unregistering this dll: " + e.Message);
-				System.Windows.Forms.MessageBox.Show("There was a problem unregistering this dll: \n\"" + e.Message + "\"");
-			}
-		}
+            //命令0
+            CommandGroupUtils.addCommandItem2(
+                "CreateCube", "Create a cube", "Create cube", 0,
+                nameof(CreateCube), nameof(this.EnalbeCreateCube), cmdItemID1, swCommandItemType_e.swMenuItem, cmdGroup);
 
-		#endregion
+            cmdGroup.HasToolbar = false;
+            cmdGroup.HasMenu = true;
+            cmdGroup.Activate();
 
-		#region ISwAddin Implementation
-		public SwAddin()
-		{
-		}
+        }
 
-		public bool ConnectToSW(object ThisSW, int cookie)
-		{
-			iSwApp = (ISldWorks)ThisSW;
-			addinID = cookie;
+        public void RemoveCommandMgr()
+        {
+            this.iCmdMgr.RemoveCommandGroup(cmdGroupID);
+        }
 
-			//Setup callbacks
-			iSwApp.SetAddinCallbackInfo(0, this, addinID);
+        public void CreateCube()
+        {
+            //iSwApp.SendMsgToUser("这是占位的命令");
+            //SldWorksUtils.testPipeBom(iSwApp);
+            //var clss = new Library1.RecursiveTraverseAssembly(iSwApp);
+            //clss.Main();
+            //SWRoutingLibUtils.ExportPipeData(iSwApp);
+            //SldWorksUtils.readSWPipeLength(iSwApp);
 
-			//#region Setup the Command Manager
-			iCmdMgr = iSwApp.GetCommandManager(cookie);
-			AddCommandMgr();
-			//#endregion
+            //trainingcylinder.main(iSwApp);
+            //training2.cmdConnect(iSwApp);
+            //training2.cmdNewModel_Part(iSwApp);
 
-			//#region Setup the Event Handlers
-			SwEventPtr = (SolidWorks.Interop.sldworks.SldWorks)iSwApp;
-			openDocs = new Hashtable();
-			AttachEventHandlers();
-			//#endregion
-
-			//#region Setup Sample Property Manager
-			AddPMP();
-			//#endregion
-
-			return true;
-		}
-
-		public bool DisconnectFromSW()
-		{
-			RemoveCommandMgr();
-			RemovePMP();
-			DetachEventHandlers();
-
-			System.Runtime.InteropServices.Marshal.ReleaseComObject(iCmdMgr);
-			iCmdMgr = null;
-			System.Runtime.InteropServices.Marshal.ReleaseComObject(iSwApp);
-			iSwApp = null;
-			//The addin _must_ call GC.Collect() here in order to retrieve all managed code pointers 
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-
-			return true;
-		}
-		#endregion
-
-		#region UI Methods
-		public void AddCommandMgr()
-		{
-			ICommandGroup cmdGroup;
-			if (iBmp == null)
-				iBmp = new BitmapHandler();
-			//Assembly thisAssembly;
-			//int cmdIndex0, cmdIndex1;
-			var Title = "C# Addin";
-			var ToolTip = "C# Addin";
-
-			int[] docTypes = new int[]{(int)swDocumentTypes_e.swDocASSEMBLY,
-                                       (int)swDocumentTypes_e.swDocDRAWING,
-                                       (int)swDocumentTypes_e.swDocPART};
-
-			var thisAssembly = Assembly.GetAssembly(this.GetType());
-
-			int[] knownIDs = new int[2] { mainItemID1, mainItemID2 };
-
-			//int cmdGroupErr = 0;
-
-			//object registryIDs;
-			////get the ID information stored in the registry
-			//bool getDataResult = iCmdMgr.GetGroupDataFromRegistry(mainCmdGroupID, out registryIDs);
-
-			var registryIDs =
-				CommandManagerUtils.getGroupDataFromRegistry(mainCmdGroupID,iCmdMgr);
-
-			bool ignorePrevious = false;
-            if (registryIDs != null)
-			{
-				if (!CompareIDs(registryIDs, knownIDs)) //if the IDs don't match, reset the commandGroup
-				{
-					ignorePrevious = true;
-				}
-			}
-
-			//cmdGroup = 
-			//	iCmdMgr.CreateCommandGroup2(mainCmdGroupID, Title, ToolTip, "", -1, ignorePrevious, ref cmdGroupErr);
-			
-			cmdGroup = 
-				CommandManagerUtils.createCommandGroup2(
-				mainCmdGroupID, Title, ToolTip, "", -1, 
-				ignorePrevious, iCmdMgr
-				);
-
-			cmdGroup.LargeIconList = iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.ToolbarLarge.bmp", thisAssembly);
-			cmdGroup.SmallIconList = iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.ToolbarSmall.bmp", thisAssembly);
-			cmdGroup.LargeMainIcon = iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconLarge.bmp", thisAssembly);
-			cmdGroup.SmallMainIcon = iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconSmall.bmp", thisAssembly);
-
-			int menuToolbarOption = (int)(swCommandItemType_e.swMenuItem | swCommandItemType_e.swToolbarItem);
-
-			//命令0
-			var cmdIndex0 = cmdGroup.AddCommandItem2(
-				"CreateCube", -1, "Create a cube", "Create cube", 0, 
-				"CreateCube", "", mainItemID1, menuToolbarOption);
-
-			//命令1
-			var cmdIndex1 = cmdGroup.AddCommandItem2(
-				"Show PMP", -1, "Display sample property manager", "Show PMP", 2, 
-				"ShowPMP", "EnablePMP", mainItemID2, menuToolbarOption);
-
-			cmdGroup.HasToolbar = true;
-			cmdGroup.HasMenu = true;
-			cmdGroup.Activate();
-
-			FlyoutGroup flyGroup = iCmdMgr.CreateFlyoutGroup(
-				flyoutGroupID, "Dynamic Flyout", "Flyout Tooltip", "Flyout Hint",
-				cmdGroup.SmallMainIcon, cmdGroup.LargeMainIcon, cmdGroup.SmallIconList, 
-				cmdGroup.LargeIconList, "FlyoutCallback", "FlyoutEnable");
-
-			flyGroup.AddCommandItem(
-				"FlyoutCommand 1", "test", 0, 
-				"FlyoutCommandItem1", "FlyoutEnableCommandItem1");
-
-			flyGroup.FlyoutType = (int)swCommandFlyoutStyle_e.swCommandFlyoutStyle_Simple;
-
-			foreach (int type in docTypes)
-			{
-				CommandTab cmdTab;
-
-				cmdTab = iCmdMgr.GetCommandTab(type, Title);
-				// !getDataResult | 
-				if (cmdTab != null && ignorePrevious) //if tab exists, but we have ignored the registry info (or changed command group ID), re-create the tab.  Otherwise the ids won't matchup and the tab will be blank
-				{
-					bool res = iCmdMgr.RemoveCommandTab(cmdTab);
-					cmdTab = null;
-				}
-
-				//if cmdTab is null, must be first load (possibly after reset), add the commands to the tabs
-				if (cmdTab == null)
-				{
-					CommandManagerUtils.createCommandTab(
-						type, Title, cmdIndex0, cmdIndex1,
-						cmdGroup,flyGroup,iCmdMgr
-                        );
-				}
-			}
-		}
-
-		public void RemoveCommandMgr()
-		{
-			iBmp.Dispose();
-
-			iCmdMgr.RemoveCommandGroup(mainCmdGroupID);
-			iCmdMgr.RemoveFlyoutGroup(flyoutGroupID);
-		}
-
-		public bool CompareIDs(int[] storedIDs, int[] addinIDs)
-		{
-			List<int> storedList = new List<int>(storedIDs);
-			List<int> addinList = new List<int>(addinIDs);
-
-			addinList.Sort();
-			storedList.Sort();
-
-			if (addinList.Count != storedList.Count)
-			{
-				return false;
-			}
-			else
-			{
-
-				for (int i = 0; i < addinList.Count; i++)
-				{
-					if (addinList[i] != storedList[i])
-					{
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-
-		public Boolean AddPMP()
-		{
-			ppage = new UserPMPage(this);
-			return true;
-		}
-
-		public Boolean RemovePMP()
-		{
-			ppage = null;
-			return true;
-		}
-
-		#endregion
-
-		#region UI Callbacks 实际的执行代码
-
-		public void CreateCube()
-		{
-			//iSwApp.SendMsgToUser("这是占位的命令");
-			//SldWorksUtils.testPipeBom(iSwApp);
-			//var clss = new Library1.RecursiveTraverseAssembly(iSwApp);
-			//clss.Main();
-			//SWRoutingLibUtils.ExportPipeData(iSwApp);
-			//SldWorksUtils.readSWPipeLength(iSwApp);
-
-			//trainingcylinder.main(iSwApp);
-			//training2.cmdConnect(iSwApp);
-			//training2.cmdNewModel_Part(iSwApp);
-
-			//training4.testPartMat(iSwApp);
+            //training4.testPartMat(iSwApp);
             //training4.rectangularExtrude(iSwApp);
             //training4.circularExtrude(iSwApp);
-			//training4.testDrawCirc(iSwApp);
-			//training4.testCircleContourRevolve(iSwApp);
-			training5.testSelectFace(iSwApp);
+            //training4.testDrawCirc(iSwApp);
+            //training4.testCircleContourRevolve(iSwApp);
+            training5.testSelectFace(this.iSwApp);
 
             //SldWorksUtils.testCutLists(iSwApp);
             //SldWorksUtils.detectCutLists(iSwApp);
@@ -370,213 +198,7 @@ namespace SwCSharpAddin1
 
         }
 
-
-        public void ShowPMP()
-		{
-			if (ppage != null)
-				ppage.Show();
-		}
-
-		public int EnablePMP()
-		{
-			if (iSwApp.ActiveDoc != null)
-				return 1;
-			else
-				return 0;
-		}
-
-		public void FlyoutCallback()
-		{
-			FlyoutGroup flyGroup = iCmdMgr.GetFlyoutGroup(flyoutGroupID);
-			flyGroup.RemoveAllCommandItems();
-			flyGroup.AddCommandItem(System.DateTime.Now.ToLongTimeString(), "test", 0, "FlyoutCommandItem1", "FlyoutEnableCommandItem1");
-
-		}
-		public int FlyoutEnable()
-		{
-			return 1;
-		}
-
-		public void FlyoutCommandItem1()
-		{
-			iSwApp.SendMsgToUser("Flyout command 1");
-		}
-
-		public int FlyoutEnableCommandItem1()
-		{
-			return 1;
-		}
-		#endregion
-
-		#region Event Methods
-		public bool AttachEventHandlers()
-		{
-			AttachSwEvents();
-			//Listen for events on all currently open docs
-			AttachEventsToAllDocuments();
-			return true;
-		}
-
-		private bool AttachSwEvents()
-		{
-			try
-			{
-				SwEventPtr.ActiveDocChangeNotify += new DSldWorksEvents_ActiveDocChangeNotifyEventHandler(OnDocChange);
-				SwEventPtr.DocumentLoadNotify2 += new DSldWorksEvents_DocumentLoadNotify2EventHandler(OnDocLoad);
-				SwEventPtr.FileNewNotify2 += new DSldWorksEvents_FileNewNotify2EventHandler(OnFileNew);
-				SwEventPtr.ActiveModelDocChangeNotify += new DSldWorksEvents_ActiveModelDocChangeNotifyEventHandler(OnModelChange);
-				SwEventPtr.FileOpenPostNotify += new DSldWorksEvents_FileOpenPostNotifyEventHandler(FileOpenPostNotify);
-				return true;
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.Message);
-				return false;
-			}
-		}
-
-
-
-		private bool DetachSwEvents()
-		{
-			try
-			{
-				SwEventPtr.ActiveDocChangeNotify -= new DSldWorksEvents_ActiveDocChangeNotifyEventHandler(OnDocChange);
-				SwEventPtr.DocumentLoadNotify2 -= new DSldWorksEvents_DocumentLoadNotify2EventHandler(OnDocLoad);
-				SwEventPtr.FileNewNotify2 -= new DSldWorksEvents_FileNewNotify2EventHandler(OnFileNew);
-				SwEventPtr.ActiveModelDocChangeNotify -= new DSldWorksEvents_ActiveModelDocChangeNotifyEventHandler(OnModelChange);
-				SwEventPtr.FileOpenPostNotify -= new DSldWorksEvents_FileOpenPostNotifyEventHandler(FileOpenPostNotify);
-				return true;
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.Message);
-				return false;
-			}
-
-		}
-
-		public void AttachEventsToAllDocuments()
-		{
-			ModelDoc2 modDoc = (ModelDoc2)iSwApp.GetFirstDocument();
-			while (modDoc != null)
-			{
-				if (!openDocs.Contains(modDoc))
-				{
-					AttachModelDocEventHandler(modDoc);
-				}
-				else if (openDocs.Contains(modDoc))
-				{
-					bool connected = false;
-					DocumentEventHandler docHandler = (DocumentEventHandler)openDocs[modDoc];
-					if (docHandler != null)
-					{
-						connected = docHandler.ConnectModelViews();
-					}
-				}
-
-				modDoc = (ModelDoc2)modDoc.GetNext();
-			}
-		}
-
-		public bool AttachModelDocEventHandler(ModelDoc2 modDoc)
-		{
-			if (modDoc == null)
-				return false;
-
-			DocumentEventHandler docHandler = null;
-
-			if (!openDocs.Contains(modDoc))
-			{
-				switch (modDoc.GetType())
-				{
-					case (int)swDocumentTypes_e.swDocPART:
-						{
-							docHandler = new PartEventHandler(modDoc, this);
-							break;
-						}
-					case (int)swDocumentTypes_e.swDocASSEMBLY:
-						{
-							docHandler = new AssemblyEventHandler(modDoc, this);
-							break;
-						}
-					case (int)swDocumentTypes_e.swDocDRAWING:
-						{
-							docHandler = new DrawingEventHandler(modDoc, this);
-							break;
-						}
-					default:
-						{
-							return false; //Unsupported document type
-						}
-				}
-				docHandler.AttachEventHandlers();
-				openDocs.Add(modDoc, docHandler);
-			}
-			return true;
-		}
-
-		public bool DetachModelEventHandler(ModelDoc2 modDoc)
-		{
-			DocumentEventHandler docHandler;
-			docHandler = (DocumentEventHandler)openDocs[modDoc];
-			openDocs.Remove(modDoc);
-			modDoc = null;
-			docHandler = null;
-			return true;
-		}
-
-		public bool DetachEventHandlers()
-		{
-			DetachSwEvents();
-
-			//Close events on all currently open docs
-			DocumentEventHandler docHandler;
-			int numKeys = openDocs.Count;
-			object[] keys = new Object[numKeys];
-
-			//Remove all document event handlers
-			openDocs.Keys.CopyTo(keys, 0);
-			foreach (ModelDoc2 key in keys)
-			{
-				docHandler = (DocumentEventHandler)openDocs[key];
-				docHandler.DetachEventHandlers(); //This also removes the pair from the hash
-				docHandler = null;
-			}
-			return true;
-		}
-		#endregion
-
-		#region Event Handlers
-		//Events
-		public int OnDocChange()
-		{
-			return 0;
-		}
-
-		public int OnDocLoad(string docTitle, string docPath)
-		{
-			return 0;
-		}
-
-		int FileOpenPostNotify(string FileName)
-		{
-			AttachEventsToAllDocuments();
-			return 0;
-		}
-
-		public int OnFileNew(object newDoc, int docType, string templateName)
-		{
-			AttachEventsToAllDocuments();
-			return 0;
-		}
-
-		public int OnModelChange()
-		{
-			return 0;
-		}
-
-		#endregion
-	}
+        public bool EnalbeCreateCube() { return true; }
+    }
 
 }
