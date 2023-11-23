@@ -38,11 +38,7 @@ let getSubCutLists(swModel: ModelDoc2) =
     swModel
     |> getCutList
     |> Seq.collect(fun feat ->
-        let sq = FeatureUtils.getSubFeatureSeq feat
-        //if Seq.isEmpty sq then
-        //    Seq.singleton feat
-        //else sq
-        sq
+        FeatureUtils.getSubFeatureSeq feat
     )
 
 let getCutListCustomPropertyManager (swModel:ModelDoc2) =

@@ -16,7 +16,7 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 open FSharp.SolidWorks
-open FSharp.Literals
+open FSharp.Idioms
 
 let testGetFeatures (swApp: ISldWorks) =
     let logfile = "d:/partmat.txt"

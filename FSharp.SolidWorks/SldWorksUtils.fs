@@ -17,7 +17,6 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 open FSharp.SolidWorks
-//open FSharp.Literals
 
 let activeDoc (swApp: ISldWorks) =
     swApp.ActiveDoc
@@ -30,7 +29,6 @@ let openDoc6
     let mutable longstatus = 0
     let mutable longwarnings = 0
     swApp.OpenDoc6(filename, int tp, int opts, config, &longstatus, &longwarnings)
-
 
 let documentVisible (visible:bool) (documentType:swDocumentTypes_e) (swApp: ISldWorks) = 
     swApp.DocumentVisible(visible, int documentType)
@@ -52,7 +50,6 @@ let loadFile4 fileName argString importData (swApp: ISldWorks) =
     try
         swApp.LoadFile4(fileName, argString, importData, &errors)
     with _ -> failwith $"{enum<swFileLoadError_e>errors}"
-
 
 let getMathUtility (swApp: ISldWorks) = 
     swApp.GetMathUtility()
@@ -118,5 +115,3 @@ let sendMsgToUser2
 let defineAttribute (name:string) (swApp:ISldWorks) =
     swApp.DefineAttribute name
     |> unbox<AttributeDef>
-
-//iCmdMgr = iSwApp.GetCommandManager(cookie);

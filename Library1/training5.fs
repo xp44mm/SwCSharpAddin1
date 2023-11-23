@@ -16,7 +16,7 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-open FSharp.Literals.Literal
+open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 open FSharp.Idioms
 

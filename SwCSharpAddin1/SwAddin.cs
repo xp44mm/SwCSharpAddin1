@@ -19,20 +19,13 @@ namespace SwCSharpAddin1
     [ComVisible(true)]
     [Guid("43f85157-13ec-476b-a57e-02fb5973e8bb")]
     [SwAddin(
-            Description = "SwCSharpAddin1 description",
-            Title = "SwCSharpAddin1",
+            Description = "崔胜利的SW插件",
+            Title = "CuiShengLi",
             LoadAtStartup = true
             )]
     public class SwAddin : ISwAddin
     {
-        public SwAddin()
-        {
-            this.iBmp = new BitmapHandler();
-        }
-
         public const int cmdGroupID = 5;
-        public const int cmdItemID1 = 0;
-        public const int cmdItemID2 = 1;
 
         ISldWorks iSwApp;
         public ISldWorks SwApp { get { return this.iSwApp; } }
@@ -103,7 +96,6 @@ namespace SwCSharpAddin1
             }
         }
 
-
         public bool ConnectToSW(object ThisSW, int cookie)
         {
             this.iSwApp = (ISldWorks)ThisSW;
@@ -138,9 +130,8 @@ namespace SwCSharpAddin1
             var thisAssembly = Assembly.GetAssembly(this.GetType());
 
             // 命令项目id
-            var itemIDs = new HashSet<int> { cmdItemID1 };
+            var itemIDs = new HashSet<int> { 0 };
 
-            //ICommandGroup cmdGroup;
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
                     title: "CuiShengLi",
@@ -150,6 +141,9 @@ namespace SwCSharpAddin1
                     cmdMgr: this.iCmdMgr
                 );
 
+            //if (this.iBmp == null)
+            this.iBmp = new BitmapHandler();
+
             cmdGroup.LargeMainIcon = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconLarge.bmp", thisAssembly);
             cmdGroup.SmallMainIcon = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconSmall.bmp", thisAssembly);
 
@@ -158,11 +152,19 @@ namespace SwCSharpAddin1
 
             //命令0
             CommandGroupUtils.addCommandItem2(
-                "CreateCube", "Create a cube", "Create cube", 0,
-                nameof(CreateCube), nameof(this.EnalbeCreateCube), cmdItemID1, swCommandItemType_e.swMenuItem, cmdGroup);
+                name            : "CreateCube",
+                hintString      : "Create a cube",
+                toolTip         : "Create cube",
+                imageListIndex  : itemIDs.ElementAt(0),
+                callbackFunction: nameof(CreateCube),
+                enableMethod    : nameof(this.EnalbeCreateCube),
+                userID          : itemIDs.ElementAt(0),
+                menuTBOption    : swCommandItemType_e.swMenuItem,
+                cmdGroup        : cmdGroup
+                );
 
-            cmdGroup.HasToolbar = false;
             cmdGroup.HasMenu = true;
+            cmdGroup.HasToolbar = false;
             cmdGroup.Activate();
 
         }

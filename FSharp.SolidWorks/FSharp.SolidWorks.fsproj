@@ -62,18 +62,17 @@
 		<Compile Include="AssemblyDocUtils.fs" />
 		<Compile Include="PartDocUtils.fs" />
 		<Compile Include="ModelDoc2Utils.fs" />
-		<Compile Include="CutList.fs" />
 		<Compile Include="SldWorksUtils.fs" />
+		<Compile Include="CutList.fs" />
 		<Compile Include="CommandGroupUtils.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
-		<None Include="Script.fsx" />
 	</ItemGroup>
 
 
 
 
 	<ItemGroup>
-	  <PackageReference Update="FSharp.Core" Version="7.0.400" />
+	  <PackageReference Update="FSharp.Core" Version="8.0.100" />
 	</ItemGroup>
 
 
