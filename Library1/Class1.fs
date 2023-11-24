@@ -10,7 +10,7 @@ type Class1(iSwApp: ISldWorks) =
     member this.CreateCube() =
         //make sure we have a part open
         let partTemplate = 
-            iSwApp.GetUserPreferenceStringValue(int  swUserPreferenceStringValue_e.swDefaultTemplatePart)
+            iSwApp.GetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swDefaultTemplatePart)
         if partTemplate <> null && partTemplate <> "" then
             let modDoc = 
                 iSwApp.NewDocument(partTemplate, int swDwgPaperSizes_e.swDwgPaperA2size, 0.0, 0.0)

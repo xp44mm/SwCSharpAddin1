@@ -28,14 +28,27 @@ let save3 (opts:swSaveAsOptions_e) (swModel: IModelDoc2) =
         failwith $"{enum<swFileSaveError_e>swErrors},{enum<swFileSaveWarning_e>swWarnings}"
 
 //https://help.solidworks.com/2023/english/api/sldworksapi/SolidWorks.Interop.sldworks~SolidWorks.Interop.sldworks.IModelDocExtension~SelectByID2.html
-let selectByID2 name selecttype (x,y,z) append mark (selectOption:swSelectOption_e)(swModel: IModelDoc2) =
-    let selecttype = EnumUtils.selecttype selecttype
+let selectByID2 name selecttype (x,y,z) append mark (selectOption:swSelectOption_e) (swModel: IModelDoc2) =
     let callout:Callout = null
-    //let selectOption = int swSelectOption_e.swSelectOptionDefault
     swModel.Extension.SelectByID2(name, selecttype, x, y, z, append, mark, callout,int selectOption)
     |> ignore
 
-let deSelectByID 
+let selectByID
+    (cfg:{|
+    name        :string;
+    stype       :string;
+    location    :float*float*float;
+    append      :bool;
+    mark        :int;
+    selectOption:swSelectOption_e
+    |})
+    (swModel: IModelDoc2) =
+    let callout:Callout = null
+    let x,y,z = cfg.location
+    swModel.Extension.SelectByID2(cfg.name, cfg.stype, x, y, z, cfg.append, cfg.mark, callout,int cfg.selectOption)
+    |> ignore
+
+let deSelectByID
     (selID: string)
     (selParams: string)
     (x: float,y: float,z: float)

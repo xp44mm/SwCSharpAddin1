@@ -21,9 +21,11 @@ let createLine (x1,y1,z1)(x2,y2,z2) (mgr:ISketchManager) =
 
 let createCenterLine  (x1,y1,z1)(x2,y2,z2) (mgr:ISketchManager) =
     mgr.CreateCenterLine (x1, y1, z1, x2, y2, z2)
+    |> ignore
 
 let createCircleByRadius (x1,y1,z1) (radius:float) (mgr:ISketchManager) =
     mgr.CreateCircleByRadius(x1,y1,z1,radius)
+    |> ignore
 
 let sketchOffset2
     (offset)

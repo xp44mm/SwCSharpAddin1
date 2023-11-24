@@ -130,7 +130,7 @@ namespace SwCSharpAddin1
             var thisAssembly = Assembly.GetAssembly(this.GetType());
 
             // 命令项目id
-            var itemIDs = new HashSet<int> { 0 };
+            var itemIDs = new HashSet<int> { 0,1 };
 
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
@@ -157,10 +157,23 @@ namespace SwCSharpAddin1
                 toolTip         : "Create cube",
                 imageListIndex  : itemIDs.ElementAt(0),
                 callbackFunction: nameof(CreateCube),
-                enableMethod    : nameof(this.EnalbeCreateCube),
+                enableMethod    : nameof(this.Always),
                 userID          : itemIDs.ElementAt(0),
                 menuTBOption    : swCommandItemType_e.swMenuItem,
                 cmdGroup        : cmdGroup
+                );
+
+            //命令1
+            CommandGroupUtils.addCommandItem2(
+                name: "training1",
+                hintString: "training1",
+                toolTip: "第1章示例",
+                imageListIndex: itemIDs.ElementAt(1),
+                callbackFunction: nameof(Training1),
+                enableMethod: nameof(this.Always),
+                userID: itemIDs.ElementAt(1),
+                menuTBOption: swCommandItemType_e.swMenuItem,
+                cmdGroup: cmdGroup
                 );
 
             cmdGroup.HasMenu = true;
@@ -200,7 +213,14 @@ namespace SwCSharpAddin1
 
         }
 
-        public bool EnalbeCreateCube() { return true; }
+
+        public void Training1()
+        {
+            training1.exec(iSwApp);
+        }
+
+
+        public bool Always() { return true; }
     }
 
 }

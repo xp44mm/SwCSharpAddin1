@@ -25,6 +25,14 @@ type DirectionExtrusion =
         translateSurface : bool
     }
 
+type DirectionRevolve = {
+    dirType       :swEndConditions_e
+    dirAngle      :float
+    offsetReverse :bool
+    offsetDistance:float
+    thinThickness :float
+}
+
 // https://help.solidworks.com/2023/english/api/sldworksapi/SolidWorks.Interop.sldworks~SolidWorks.Interop.sldworks.IFeatureManager~FeatureExtrusion3.html
 let featureExtrusion3
     (sd: bool)
@@ -77,14 +85,6 @@ let featureExtrusion3
         startOffset,
         flipStartOffset)
 
-type DirectionRevolve = {
-    dirType       :swEndConditions_e
-    dirAngle      :float
-    offsetReverse :bool
-    offsetDistance:float
-    thinThickness :float
-}
-
 //type
 let featureRevolve2
     (singleDir:bool)
@@ -125,18 +125,63 @@ let featureRevolve2
         isCut     ,
         reverseDir,
         bothDirectionUpToSameEntity,
-        int dir1Type,
-        int dir2Type,
-        dir1Angle,
-        dir2Angle,
-        offsetReverse1,
-        offsetReverse2,
-        offsetDistance1,
-        offsetDistance2,
+        int dir1Type, int dir2Type,
+        dir1Angle,  dir2Angle,
+        offsetReverse1,        offsetReverse2,
+        offsetDistance1,       offsetDistance2,
         int thinType,
-        thinThickness1 ,
-        thinThickness2 ,
+        thinThickness1 ,        thinThickness2 ,
         merge,
         useFeatScope,
         useAutoSelect
         )
+
+let featureExtrusion (c:{|
+    sd: bool                      
+    flip: bool                    
+    dir: bool                     
+    direction1: DirectionExtrusion
+    direction2: DirectionExtrusion
+    merge: bool                   
+    useFeatScope: bool            
+    useAutoSelect: bool           
+    t0: swStartConditions_e       
+    startOffset: float            
+    flipStartOffset: bool
+    |})
+    (mgr: IFeatureManager)
+    =
+    let {
+        t=t1
+        d=d1
+        dchk=dchk1
+        ddir=ddir1
+        dang=dang1
+        offsetReverse=offsetReverse1
+        translateSurface=translateSurface1
+    } = c.direction1
+    let {
+        t=t2
+        d=d2
+        dchk=dchk2
+        ddir=ddir2
+        dang=dang2
+        offsetReverse=offsetReverse2
+        translateSurface=translateSurface2
+    } = c.direction2
+    mgr.FeatureExtrusion3(
+        c.sd, c.flip, c.dir,
+        int t1, int t2,
+        d1, d2,
+        dchk1, dchk2,
+        ddir1, ddir2,
+        dang1, dang2,
+        offsetReverse1, offsetReverse2,
+        translateSurface1, translateSurface2,
+        c.merge,
+        c.useFeatScope,
+        c.useAutoSelect,
+        int c.t0,
+        c.startOffset,
+        c.flipStartOffset)
+    |> ignore
