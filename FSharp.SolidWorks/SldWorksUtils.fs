@@ -38,6 +38,10 @@ let newDocument (template) (paperSize:swDwgPaperSizes_e) (w) (h) (swApp: ISldWor
     swApp.NewDocument(template, int paperSize, w, h)
     |> unbox<ModelDoc2>
 
+let newModelDoc (template) (swApp: ISldWorks) =
+    swApp
+    |> newDocument template swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
+
 let activateDoc3 name usePrefs (opts:swRebuildOnActivation_e) (swApp: ISldWorks) =
     let mutable errors = 0
     try

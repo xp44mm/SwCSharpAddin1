@@ -48,26 +48,6 @@ let exec (swApp: ISldWorks) =
     swModel.SketchManager
     |> SketchManagerUtils.createCircleByRadius (0.0, 0.0, 0.0) 0.04
 
-    //swModel.FeatureManager.FeatureExtrusion3(
-    //    true , 
-    //    false, 
-    //    false, 
-    //    0, 0, 
-    //    0.01, 0.01, 
-    //    false, false, 
-    //    false, false, 
-    //    1.74532925199433e-02, 1.74532925199433e-02, 
-    //    false, false, 
-    //    false, false, 
-    //    true ,
-    //    true ,
-    //    true ,
-    //    0    ,
-    //    0    ,
-    //    false
-    //    )
-    //|> ignore
-
     swModel.FeatureManager
     |> FeatureManagerUtils.featureExtrusion {|
         sd              = true 

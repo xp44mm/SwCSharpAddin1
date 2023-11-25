@@ -129,7 +129,7 @@ namespace SwCSharpAddin1
         {
             // ’ºØ√¸¡ÓœÓƒø
             var cmds = new CommandItemCollection();
-            //√¸¡Ó0
+            //√¸¡Ó
             cmds.add(
                 hintString: "Create a cube",
                 toolTip: "Create cube",
@@ -138,7 +138,7 @@ namespace SwCSharpAddin1
                 menuTBOption: swCommandItemType_e.swMenuItem
                 );
 
-            //√¸¡Ó1
+            //√¸¡Ó
             cmds.add(
                 hintString: "training1",
                 toolTip: "µ⁄1’¬ æ¿˝",
@@ -147,11 +147,38 @@ namespace SwCSharpAddin1
                 menuTBOption: swCommandItemType_e.swMenuItem
                 );
 
-            //√¸¡Ó2
+            //√¸¡Ó
             cmds.add(
                 hintString: "connect to sw",
                 toolTip: "2.3Ω⁄",
                 callbackFunction: nameof(this.Training2_3),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "new part",
+                toolTip: "≤Ω÷Ë9",
+                callbackFunction: nameof(this.Training2_NewModel_Part),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "new asm",
+                toolTip: "≤Ω÷Ë9",
+                callbackFunction: nameof(this.Training2_NewModel_ASM),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "new drw",
+                toolTip: "≤Ω÷Ë9",
+                callbackFunction: nameof(this.Training2_NewModel_DRW),
                 enableMethod: nameof(this.Always),
                 menuTBOption: swCommandItemType_e.swMenuItem
                 );
@@ -168,7 +195,6 @@ namespace SwCSharpAddin1
                     cmdMgr: this.iCmdMgr
                 );
 
-            //if (this.iBmp == null)
             var callingAssy = Assembly.GetAssembly(this.GetType());
             this.iBmp = new BitmapHandler();
 
@@ -216,16 +242,31 @@ namespace SwCSharpAddin1
 
         }
 
-
         public void Training1()
         {
-            training1.exec(iSwApp);
+            training1.exec(this.iSwApp);
         }
 
         public void Training2_3()
         {
-            training2.connectToSW(iSwApp);
+            training2.connectToSolidWorks(this.iSwApp);
         }
+
+        public void Training2_NewModel_Part()
+        {
+            training2.NewModel_Part(this.iSwApp);
+        }
+
+        public void Training2_NewModel_ASM()
+        {
+            training2.NewModel_ASM(this.iSwApp);
+        }
+
+        public void Training2_NewModel_DRW()
+        {
+            training2.NewModel_DRW(this.iSwApp);
+        }
+
 
         public bool Always() { return true; }
     }

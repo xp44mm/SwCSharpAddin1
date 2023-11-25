@@ -16,7 +16,7 @@ open SolidWorksTools
 open SolidWorksTools.File
 open FSharp.SolidWorks
 
-let connectToSW (swApp: ISldWorks) =
+let connectToSolidWorks (swApp: ISldWorks) =
     swApp.SendMsgToUser $"RevisionNumber:{swApp.RevisionNumber}"
 
     swApp.DisplayStatusBar true
@@ -25,16 +25,15 @@ let connectToSW (swApp: ISldWorks) =
     let lang = swApp.GetCurrentLanguage()
     swApp.SendMsgToUser $"SOLIDWORKS is currently using the {lang} language."
 
-
-let TRAININGDIR = @"D:\崔胜利\My SolidWorks\solidworks trainings\SOLIDWORKS Training Files\API Fundamentals\Lesson02 - Object Model Basics\Case Study"
-let TEMPLATEDIR = @"C:\ProgramData\SOLIDWORKS\SOLIDWORKS 2022\templates\"
-let FILEDIR = TRAININGDIR + @"Lesson02 - Object Model Basics\Case Study\"
-let partpath = @"C:\Users\cuisl\Documents\cstick.SLDPRT"
+let TRAININGDIR = @"D:\崔胜利\My SolidWorks\API Fundamentals"
+let TEMPLATEDIR = @"D:\崔胜利\My SolidWorks\Training Templates"
+let FILEDIR = @"D:\崔胜利\My SolidWorks\API Fundamentals\Lesson02 - Object Model Basics\Case Study"
 
 let sampleNote (text) (swModel: ModelDoc2) =
     let swNote =
         swModel.InsertNote(text)
         |> unbox<INote>
+
     let swAnnotation =
         swNote.GetAnnotation()
         |> unbox<IAnnotation>
@@ -42,10 +41,24 @@ let sampleNote (text) (swModel: ModelDoc2) =
     swAnnotation.SetPosition(0.01, 0.01, 0.0)
     |> ignore
 
-let cmdNewModel_Part (swApp: ISldWorks) =
-
+let NewModel_Part (swApp: ISldWorks) =
     let swModel =
-        let tmpl = Path.Combine(TEMPLATEDIR, "gb_part.prtdot")
+        let tmpl = Path.Combine(TEMPLATEDIR, "Part_MM.prtdot")
+        swApp
+        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
+
+    swModel.InsertFamilyTableNew()
+
+    swApp.SendMsgToUser "InsertFamilyTableNew"
+
+    let text = "Sample Note"
+    sampleNote text swModel
+    swApp.SendMsgToUser text
+    ()
+
+let NewModel_ASM (swApp: ISldWorks) =
+    let swModel =
+        let tmpl = Path.Combine(TEMPLATEDIR, "Assembly_MM.asmdot")
         swApp
         |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
 
@@ -57,56 +70,42 @@ let cmdNewModel_Part (swApp: ISldWorks) =
     sampleNote text swModel
     swApp.SendMsgToUser text
 
-let cmdNewModel_ASM (swApp: ISldWorks) =
+let NewModel_DRW (swApp: ISldWorks) =
     let swModel =
-        let tmpl = Path.Combine(TEMPLATEDIR, "gb_assembly.asmdot")
+        let tmpl = Path.Combine(TEMPLATEDIR, "B_Size_ANSI_MM.drwdot")
         swApp
         |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
 
-    swModel.InsertFamilyTableNew()
+    (swModel:?> DrawingDoc).EditSheet()
 
-    swApp.SendMsgToUser "InsertFamilyTableNew"
-
-    let text = "Sample Note"
-    sampleNote text swModel
-    swApp.SendMsgToUser text
-
-let cmdNewModel_DRW (swApp: ISldWorks) =
-    let swModel =
-        let tmpl = Path.Combine(TEMPLATEDIR, "gb_a1.drwdot")
+    let drawName = swModel.GetTitle()
+    let partDoc =
+        let filename = Path.Combine(FILEDIR ,"BlockwithDesignTable.SLDPRT")
         swApp
-        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
+        |> SldWorksUtils.openDoc6 filename swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
 
-    let drawname = swModel.GetTitle()
-    let partpath = @"C:\Users\cuisl\Documents\cstick.SLDPRT"
-
-    let _ =
-        swApp
-        |> SldWorksUtils.openDoc6 partpath swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+    let partName = partDoc.GetTitle()
 
     let swDrw =
         swApp
-        |> SldWorksUtils.activateDoc3 drawname false swRebuildOnActivation_e.swRebuildActiveDoc
+        |> SldWorksUtils.activateDoc3 drawName false swRebuildOnActivation_e.swRebuildActiveDoc
         :?> DrawingDoc
 
-    swDrw.EditSheet()
-
     let preparedrawingView() =
-        swDrw.CreateDrawViewFromModelView3(partpath,"*Isometric", 0.1, 0.1, 0.0)
+        swDrw.CreateDrawViewFromModelView3(partName,"*Isometric", 0.1, 0.1, 0.0)
 
     let swView = preparedrawingView()
-
     swView.FocusLocked <- true
 
     swModel
     |> ModelDoc2Utils.selectByID2(swView.GetName2()) "DRAWINGVIEW" (0.0,0.0,0.0) false 0 swSelectOption_e.swSelectOptionDefault
 
     swModel.InsertFamilyTableNew()
-    swApp.SendMsgToUser "InsertFamilyTableNew"
 
     let text = "Sample Note"
     sampleNote text swModel
-    swApp.SendMsgToUser text
+
+    ()
 
 let cmdPart_Click (swApp: ISldWorks) =
     let swModel =
@@ -127,8 +126,9 @@ let cmdPart_Click (swApp: ISldWorks) =
 
 let cmdAssy_Click (swApp: ISldWorks) =
     let _ =
+
         swApp
-        |>SldWorksUtils.openDoc6(partpath) swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+        |>SldWorksUtils.openDoc6 "" swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
 
     let swModel =
         let temp = Path.Combine(TEMPLATEDIR, "gb_assembly.asmdot")
@@ -141,7 +141,7 @@ let cmdAssy_Click (swApp: ISldWorks) =
     let _ =
         swAssy
         |> AssemblyDocUtils.addComponent5 
-            partpath 
+            "" 
             swAddComponentConfigOptions_e.swAddComponentConfigOptions_CurrentSelectedConfig
              "" false "" (0.0, 0.0, 0.0)
     ()
