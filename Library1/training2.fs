@@ -16,20 +16,20 @@ open SolidWorksTools
 open SolidWorksTools.File
 open FSharp.SolidWorks
 
+let connectToSW (swApp: ISldWorks) =
+    swApp.SendMsgToUser $"RevisionNumber:{swApp.RevisionNumber}"
+
+    swApp.DisplayStatusBar true
+    //swApp.SendMsgToUser $"DisplayStatusBar Ok!"
+
+    let lang = swApp.GetCurrentLanguage()
+    swApp.SendMsgToUser $"SOLIDWORKS is currently using the {lang} language."
+
+
 let TRAININGDIR = @"D:\崔胜利\My SolidWorks\solidworks trainings\SOLIDWORKS Training Files\API Fundamentals\Lesson02 - Object Model Basics\Case Study"
 let TEMPLATEDIR = @"C:\ProgramData\SOLIDWORKS\SOLIDWORKS 2022\templates\"
 let FILEDIR = TRAININGDIR + @"Lesson02 - Object Model Basics\Case Study\"
 let partpath = @"C:\Users\cuisl\Documents\cstick.SLDPRT"
-
-
-let cmdConnect (swApp: ISldWorks) =
-    swApp.SendMsgToUser $"RevisionNumber:{swApp.RevisionNumber}"
-
-    swApp.DisplayStatusBar true
-    swApp.SendMsgToUser $"DisplayStatusBar Ok!"
-
-    let lang = swApp.GetCurrentLanguage()
-    swApp.SendMsgToUser $"SOLIDWORKS is currently using the {lang} language."
 
 let sampleNote (text) (swModel: ModelDoc2) =
     let swNote =

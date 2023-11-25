@@ -127,10 +127,37 @@ namespace SwCSharpAddin1
 
         public void AddCommandMgr()
         {
-            var thisAssembly = Assembly.GetAssembly(this.GetType());
+            //收集命令项目
+            var cmds = new CommandItemCollection();
+            //命令0
+            cmds.add(
+                hintString: "Create a cube",
+                toolTip: "Create cube",
+                callbackFunction: nameof(CreateCube),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //命令1
+            cmds.add(
+                hintString: "training1",
+                toolTip: "第1章示例",
+                callbackFunction: nameof(this.Training1),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //命令2
+            cmds.add(
+                hintString: "connect to sw",
+                toolTip: "2.3节",
+                callbackFunction: nameof(this.Training2_3),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
 
             // 命令项目id
-            var itemIDs = new HashSet<int> { 0,1 };
+            var itemIDs = cmds.getUserIDs();
 
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
@@ -142,39 +169,15 @@ namespace SwCSharpAddin1
                 );
 
             //if (this.iBmp == null)
+            var callingAssy = Assembly.GetAssembly(this.GetType());
             this.iBmp = new BitmapHandler();
 
-            cmdGroup.LargeMainIcon = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconLarge.bmp", thisAssembly);
-            cmdGroup.SmallMainIcon = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconSmall.bmp", thisAssembly);
+            cmdGroup.LargeMainIcon = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconLarge.bmp", callingAssy);
+            cmdGroup.SmallMainIcon = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.MainIconSmall.bmp", callingAssy);
+            cmdGroup.LargeIconList = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.ToolbarLarge.bmp", callingAssy);
+            cmdGroup.SmallIconList = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.ToolbarSmall.bmp", callingAssy);
 
-            cmdGroup.LargeIconList = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.ToolbarLarge.bmp", thisAssembly);
-            cmdGroup.SmallIconList = this.iBmp.CreateFileFromResourceBitmap("SwCSharpAddin1.ToolbarSmall.bmp", thisAssembly);
-
-            //命令0
-            CommandGroupUtils.addCommandItem2(
-                name            : "CreateCube",
-                hintString      : "Create a cube",
-                toolTip         : "Create cube",
-                imageListIndex  : itemIDs.ElementAt(0),
-                callbackFunction: nameof(CreateCube),
-                enableMethod    : nameof(this.Always),
-                userID          : itemIDs.ElementAt(0),
-                menuTBOption    : swCommandItemType_e.swMenuItem,
-                cmdGroup        : cmdGroup
-                );
-
-            //命令1
-            CommandGroupUtils.addCommandItem2(
-                name: "training1",
-                hintString: "training1",
-                toolTip: "第1章示例",
-                imageListIndex: itemIDs.ElementAt(1),
-                callbackFunction: nameof(Training1),
-                enableMethod: nameof(this.Always),
-                userID: itemIDs.ElementAt(1),
-                menuTBOption: swCommandItemType_e.swMenuItem,
-                cmdGroup: cmdGroup
-                );
+            cmds.update(cmdGroup);
 
             cmdGroup.HasMenu = true;
             cmdGroup.HasToolbar = false;
@@ -219,6 +222,10 @@ namespace SwCSharpAddin1
             training1.exec(iSwApp);
         }
 
+        public void Training2_3()
+        {
+            training2.connectToSW(iSwApp);
+        }
 
         public bool Always() { return true; }
     }

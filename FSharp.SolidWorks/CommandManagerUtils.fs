@@ -15,23 +15,35 @@ open SolidWorksTools.File
 
 let ignorePreviousVersion (cmdGroupId:int) (cmdItemIDs:HashSet<int>) (iCmdMgr:ICommandManager) =
     match iCmdMgr.GetGroupDataFromRegistry(cmdGroupId) with
-    | true, userIDs ->
-        userIDs 
-        |> unbox<seq<int>>
-        |> cmdItemIDs.SetEquals
+    | true, userIDs ->        
+        cmdItemIDs.SetEquals(userIDs :?> seq<int>)
     | _ -> false
 
 ///命令组：菜单，工具栏共用
 let createCommandGroup2
-    (userID : int )
-    (title : string )
-    (toolTip : string )
-    (hint : string )
-    (ignorePreviousVersion : bool )
-    (cmdMgr : ICommandManager )
+    (userID                : int            )
+    (title                 : string         )
+    (toolTip               : string         )
+    (hint                  : string         )
+    (ignorePreviousVersion : bool           )
+    (cmdMgr                : ICommandManager)
     =
-    let position = -1 //Specify 0 to add the CommandGroup to the beginning of the CommandMananger, or specify -1 to add it to the end of the CommandManager.
     let mutable err = 1
     try
-        cmdMgr.CreateCommandGroup2(userID, title, toolTip, hint, position, ignorePreviousVersion, &err)
-    with _ -> failwith $"{enum<swCreateCommandGroupErrors>err}"
+        cmdMgr.CreateCommandGroup2(
+            UserID                = userID, 
+            Title                 = title, 
+            ToolTip               = toolTip, 
+            Hint                  = hint, 
+            Position              = -1, 
+            IgnorePreviousVersion = ignorePreviousVersion, 
+            Errors                = &err)
+    with _ -> 
+    failwith $"{enum<swCreateCommandGroupErrors> err}"
+
+
+
+
+
+
+
