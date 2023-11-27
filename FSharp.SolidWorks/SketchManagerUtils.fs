@@ -44,3 +44,6 @@ let sketchOffset2
         int makeConstruction,
         addDimensions)
     |> ignore
+
+let createCornerRectangle (x1,y1,z1) (x2,y2,z2) (mgr:ISketchManager) =
+    mgr.CreateCornerRectangle(x1, y1, z1, x2, y2, z2)

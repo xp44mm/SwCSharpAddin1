@@ -1,4 +1,4 @@
-﻿module training2_frmExistingDocs
+﻿module training2_existingDocs
 
 open System
 open System.Runtime.InteropServices
@@ -17,34 +17,33 @@ open SolidWorksTools.File
 
 open FSharp.SolidWorks
 
-let TRAININGDIR = @"C:\Users\cuisl\Documents\"
-let TEMPLATEDIR = @"C:\ProgramData\SOLIDWORKS\SOLIDWORKS 2022\templates\"
+let TRAININGDIR = @"D:\崔胜利\My SolidWorks\API Fundamentals"
+let TEMPLATEDIR = @"D:\崔胜利\My SolidWorks\Training Templates"
+let FILEDIR = @"D:\崔胜利\My SolidWorks\API Fundamentals\Lesson02 - Object Model Basics\Case Study"
 
-let partpath = Path.Combine(TRAININGDIR, "cstick.SLDPRT")
-
-let cmdConnect_Click (swApp: ISldWorks) =
-
-    //If chkOpen.Value = True Then
-    let _ =
+let connectToSolidWorks (swApp: ISldWorks) =
+    // check openDoc6
+    let partDoc =
+        let prt = Path.Combine(FILEDIR, "Sample.SLDPRT")
         swApp
-        |> SldWorksUtils.openDoc6 partpath
-            swDocumentTypes_e.swDocPART 
-            swOpenDocOptions_e.swOpenDocOptions_Silent
-            ""
+        |> SldWorksUtils.openDoc6 prt swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
 
-    //If chkLoad.Value = True Then
-    //let mutable errors = 0
+    // check loadFile4
     let ImportedModelDoc =
-        let path = Path.Combine(TRAININGDIR, "cstick.igs")
+        let path = Path.Combine(FILEDIR, "Sample.igs")
         swApp
         |> SldWorksUtils.loadFile4 path "" null
 
-    //If chkNewWindow.Value = True Then
+    // check CreateNewWindow
     swApp.CreateNewWindow()
     swApp.ArrangeWindows 1
+    ()
 
-let cmdNewModel_Click(swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc |> unbox<IModelDoc2>
+// 需要先打开一个文件
+let ToolbarAndCustomProperty (swApp: ISldWorks) =
+    let swModel = 
+        swApp.ActiveDoc :?> IModelDoc2
+
     let toolbars =
         [
             swToolbar_e.swFeatureToolbar
@@ -63,21 +62,19 @@ let cmdNewModel_Click(swApp: ISldWorks) =
         |> ModelDoc2Utils.setToolbarVisibility tb false
     )
 
-    let custPropMan = swModel.Extension.CustomPropertyManager("")
-    let _ = 
-        custPropMan
-        |> CustomPropertyManagerUtils.add3
-            "MyInfo" swCustomInfoType_e.swCustomInfoText
-            "MyData" swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd
-    ()
+    swModel.Extension.CustomPropertyManager("")
+    |> CustomPropertyManagerUtils.add3
+        "MyInfo" swCustomInfoType_e.swCustomInfoText "MyData" 
+        swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd
+    |> ignore
 
 //注意：源零件不能只有焊件
-let cmdPart_Click(swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc |> unbox<IModelDoc2>
-    let swPart = swModel :?> IPartDoc
+let MirrorPart (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
+    let swPart = swApp.ActiveDoc :?> IPartDoc
 
     //执行之前保存原文件名
-    let partname = swModel.GetTitle()
+    let partname = swModel.GetTitle() // sheetmetalsample.SLDPRT
 
     let x = 
         swModel
@@ -96,20 +93,18 @@ let cmdPart_Click(swApp: ISldWorks) =
     let swModel =
         swApp
         |> SldWorksUtils.activateDoc3 partname false swRebuildOnActivation_e.swRebuildActiveDoc
-        |> unbox<ModelDoc2>
 
     let _ = 
         swModel
         |> ModelDoc2Utils.deSelectByID "Top" "PLANE" (0.0, 0.0, 0.0)
     ()
-
-let cmdAssy_Click(swApp: ISldWorks) =
+// 打开 sheetmetalsample
+let InsertCavity (swApp: ISldWorks) =
     let swModel = 
-        swApp.ActiveDoc
-        |> unbox<ModelDoc2>
+        swApp.ActiveDoc :?> IModelDoc2
 
     let swAssy = 
-        swModel :?> AssemblyDoc
+        swApp.ActiveDoc :?> IAssemblyDoc
 
     let assyname = Path.GetFileNameWithoutExtension(swModel.GetTitle())
     
@@ -120,7 +115,6 @@ let cmdAssy_Click(swApp: ISldWorks) =
             false 0 swSelectOption_e.swSelectOptionDefault
 
     let status = 
-        //let mutable info = 0
         swAssy
         |> AssemblyDocUtils.editPart2 true false
 
@@ -146,12 +140,25 @@ let cmdAssy_Click(swApp: ISldWorks) =
 
 open System.Drawing
 
-let cmdDraw_Click (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
-    let swDraw = swModel :?> DrawingDoc
+let CreateLayer (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
+    let swDraw = swApp.ActiveDoc :?> IDrawingDoc
 
     swModel.ClearSelection2 true
     let retval = 
-        swDraw.CreateLayer2("MyRedLayer", "Red", Color.FromArgb(255, 0, 0).ToArgb(),
-        int swLineStyles_e.swLineSTITCH, int swLineWeights_e.swLW_THICK, true, true)
+        swDraw.CreateLayer2(
+            Layername  = "MyRedLayer", 
+            LayerDesc  = "Red", 
+            LayerColor = Color.FromArgb(255, 0, 0).ToArgb(),
+            LayerStyle = int swLineStyles_e.swLineSTITCH, 
+            LayerWidth = int swLineWeights_e.swLW_THICK, 
+            BOn        = true, 
+            BPrint     = true)
     ()
+
+
+
+
+
+
+

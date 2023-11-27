@@ -24,84 +24,112 @@ let activeDoc (swApp: ISldWorks) =
 
 ///https://help.solidworks.com/2023/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.isldworks~opendoc6.html
 let openDoc6
-    (filename:string) (tp:swDocumentTypes_e) (opts:swOpenDocOptions_e) (config:string)
+    (fileName:string) (docType:swDocumentTypes_e) (options:swOpenDocOptions_e) (config:string)
     (swApp: ISldWorks) =
-    let mutable longstatus = 0
-    let mutable longwarnings = 0
-    swApp.OpenDoc6(filename, int tp, int opts, config, &longstatus, &longwarnings)
+    let mutable errors = 0
+    let mutable warnings = 0
+    let modelDoc = swApp.OpenDoc6(
+        FileName      = fileName,
+        Type          = int docType,
+        Options       = int options,
+        Configuration = config,
+        Errors        = &errors,
+        Warnings      = &warnings 
+        )
+    if modelDoc <> null && errors = 0 && warnings = 0 then
+        modelDoc
+    else
+        [
+            if errors > 0 then 
+                sprintf "%A" (enum<swFileLoadError_e>errors)
+            if warnings > 0 then 
+                sprintf "%A" (enum<swFileLoadWarning_e>warnings)
+        ]
+        |> String.concat " and "
+        |> failwith
 
-let documentVisible (visible:bool) (documentType:swDocumentTypes_e) (swApp: ISldWorks) = 
+let documentVisible (visible:bool) (documentType:swDocumentTypes_e) (swApp: ISldWorks) =
     swApp.DocumentVisible(visible, int documentType)
 
 //swDwgPaperSizes_e
-let newDocument (template) (paperSize:swDwgPaperSizes_e) (w) (h) (swApp: ISldWorks) =
+let newDocument (template) (paperSize:swDwgPaperSizes_e) (w,h) (swApp: ISldWorks) =
     swApp.NewDocument(template, int paperSize, w, h)
-    |> unbox<ModelDoc2>
+    :?> ModelDoc2
 
-let newModelDoc (template) (swApp: ISldWorks) =
-    swApp
-    |> newDocument template swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
-
-let activateDoc3 name usePrefs (opts:swRebuildOnActivation_e) (swApp: ISldWorks) =
+let activateDoc3 name preferences (options:swRebuildOnActivation_e) (swApp: ISldWorks) =
     let mutable errors = 0
-    try
-        swApp.ActivateDoc3(name, usePrefs,int opts, &errors)
-        |> unbox<ModelDoc2>
-    with _ -> failwith $"{enum<swActivateDocError_e>errors}"
+    let res = 
+        swApp.ActivateDoc3(
+            Name               = name, 
+            UseUserPreferences = preferences,
+            Option             = int options, 
+            Errors             = &errors)
+        :?> ModelDoc2
+    if errors = 0 then
+        res
+    else
+        failwith $"{enum<swActivateDocError_e>errors}"
 
 let loadFile4 fileName argString importData (swApp: ISldWorks) =
     let mutable errors = 0
-    try
-        swApp.LoadFile4(fileName, argString, importData, &errors)
-    with _ -> failwith $"{enum<swFileLoadError_e>errors}"
+    let res = swApp.LoadFile4(
+        FileName   = fileName, 
+        ArgString  = argString, 
+        ImportData = importData, 
+        Errors     = &errors)
+    if errors = 0 then
+        res
+    else
+        failwith $"{enum<swFileLoadError_e>errors}"
 
-let getMathUtility (swApp: ISldWorks) = 
+ 
+let getMathUtility (swApp: ISldWorks) =
     swApp.GetMathUtility()
     |> unbox<MathUtility>
 
-let setUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (onFlag:bool) (swApp: ISldWorks) = 
+let setUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (onFlag:bool) (swApp: ISldWorks) =
     swApp.SetUserPreferenceToggle(int toggle, onFlag)
 
-let getUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (swApp: ISldWorks) = 
+let getUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (swApp: ISldWorks) =
     swApp.GetUserPreferenceToggle(int toggle)
 
-let setUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (value:float) (swApp: ISldWorks) = 
+let setUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (value:float) (swApp: ISldWorks) =
     swApp.SetUserPreferenceDoubleValue(int pref, value)
     |> ignore
 
-let getUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (swApp: ISldWorks) = 
+let getUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (swApp: ISldWorks) =
     swApp.GetUserPreferenceDoubleValue(int pref)
 
-let setUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (value:int) (swApp: ISldWorks) = 
+let setUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (value:int) (swApp: ISldWorks) =
     swApp.SetUserPreferenceIntegerValue(int pref, value)
     |> ignore
 
-let getUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (swApp: ISldWorks) = 
+let getUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (swApp: ISldWorks) =
     swApp.GetUserPreferenceIntegerValue(int pref)
 
-let setUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (value:string) (swApp: ISldWorks) = 
+let setUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (value:string) (swApp: ISldWorks) =
     swApp.SetUserPreferenceStringValue(int pref, value)
     |> ignore
 
-let getUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (swApp: ISldWorks) = 
+let getUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (swApp: ISldWorks) =
     swApp.GetUserPreferenceStringValue(int pref)
 
 //用默认模板新建一个零件文件
-let newPartDoc (swApp: ISldWorks) = 
-    let dir = 
-        swApp 
+let newPartDoc (swApp: ISldWorks) =
+    let dir =
+        swApp
         |> getUserPreferenceStringValue swUserPreferenceStringValue_e.swDefaultTemplatePart
     swApp
-    |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
+    |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
     :?> PartDoc
 
 //用默认模板新建一个装配体文件
-let newAssemblyDoc (swApp: ISldWorks) = 
-    let dir = 
-        swApp 
+let newAssemblyDoc (swApp: ISldWorks) =
+    let dir =
+        swApp
         |> getUserPreferenceStringValue swUserPreferenceStringValue_e.swDefaultTemplateAssembly
     swApp
-    |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
+    |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
     :?> AssemblyDoc
 
 let sendMsgToUser2
@@ -114,7 +142,7 @@ let sendMsgToUser2
         message,
         int icon,
         int buttons)
-    |> enum<swMessageBoxResult_e> 
+    |> enum<swMessageBoxResult_e>
 
 let defineAttribute (name:string) (swApp:ISldWorks) =
     swApp.DefineAttribute name

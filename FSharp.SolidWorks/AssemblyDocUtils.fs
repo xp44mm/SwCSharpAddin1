@@ -16,7 +16,16 @@ let addComponent5
     (x:float,y:float,z:float)
     (swAssy: IAssemblyDoc)
     =
-    swAssy.AddComponent5(compName,int configOpt, newConfigName, useConfigForPartReferences, existingConfigName, x, y, z)
+    swAssy.AddComponent5(
+        CompName                   = compName,
+        ConfigOption               = int configOpt, 
+        NewConfigName              = newConfigName, 
+        UseConfigForPartReferences = useConfigForPartReferences, 
+        ExistingConfigName         = existingConfigName, 
+        X                          = x, 
+        Y                          = y, 
+        Z                          = z)
+
 
 let editPart2
     (silent: bool)

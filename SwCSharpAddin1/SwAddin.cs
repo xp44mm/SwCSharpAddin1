@@ -150,7 +150,7 @@ namespace SwCSharpAddin1
             //√¸¡Ó
             cmds.add(
                 hintString: "connect to sw",
-                toolTip: "2.3Ω⁄",
+                toolTip: "Õº2-7",
                 callbackFunction: nameof(this.Training2_3),
                 enableMethod: nameof(this.Always),
                 menuTBOption: swCommandItemType_e.swMenuItem
@@ -159,7 +159,7 @@ namespace SwCSharpAddin1
             //√¸¡Ó
             cmds.add(
                 hintString: "new part",
-                toolTip: "≤Ω÷Ë9",
+                toolTip: "Õº2-12",
                 callbackFunction: nameof(this.Training2_NewModel_Part),
                 enableMethod: nameof(this.Always),
                 menuTBOption: swCommandItemType_e.swMenuItem
@@ -167,8 +167,8 @@ namespace SwCSharpAddin1
 
             //√¸¡Ó
             cmds.add(
-                hintString: "new asm",
-                toolTip: "≤Ω÷Ë9",
+                hintString: "new assy",
+                toolTip: "Õº2-12",
                 callbackFunction: nameof(this.Training2_NewModel_ASM),
                 enableMethod: nameof(this.Always),
                 menuTBOption: swCommandItemType_e.swMenuItem
@@ -177,8 +177,80 @@ namespace SwCSharpAddin1
             //√¸¡Ó
             cmds.add(
                 hintString: "new drw",
-                toolTip: "≤Ω÷Ë9",
+                toolTip: "Õº2-12",
                 callbackFunction: nameof(this.Training2_NewModel_DRW),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "New PartDoc",
+                toolTip: "Õº2-18",
+                callbackFunction: nameof(this.Training2_NewPartDoc),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "New AssemblyDoc",
+                toolTip: "Õº2-18",
+                callbackFunction: nameof(this.Training2_NewAssemblyDoc),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "New DrawingDoc",
+                toolTip: "Õº2-18",
+                callbackFunction: nameof(this.Training2_NewDrawingDoc),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "New DrawingDoc",
+                toolTip: "≤Ω÷Ë29~31",
+                callbackFunction: nameof(this.Training2_existingDocs_connectToSolidWorks),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "ToolbarAndCustomProperty",
+                toolTip: "≤Ω÷Ë33~35",
+                callbackFunction: nameof(this.Training2_existingDocs_ToolbarAndCustomProperty),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "µ⁄2’¬≤Ω÷Ë36~38",
+                toolTip: "",
+                callbackFunction: nameof(this.Training2_existingDocs_MirrorPart),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "µ⁄2’¬≤Ω÷Ë39~41",
+                toolTip: "",
+                callbackFunction: nameof(this.Training2_existingDocs_InsertCavity),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //√¸¡Ó
+            cmds.add(
+                hintString: "µ⁄2’¬≤Ω÷Ë42~44",
+                toolTip: "",
+                callbackFunction: nameof(this.Training2_existingDocs_CreateLayer),
                 enableMethod: nameof(this.Always),
                 menuTBOption: swCommandItemType_e.swMenuItem
                 );
@@ -267,6 +339,45 @@ namespace SwCSharpAddin1
             training2.NewModel_DRW(this.iSwApp);
         }
 
+        public void Training2_NewPartDoc()
+        {
+            training2.NewPartDoc(this.iSwApp);
+        }
+
+        public void Training2_NewAssemblyDoc()
+        {
+            training2.NewAssemblyDoc(this.iSwApp);
+        }
+
+        public void Training2_NewDrawingDoc()
+        {
+            training2.NewDrawingDoc(this.iSwApp);
+        }
+
+        public void Training2_existingDocs_connectToSolidWorks()
+        {
+            training2_existingDocs.connectToSolidWorks(this.iSwApp);
+        }
+
+        public void Training2_existingDocs_ToolbarAndCustomProperty()
+        {
+            training2_existingDocs.ToolbarAndCustomProperty(this.iSwApp);
+        }
+
+        public void Training2_existingDocs_MirrorPart()
+        {
+            training2_existingDocs.MirrorPart(this.iSwApp);
+        }
+
+        public void Training2_existingDocs_InsertCavity()
+        {
+            training2_existingDocs.InsertCavity(this.iSwApp);
+        }
+
+        public void Training2_existingDocs_CreateLayer()
+        {
+            training2_existingDocs.CreateLayer(this.iSwApp);
+        }
 
         public bool Always() { return true; }
     }

@@ -45,7 +45,7 @@ let NewModel_Part (swApp: ISldWorks) =
     let swModel =
         let tmpl = Path.Combine(TEMPLATEDIR, "Part_MM.prtdot")
         swApp
-        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
+        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
 
     swModel.InsertFamilyTableNew()
 
@@ -60,7 +60,7 @@ let NewModel_ASM (swApp: ISldWorks) =
     let swModel =
         let tmpl = Path.Combine(TEMPLATEDIR, "Assembly_MM.asmdot")
         swApp
-        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
+        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
 
     swModel.InsertFamilyTableNew()
 
@@ -70,13 +70,12 @@ let NewModel_ASM (swApp: ISldWorks) =
     sampleNote text swModel
     swApp.SendMsgToUser text
 
+// 实际编程时，可以先打开零件，再打开图纸，避免从图纸切换到零件，又切换回图纸。
 let NewModel_DRW (swApp: ISldWorks) =
     let swModel =
         let tmpl = Path.Combine(TEMPLATEDIR, "B_Size_ANSI_MM.drwdot")
         swApp
-        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
-
-    (swModel:?> DrawingDoc).EditSheet()
+        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
 
     let drawName = swModel.GetTitle()
     let partDoc =
@@ -90,6 +89,8 @@ let NewModel_DRW (swApp: ISldWorks) =
         swApp
         |> SldWorksUtils.activateDoc3 drawName false swRebuildOnActivation_e.swRebuildActiveDoc
         :?> DrawingDoc
+
+    swDrw.EditSheet()
 
     let preparedrawingView() =
         swDrw.CreateDrawViewFromModelView3(partName,"*Isometric", 0.1, 0.1, 0.0)
@@ -105,61 +106,81 @@ let NewModel_DRW (swApp: ISldWorks) =
     let text = "Sample Note"
     sampleNote text swModel
 
-    ()
-
-let cmdPart_Click (swApp: ISldWorks) =
+let NewPartDoc (swApp: ISldWorks) =
     let swModel =
-        let tmpl = Path.Combine(TEMPLATEDIR, "gb_part.prtdot")
+        let tmpl = Path.Combine(TEMPLATEDIR, "Part_MM.prtdot")
         swApp
-        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
+        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
 
     let swPart = swModel :?> IPartDoc
 
     swModel.SketchManager.InsertSketch true
-    let _ = swModel.SketchManager.CreateCornerRectangle(0, 0, 0, 0.1, 0.1, 0)
-    let _ = swModel.FeatureManager.FeatureExtrusion2( true, false,
-        false, 0, 0, 0.1, 0.01, false, false, false, false,
-        0.01745329251994, 0.01745329251994, false, false,
-        false, false, true, true, true, 0, 0, false)
+
+    //swModel.SketchManager.CreateCornerRectangle(0, 0, 0, 0.1, 0.1, 0)
+    swModel.SketchManager
+    |> SketchManagerUtils.createCornerRectangle (0.0, 0.0, 0.0) (0.1, 0.1, 0.0) 
+    |> ignore
+
+    swModel.FeatureManager.FeatureExtrusion3( 
+        Sd                = true, 
+        Flip              = false,
+        Dir               = false, 
+        T1                = 0, 
+        T2                = 0, 
+        D1                = 0.1, 
+        D2                = 0.01, 
+        Dchk1             = false, 
+        Dchk2             = false, 
+        Ddir1             = false, 
+        Ddir2             = false,
+        Dang1             = 0.01745329251994, 
+        Dang2             = 0.01745329251994, 
+        OffsetReverse1    = false, 
+        OffsetReverse2    = false,
+        TranslateSurface1 = false, 
+        TranslateSurface2 = false, 
+        Merge             = true, 
+        UseFeatScope      = true, 
+        UseAutoSelect     = true, 
+        T0                = 0, 
+        StartOffset       = 0, 
+        FlipStartOffset   = false)
+    |> ignore
 
     swPart.EditRollback()
 
-let cmdAssy_Click (swApp: ISldWorks) =
-    let _ =
-
+let NewAssemblyDoc (swApp: ISldWorks) =
+    let partDoc =
+        let prt = Path.Combine(FILEDIR, "Sample.SLDPRT")        
         swApp
-        |>SldWorksUtils.openDoc6 "" swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+        |> SldWorksUtils.openDoc6 prt swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+            
+    let swAssy = 
+        let temp = Path.Combine(TEMPLATEDIR,"Assembly_MM.asmdot")
+        swApp 
+        |> SldWorksUtils.newDocument temp swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
+        :?> IAssemblyDoc
 
-    let swModel =
-        let temp = Path.Combine(TEMPLATEDIR, "gb_assembly.asmdot")
+    swAssy
+    |> AssemblyDocUtils.addComponent5 
+        (partDoc.GetTitle())
+        swAddComponentConfigOptions_e.swAddComponentConfigOptions_CurrentSelectedConfig
+        "" false "" (0.0, 0.0, 0.0)
+    |> ignore
 
-        swApp
-        |> SldWorksUtils.newDocument temp swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
-
-    let swAssy = swModel :?> IAssemblyDoc
-
-    let _ =
-        swAssy
-        |> AssemblyDocUtils.addComponent5 
-            "" 
-            swAddComponentConfigOptions_e.swAddComponentConfigOptions_CurrentSelectedConfig
-             "" false "" (0.0, 0.0, 0.0)
-    ()
-
-let cmdDraw_Click (swApp: ISldWorks) =
-
+let NewDrawingDoc (swApp: ISldWorks) =
     let swDrw =
-        let tmpl = Path.Combine(TEMPLATEDIR, "gb_a1.drwdot")
+        let tmpl = Path.Combine(TEMPLATEDIR, "B_Size_ANSI_MM.drwdot")
         swApp
-        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize 0.0 0.0
-        :?> DrawingDoc
+        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
+        :?> IDrawingDoc
 
-    let msg =
-        if swDrw.GetEditSheet() then
-            "sheet"
-        else "template"
+    //let msg =
+    //    if swDrw.GetEditSheet() then
+    //        "sheet"
+    //    else "template"
 
-    swApp.SendMsgToUser msg
+    //swApp.SendMsgToUser msg
     //swDrw.EditTemplate()
-    //swDrw.EditSheet()
+    swDrw.EditSheet()
     ()
