@@ -255,6 +255,24 @@ namespace SwCSharpAddin1
                 menuTBOption: swCommandItemType_e.swMenuItem
                 );
 
+            //命令
+            cmds.add(
+                hintString: "第3章之系统选项",
+                toolTip: "",
+                callbackFunction: nameof(this.Training3_systemOptions),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //命令
+            cmds.add(
+                hintString: "第3章之文档属性",
+                toolTip: "",
+                callbackFunction: nameof(this.Training3_documentProperties),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
             // 命令项目id
             var itemIDs = cmds.getUserIDs();
 
@@ -378,6 +396,18 @@ namespace SwCSharpAddin1
         {
             training2_existingDocs.CreateLayer(this.iSwApp);
         }
+
+        public void Training3_systemOptions()
+        {
+            training3.systemOptions(this.iSwApp);
+        }
+
+        public void Training3_documentProperties()
+        {
+            training3.documentProperties(this.iSwApp);
+        }
+
+
 
         public bool Always() { return true; }
     }

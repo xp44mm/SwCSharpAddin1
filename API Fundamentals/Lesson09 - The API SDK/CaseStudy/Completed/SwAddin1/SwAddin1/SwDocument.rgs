@@ -1,0 +1,27 @@
+HKCR
+{
+	SwAddin1.SwDocument.1 = s 'SwDocument Class'
+	{
+		CLSID = s '{DFA09868-8F51-4865-8059-F56AB36B2457}'
+	}
+	SwAddin1.SwDocument = s 'SwDocument Class'
+	{
+		CLSID = s '{DFA09868-8F51-4865-8059-F56AB36B2457}'
+		CurVer = s 'SwAddin1.SwDocument.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DFA09868-8F51-4865-8059-F56AB36B2457} = s 'SwDocument Class'
+		{
+			ProgID = s 'SwAddin1.SwDocument.1'
+			VersionIndependentProgID = s 'SwAddin1.SwDocument'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{AB93CF9E-A234-49DF-AA75-E59E1EF3A159}'
+		}
+	}
+}

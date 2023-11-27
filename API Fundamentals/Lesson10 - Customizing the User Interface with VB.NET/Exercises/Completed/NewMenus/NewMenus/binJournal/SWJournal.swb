@@ -1,0 +1,272 @@
+' ******************************************************************************
+' SWJournal - journal recorded on 12/04/15 by JPB
+' *****************************************************************************
+Dim swApp As SldWorks.SldWorks
+Dim JournalMgr As SldWorks.JournalManager
+Dim ModelDoc As SldWorks.ModelDoc2
+Dim ModelDocExt As SldWorks.ModelDocExtension
+Dim ModelView As SldWorks.ModelView
+Dim ScreenWidth as integer 
+Dim ScreenHeight as integer 
+Dim ScreenLeft as integer 
+Dim ScreenTop as integer 
+Dim ScreenState as integer 
+Dim Config As SldWorks.Configuration
+Dim mouseObj As SldWorks.Mouse
+Dim longstatus As Long
+Dim longwarnings As Long
+Dim originalWorkingDirectory as String
+Dim boolstatus As Boolean
+
+Sub main()
+
+Set swApp = Application.SldWorks
+Set JournalMgr = swApp.JournalManager
+originalWorkingDirectory = swApp.GetCurrentWorkingDirectory 
+swApp.SetCurrentWorkingDirectory "C:\SolidWorks Training Files\API Fundamentals\Appendix\MacroFeature\"
+ScreenLeft = swApp.FrameLeft
+ScreenWidth = swApp.FrameWidth
+ScreenTop = swApp.FrameTop
+ScreenHeight = swApp.FrameHeight
+ScreenState = swApp.FrameState
+swApp.FrameState = swWindowNormal
+swApp.FrameLeft =660
+swApp.FrameTop =379
+swApp.FrameWidth =600
+swApp.FrameHeight =402
+If swApp.FrameHeight <> 402 then  MsgBox "Unable to set screen Height"
+If swApp.FrameWidth  <> 600 then MsgBox "Unable to set screen width"
+swApp.SetCurrentWorkingDirectory "C:\SolidWorks Training Files\API Fundamentals\Appendix\MacroFeature\"
+JournalMgr.RecordDialogControl "Init_Run_Queue",""
+'*** registry backup/restore disclaimer and instructions ***
+'JournalMgr.ExportSwSettings("C:\SolidWorks Training Files\API Fundamentals\Lesson10 - Customizing the User Interface with VB.NET\Exercises\Completed\NewMenus\NewMenus\binJournal\swJournalCurrent.swb.reg")
+'JournalMgr.ImportSwSettings("swJournal.swb.reg")
+' ------------------------------------------
+
+If swApp.ResetUntitledCount(0, 0, 0) <> 0 Then MsgBox "Unable to rest Untitled documents"
+boolstatus = JournalMgr.RunCommand(1041668, "")
+Set ModelView = swApp.GetModelView("Part1",0, 0, 0)   ' Activate view WindowID, Row, Col
+Set mouseObj = ModelView.GetMouse
+Set ModelDoc = ModelView.GetModelDoc
+Set ModelDocExt = ModelDoc.Extension
+boolstatus = mouseObj.MoveXYZ(-0.5968661726567507, 0.4437535492102737, 0.01930388501237501, swMouse_Click)
+boolstatus = mouseObj.MoveXYZ(0.05566343241289196, 0.2839023645041338, -0.4071620066844361, swMouse_Click)
+JournalMgr.SetKeyBoardState "Alt:0 Esc:0 Tab:0 Shft:0 Ctl:1"
+boolstatus = mouseObj.MoveXYZ(-0.06440071865068409, 0.02747442237136777, 0.07554601791472837, swMouse_MiddleDown)
+boolstatus = mouseObj.MoveXYZ(-0.06440071865068409, 0.02747442237136777, 0.07554601791472837, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737269, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.07221578490001712, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332852, 0.02747442237136788, 0.07388090140737236, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332852, 0.02747442237136788, 0.07388090140737247, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.0722157849000169, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737258, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.0722157849000169, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861694, 0.02747442237136788, 0.07055066839266122, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597295, 0.02747442237136788, 0.0722157849000169, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.0722157849000169, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.07221578490001701, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861738, 0.02747442237136788, 0.07055066839266133, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737258, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.07221578490001701, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.07221578490001668, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861716, 0.02747442237136788, 0.07055066839266122, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.0722157849000169, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.0722157849000169, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.0722157849000169, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597295, 0.02747442237136788, 0.07221578490001701, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861694, 0.02747442237136788, 0.07055066839266133, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861694, 0.02747442237136788, 0.07055066839266133, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861716, 0.02747442237136788, 0.07055066839266133, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861716, 0.02747442237136788, 0.07055066839266122, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.0722157849000169, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861716, 0.02747442237136788, 0.07055066839266122, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861716, 0.02747442237136788, 0.07055066839266122, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332852, 0.02747442237136788, 0.07388090140737258, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05774025262126159, 0.02747442237136788, 0.06888555188530543, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332852, 0.02747442237136788, 0.07388090140737247, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136788, 0.07388090140737236, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597251, 0.02747442237136788, 0.07221578490001679, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597251, 0.02747442237136788, 0.07221578490001679, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136788, 0.07388090140737247, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861694, 0.02747442237136788, 0.07055066839266122, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737225, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861694, 0.02747442237136788, 0.070550668392661, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737225, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136788, 0.07388090140737247, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861694, 0.02747442237136788, 0.07055066839266111, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861694, 0.02747442237136788, 0.07055066839266111, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136788, 0.07388090140737247, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737236, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.07221578490001657, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737225, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737225, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597251, 0.02747442237136788, 0.07221578490001657, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136788, 0.07388090140737236, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136788, 0.07388090140737225, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.05940536912861716, 0.02747442237136788, 0.07055066839266111, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.07221578490001679, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.07221578490001668, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737247, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136788, 0.07388090140737214, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597251, 0.02747442237136788, 0.07221578490001657, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136788, 0.07388090140737225, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737225, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.07221578490001657, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332852, 0.02747442237136788, 0.07388090140737236, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597273, 0.02747442237136788, 0.07221578490001657, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597251, 0.02747442237136788, 0.07221578490001668, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136788, 0.07388090140737225, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737236, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597228, 0.02747442237136788, 0.0722157849000169, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136788, 0.07388090140737225, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06391301731714516, 0.02913953887872334, 0.07270348623355538, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06224790080978937, 0.02913953887872323, 0.07103836972619981, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06391301731714538, 0.02913953887872334, 0.07270348623355549, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06509043249096158, 0.03080465538607902, 0.07152607105973874, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332785, 0.02747442237136766, 0.07388090140737247, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597228, 0.02747442237136766, 0.07221578490001679, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332785, 0.02747442237136766, 0.07388090140737247, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332785, 0.02747442237136766, 0.07388090140737236, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597251, 0.02747442237136766, 0.07221578490001679, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332807, 0.02747442237136766, 0.07388090140737236, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06273560214332785, 0.02747442237136766, 0.07388090140737269, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06107048563597251, 0.02747442237136766, 0.07221578490001679, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0627356021433283, 0.02747442237136766, 0.07388090140737247, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06440071865068386, 0.02747442237136766, 0.07554601791472815, swMouse_MiddleUp)
+JournalMgr.SetKeyBoardState "Alt:0 Esc:0 Tab:0 Shft:0 Ctl:0"
+boolstatus = mouseObj.MoveXYZ(-0.4035640932966533, 0.5472155985238554, -0.3203156276779071, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.4056200191953416, 0.5456254239690108, -0.316010855357217, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.4049613473281843, 0.5424450748593217, -0.3121718343803708, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.4086074477817172, 0.5408549003044771, -0.3062768875048361, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.4106633736804055, 0.5392647257496326, -0.3019721151841461, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.4140366433134082, 0.5440352494141663, -0.3053453848171488, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.4194658388450987, 0.5472155985238554, -0.3044138821294613, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.4233048598219451, 0.5503959476335444, -0.3050725539966186, swMouse_MouseMove)
+JournalMgr.SetKeyBoardState "Alt:0 Esc:0 Tab:0 Shft:0 Ctl:1"
+boolstatus = mouseObj.MoveXYZ(0.09760333857091008, -0.04909985954284735, 0.02183434870519951, swMouse_MiddleDown)
+boolstatus = mouseObj.MoveXYZ(0.09760333857091008, -0.04909985954284735, 0.02183434870519951, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09601316401606552, -0.04909985954284735, 0.02342452326004418, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0960131640160653, -0.04909985954284735, 0.02342452326004418, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0960131640160653, -0.04909985954284735, 0.02342452326004418, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09442298946122096, -0.04909985954284735, 0.02501469781488863, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0960131640160653, -0.04909985954284735, 0.02342452326004418, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0960131640160653, -0.04909985954284735, 0.02342452326004407, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09442298946122074, -0.04909985954284735, 0.02501469781488863, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09601316401606508, -0.04909985954284735, 0.02342452326004407, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09601316401606508, -0.04909985954284735, 0.02342452326004418, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09442298946122052, -0.04909985954284735, 0.02501469781488874, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09601316401606508, -0.04909985954284735, 0.02342452326004418, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0960131640160653, -0.04909985954284735, 0.02342452326004407, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09442298946122074, -0.04909985954284735, 0.02501469781488863, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09601316401606508, -0.04909985954284735, 0.02342452326004407, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09760333857090964, -0.04909985954284735, 0.02183434870519985, swMouse_MiddleUp)
+JournalMgr.SetKeyBoardState "Alt:0 Esc:0 Tab:0 Shft:0 Ctl:0"
+boolstatus = mouseObj.MoveXYZ(-0.1494033162920854, 0.3834276193748677, -0.3428452232162915, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.1478131417372408, 0.3834276193748677, -0.3444353977711361, swMouse_Click)
+JournalMgr.SetKeyBoardState "Alt:0 Esc:0 Tab:0 Shft:0 Ctl:1"
+boolstatus = mouseObj.MoveXYZ(-0.008571905046473427, 0.03358921730906872, 0.01106957837848988, swMouse_MiddleDown)
+boolstatus = mouseObj.MoveXYZ(-0.008571905046473427, 0.03358921730906872, 0.01106957837848988, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.006323058624471578, 0.03040886819937971, 0.01331842480049161, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.007447481835472614, 0.03199904275422427, 0.01219400158949069, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.007447481835472392, 0.03199904275422427, 0.01219400158949091, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.006323058624471578, 0.03040886819937982, 0.01331842480049172, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.007447481835472392, 0.03199904275422438, 0.01219400158949113, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.007447481835472392, 0.03199904275422427, 0.01219400158949091, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.006323058624471578, 0.03040886819937994, 0.01331842480049195, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.00744748183547217, 0.03199904275422449, 0.01219400158949113, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.00744748183547217, 0.03199904275422461, 0.01219400158949124, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.006323058624471134, 0.03040886819937994, 0.01331842480049206, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.00744748183547217, 0.03199904275422449, 0.01219400158949113, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.00744748183547217, 0.03199904275422461, 0.01219400158949113, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.006323058624471356, 0.03040886819938005, 0.01331842480049195, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.007447481835471947, 0.03199904275422461, 0.01219400158949124, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.00744748183547217, 0.03199904275422472, 0.01219400158949124, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.006323058624471356, 0.03040886819938005, 0.01331842480049184, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.009037656390316728, 0.03199904275422472, 0.01378417614433569, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.008571905046472983, 0.03358921730906928, 0.01106957837849021, swMouse_MiddleUp)
+JournalMgr.SetKeyBoardState "Alt:0 Esc:0 Tab:0 Shft:0 Ctl:0"
+boolstatus = JournalMgr.RunCommand(swCommands_Toggle_Context_Switch, "")   ' Show descriptions on CommandManager buttons.
+JournalMgr.SetKeyBoardState "Alt:0 Esc:0 Tab:0 Shft:0 Ctl:1"
+boolstatus = mouseObj.MoveXYZ(0.06422556054417483, 0.01089418806204023, -0.02963226905255501, swMouse_MiddleDown)
+boolstatus = mouseObj.MoveXYZ(0.06422556054417483, 0.01089418806204023, -0.02963226905255501, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062704, 0.01089418806204023, -0.02791401052900722, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05907078497353169, 0.01089418806204023, -0.02447749348191153, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349707925, 0.01089418806204023, -0.02619575200545932, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05785579271969943, 0.01261244658558813, -0.02569248573574401, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05907078497353169, 0.01089418806204034, -0.02447749348191175, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05664080046586717, 0.01433070510913592, -0.02690747798957605, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05613753419615164, 0.01261244658558813, -0.023974227212196, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0607890434970797, 0.01089418806204012, -0.02619575200545954, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0607890434970797, 0.01089418806204012, -0.02619575200545976, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0583590589894154, 0.01433070510913581, -0.02862573651312428, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05563426792643611, 0.01089418806204023, -0.02104097643481606, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05957405124324744, 0.01261244658558802, -0.02741074425929191, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05785579271969987, 0.01261244658558791, -0.02569248573574412, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05907078497353213, 0.01089418806204012, -0.02447749348191175, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05492254194231938, 0.01433070510913581, -0.02518921946602859, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05785579271969965, 0.01261244658558791, -0.02569248573574412, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05492254194231916, 0.01433070510913581, -0.02518921946602859, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05907078497353191, 0.01089418806204012, -0.02447749348191197, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05785579271969965, 0.01261244658558802, -0.02569248573574423, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05957405124324722, 0.0126124465855878, -0.02741074425929224, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349707948, 0.01089418806204012, -0.02619575200545998, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349707948, 0.01089418806204012, -0.02619575200545987, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05664080046586739, 0.01433070510913581, -0.02690747798957649, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05785579271969921, 0.01261244658558791, -0.02569248573574434, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05957405124324722, 0.01261244658558791, -0.02741074425929224, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05907078497353147, 0.01089418806204001, -0.02447749348191231, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062726, 0.01089418806204001, -0.0279140105290081, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05907078497353191, 0.01089418806204001, -0.02447749348191231, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06007731751296275, 0.0143307051091357, -0.0303439950366724, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062726, 0.01089418806204001, -0.02791401052900799, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349707948, 0.01089418806204001, -0.02619575200546009, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05957405124324766, 0.0126124465855878, -0.02741074425929257, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0607890434970797, 0.01089418806204001, -0.02619575200546032, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349707948, 0.01089418806204001, -0.02619575200546009, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062771, 0.01089418806204001, -0.02791401052900788, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349707948, 0.01089418806204001, -0.02619575200546009, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06129230976679501, 0.01261244658558791, -0.02912900278284025, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062749, 0.01089418806204001, -0.02791401052900788, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0607890434970797, 0.01089418806204001, -0.02619575200546009, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062726, 0.01089418806204001, -0.0279140105290081, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062771, 0.01089418806204001, -0.02791401052900833, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05664080046586739, 0.01433070510913559, -0.02690747798957704, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06129230976679523, 0.0126124465855878, -0.02912900278284047, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.0607890434970797, 0.0108941880620399, -0.02619575200546032, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062771, 0.0108941880620399, -0.02791401052900822, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062793, 0.0108941880620399, -0.02791401052900844, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349708014, 0.0108941880620399, -0.02619575200546054, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349708014, 0.0108941880620399, -0.02619575200546076, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062793, 0.0108941880620399, -0.02791401052900833, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349708014, 0.0108941880620399, -0.02619575200546054, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062793, 0.0108941880620399, -0.02791401052900833, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062771, 0.0108941880620399, -0.02791401052900833, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.05957405124324788, 0.01261244658558769, -0.0274107442592928, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06129230976679545, 0.01261244658558769, -0.02912900278284081, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062793, 0.0108941880620399, -0.02791401052900844, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06078904349708036, 0.0108941880620399, -0.02619575200546076, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062815, 0.0108941880620399, -0.02791401052900855, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06250730202062793, 0.0108941880620399, -0.02791401052900855, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.06422556054417572, 0.0108941880620399, -0.02963226905255634, swMouse_MiddleUp)
+JournalMgr.SetKeyBoardState "Alt:0 Esc:0 Tab:0 Shft:0 Ctl:0"
+boolstatus = mouseObj.MoveXYZ(-0.2478189889763178, 0.4473318530431872, -0.3348037844788573, swMouse_RightDown)
+boolstatus = mouseObj.MoveXYZ(-0.2478189889763178, 0.4473318530431872, -0.3348037844788573, swMouse_RightUp)
+boolstatus = mouseObj.MoveXYZ(-0.3305038578210149, 0.4524866286138307, -0.2594088691571534, swMouse_Click)
+boolstatus = JournalMgr.RunCommand(1033463, "")   ' View (&Heads-Up) Toolbar
+boolstatus = JournalMgr.RunCommand(1041667, "")
+JournalMgr.ClickDialogControl "0","5761"   ' Color Faces
+boolstatus = JournalMgr.RunCommand(swCommands_Toggle_Context_Switch, "")   ' Show descriptions on CommandManager buttons.
+JournalMgr.ClickDialogControl "DVE_SHEET","IDC_PM_CANCEL"
+
+'------------------------------------------
+swApp.FrameLeft = ScreenLeft
+swApp.FrameWidth = ScreenWidth
+swApp.FrameTop = ScreenTop
+swApp.FrameHeight = ScreenHeight
+swApp.FrameState = ScreenState
+Set mouseObj = Nothing
+Set ModelView = Nothing
+swApp.SetCurrentWorkingDirectory originalWorkingDirectory
+'JournalMgr.ImportSwSettings("C:\Users\jpehl\AppData\Roaming\SolidWorks\SOLIDWORKS 2016\Journal\swJournalCurrent.swb.reg")
+
+End Sub

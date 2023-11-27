@@ -1,0 +1,122 @@
+' ******************************************************************************
+' SWJournal - journal recorded on 12/03/15 by JPB
+' *****************************************************************************
+Dim swApp As SldWorks.SldWorks
+Dim JournalMgr As SldWorks.JournalManager
+Dim ModelDoc As SldWorks.ModelDoc2
+Dim ModelDocExt As SldWorks.ModelDocExtension
+Dim ModelView As SldWorks.ModelView
+Dim ScreenWidth as integer 
+Dim ScreenHeight as integer 
+Dim ScreenLeft as integer 
+Dim ScreenTop as integer 
+Dim ScreenState as integer 
+Dim Config As SldWorks.Configuration
+Dim mouseObj As SldWorks.Mouse
+Dim longstatus As Long
+Dim longwarnings As Long
+Dim originalWorkingDirectory as String
+Dim boolstatus As Boolean
+
+Sub main()
+
+Set swApp = Application.SldWorks
+Set JournalMgr = swApp.JournalManager
+originalWorkingDirectory = swApp.GetCurrentWorkingDirectory 
+swApp.SetCurrentWorkingDirectory "C:\MyAddIns\SwAddin1\SwAddin1\x64\Debug\"
+ScreenLeft = swApp.FrameLeft
+ScreenWidth = swApp.FrameWidth
+ScreenTop = swApp.FrameTop
+ScreenHeight = swApp.FrameHeight
+ScreenState = swApp.FrameState
+swApp.FrameState = swWindowNormal
+swApp.FrameLeft =660
+swApp.FrameTop =379
+swApp.FrameWidth =600
+swApp.FrameHeight =402
+If swApp.FrameHeight <> 402 then  MsgBox "Unable to set screen Height"
+If swApp.FrameWidth  <> 600 then MsgBox "Unable to set screen width"
+swApp.SetCurrentWorkingDirectory "C:\MyAddIns\SwAddin1\SwAddin1\x64\Debug\"
+JournalMgr.RecordDialogControl "Init_Run_Queue",""
+'*** registry backup/restore disclaimer and instructions ***
+'JournalMgr.ExportSwSettings("C:\SolidWorks Training Files\API Fundamentals\Lesson10 - Customizing the User Interface with VB.NET\Case Study\Completed\CustomSWAddin\CustomSWAddin\binJournal\swJournalCurrent.swb.reg")
+'JournalMgr.ImportSwSettings("swJournal.swb.reg")
+' ------------------------------------------
+
+If swApp.ResetUntitledCount(0, 0, 0) <> 0 Then MsgBox "Unable to rest Untitled documents"
+boolstatus = JournalMgr.RunCommand(1041664, "")
+boolstatus = JournalMgr.RunCommand(1041665, "")
+Set ModelView = swApp.GetModelView("Part1",0, 0, 0)   ' Activate view WindowID, Row, Col
+Set mouseObj = ModelView.GetMouse
+Set ModelDoc = ModelView.GetModelDoc
+Set ModelDocExt = ModelDoc.Extension
+boolstatus = mouseObj.MoveXYZ(-0.06454566319852589, 0.07622146717564815, 0.1274629086934031, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06517853713825622, 0.07594545173169397, 0.1284861274173979, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06573056802616462, 0.07594545173169397, 0.1290381583053063, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06589225412980855, 0.07539342084378559, 0.1299805339774791, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06644428501771693, 0.07539342084378559, 0.1305325648653875, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.06699631590562531, 0.07539342084378559, 0.1310845957532959, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0930560969776297, 0.07594545173169397, 0.1563636872567715, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.09167601975785873, 0.07594545173169397, 0.1549836100370005, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.09029594253808777, 0.07594545173169397, 0.1536035328172295, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0889158653183168, 0.07594545173169397, 0.1522234555974586, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08808781898645424, 0.07594545173169397, 0.151395409265596, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08698375721063746, 0.07594545173169397, 0.1502913474897792, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08560367999086649, 0.07594545173169397, 0.1489112702700082, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08449961821504973, 0.07594545173169397, 0.1478072084941915, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08367157188318715, 0.07594545173169397, 0.1469791621623289, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08229149466341618, 0.07594545173169397, 0.1455990849425579, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08118743288759941, 0.07594545173169397, 0.1444950231667411, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08063540199969102, 0.07594545173169397, 0.1439429922788328, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08008337111178264, 0.07594545173169397, 0.1433909613909244, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.07953134022387425, 0.07594545173169397, 0.142838930503016, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.07897930933596586, 0.07594545173169397, 0.1422868996151076, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.07842727844805747, 0.07594545173169397, 0.1417348687271992, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.09526422052926324, 0.07594545173169397, 0.158571810808405, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0930560969776297, 0.07594545173169397, 0.1563636872567715, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.09195203520181292, 0.07594545173169397, 0.1552596254809547, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.09084797342599617, 0.07594545173169397, 0.1541555637051379, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08946789620622518, 0.07594545173169397, 0.152775486485367, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.0889158653183168, 0.07594545173169397, 0.1522234555974586, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08808781898645424, 0.07594545173169397, 0.151395409265596, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08753578809854584, 0.07594545173169397, 0.1508433783776876, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08698375721063746, 0.07594545173169397, 0.1502913474897792, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08615571087877488, 0.07594545173169397, 0.1494633011579166, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08560367999086649, 0.07594545173169397, 0.1489112702700082, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(-0.08505164910295811, 0.07594545173169397, 0.1483592393820999, swMouse_MouseMove)
+boolstatus = JournalMgr.RunCommand(swCommands_View_Showhide_Tb, "")
+boolstatus = JournalMgr.RunCommand(swCommands_View_Showhide_Tb, "")
+JournalMgr.ClickDialogControl "0","IDC_DVE_DIVIDER_3"   ' Sample Group II
+JournalMgr.ClickDialogControl "0","5763"   ' Sample Option3
+JournalMgr.RecordDialogControl "IDD_ADDINS","IDOK"   ' OK
+boolstatus = JournalMgr.RunCommand(swCommands_Tools_Addins, "")   ' Launch the add-in manager.
+boolstatus = mouseObj.MoveXYZ(-0.0389001323593354, 0.04794574962499604, 0.1418052811001764, swMouse_Click)
+JournalMgr.ClickDialogControl "DVE_SHEET","IDC_PM_CANCEL"
+boolstatus = mouseObj.MoveXYZ(-0.03595229786439157, 0.07863866699270206, 0.09545110659502515, swMouse_Click)
+JournalMgr.RecordDialogControl "IDD_ADDINS","IDOK"   ' OK
+boolstatus = JournalMgr.RunCommand(swCommands_Tools_Addins, "")   ' Launch the add-in manager.
+boolstatus = mouseObj.MoveXYZ(0.09500080164469657, 0.04963748522794045, 0.005511871662510492, swMouse_MouseMove)
+boolstatus = mouseObj.MoveXYZ(0.09500080164469657, 0.04963748522794045, 0.005511871662510492, swMouse_RightDown)
+boolstatus = mouseObj.MoveXYZ(0.09451744861528388, 0.04963748522794045, 0.005995224691923207, swMouse_RightUp)
+boolstatus = JournalMgr.RunCommand(swCommands_Customization_And_More, "")   ' Customize Menu
+boolstatus = mouseObj.MoveXYZ(0.009441421765892438, 0.07767196093387667, 0.05142451578396012, swMouse_RightDown)
+boolstatus = mouseObj.MoveXYZ(0.009441421765892438, 0.07767196093387667, 0.05142451578396012, swMouse_RightUp)
+boolstatus = mouseObj.MouseWheelXYZ(-0.1128099545081838, 0.001060505771964787, 0.2820208509811529, 120,swMouse_Wheel)
+boolstatus = mouseObj.MouseWheelXYZ(-0.142418625773369, -0.009017404891289854, 0.3258818401866976, -120,swMouse_Wheel)
+boolstatus = mouseObj.MouseWheelXYZ(-0.1113305751421512, 0.0003354762278457435, 0.2815668182295347, 120,swMouse_Wheel)
+boolstatus = mouseObj.MoveXYZ(-0.04740591024880622, 0.06783572678532839, 0.1221823835342136, swMouse_Click)
+JournalMgr.RecordDialogControl "IDD_ADDINS","IDOK"   ' OK
+boolstatus = JournalMgr.RunCommand(swCommands_Tools_Addins, "")   ' Launch the add-in manager.
+
+'------------------------------------------
+swApp.FrameLeft = ScreenLeft
+swApp.FrameWidth = ScreenWidth
+swApp.FrameTop = ScreenTop
+swApp.FrameHeight = ScreenHeight
+swApp.FrameState = ScreenState
+Set mouseObj = Nothing
+Set ModelView = Nothing
+swApp.SetCurrentWorkingDirectory originalWorkingDirectory
+'JournalMgr.ImportSwSettings("C:\Users\jpehl\AppData\Roaming\SolidWorks\SOLIDWORKS 2016\Journal\swJournalCurrent.swb.reg")
+
+End Sub

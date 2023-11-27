@@ -81,8 +81,7 @@ let loadFile4 fileName argString importData (swApp: ISldWorks) =
         res
     else
         failwith $"{enum<swFileLoadError_e>errors}"
-
- 
+         
 let getMathUtility (swApp: ISldWorks) =
     swApp.GetMathUtility()
     |> unbox<MathUtility>

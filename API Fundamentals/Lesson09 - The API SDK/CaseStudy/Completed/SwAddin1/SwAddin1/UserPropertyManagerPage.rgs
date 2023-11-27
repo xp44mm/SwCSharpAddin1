@@ -1,0 +1,27 @@
+HKCR
+{
+	SwAddin1.UserPropertyManagerPage.1 = s 'UserPropertyManagerPage Class'
+	{
+		CLSID = s '{9572278A-4C51-4DEE-9A6F-DFBB48CBC770}'
+	}
+	SwAddin1.UserPropertyManagerPage = s 'UserPropertyManagerPage Class'
+	{
+		CLSID = s '{9572278A-4C51-4DEE-9A6F-DFBB48CBC770}'
+		CurVer = s 'SwAddin1.UserPropertyManagerPage.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {9572278A-4C51-4DEE-9A6F-DFBB48CBC770} = s 'UserPropertyManagerPage Class'
+		{
+			ProgID = s 'SwAddin1.UserPropertyManagerPage.1'
+			VersionIndependentProgID = s 'SwAddin1.UserPropertyManagerPage'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{AB93CF9E-A234-49DF-AA75-E59E1EF3A159}'
+		}
+	}
+}

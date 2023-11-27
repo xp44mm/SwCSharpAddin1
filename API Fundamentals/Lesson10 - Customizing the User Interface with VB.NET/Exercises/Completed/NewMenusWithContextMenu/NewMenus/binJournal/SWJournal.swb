@@ -1,0 +1,63 @@
+' ******************************************************************************
+' SWJournal - journal recorded on 12/03/15 by JPB
+' *****************************************************************************
+Dim swApp As SldWorks.SldWorks
+Dim JournalMgr As SldWorks.JournalManager
+Dim ModelDoc As SldWorks.ModelDoc2
+Dim ModelDocExt As SldWorks.ModelDocExtension
+Dim ModelView As SldWorks.ModelView
+Dim ScreenWidth as integer 
+Dim ScreenHeight as integer 
+Dim ScreenLeft as integer 
+Dim ScreenTop as integer 
+Dim ScreenState as integer 
+Dim Config As SldWorks.Configuration
+Dim mouseObj As SldWorks.Mouse
+Dim longstatus As Long
+Dim longwarnings As Long
+Dim originalWorkingDirectory as String
+Dim boolstatus As Boolean
+
+Sub main()
+
+Set swApp = Application.SldWorks
+Set JournalMgr = swApp.JournalManager
+originalWorkingDirectory = swApp.GetCurrentWorkingDirectory 
+swApp.SetCurrentWorkingDirectory "C:\MyAddIns\SwAddin1\SwAddin1\x64\Debug\"
+ScreenLeft = swApp.FrameLeft
+ScreenWidth = swApp.FrameWidth
+ScreenTop = swApp.FrameTop
+ScreenHeight = swApp.FrameHeight
+ScreenState = swApp.FrameState
+swApp.FrameState = swWindowNormal
+swApp.FrameLeft =660
+swApp.FrameTop =379
+swApp.FrameWidth =600
+swApp.FrameHeight =402
+If swApp.FrameHeight <> 402 then  MsgBox "Unable to set screen Height"
+If swApp.FrameWidth  <> 600 then MsgBox "Unable to set screen width"
+swApp.SetCurrentWorkingDirectory "C:\MyAddIns\SwAddin1\SwAddin1\x64\Debug\"
+JournalMgr.RecordDialogControl "Init_Run_Queue",""
+'*** registry backup/restore disclaimer and instructions ***
+'JournalMgr.ExportSwSettings("C:\SolidWorks Training Files\API Fundamentals\Lesson10 - Customizing the User Interface with VB.NET\Exercises\Completed\NewMenus\NewMenus\binJournal\swJournalCurrent.swb.reg")
+'JournalMgr.ImportSwSettings("swJournal.swb.reg")
+' ------------------------------------------
+
+If swApp.ResetUntitledCount(0, 0, 0) <> 0 Then MsgBox "Unable to rest Untitled documents"
+JournalMgr.RecordDialogControl "IDD_ADDINS","IDOK"   ' OK
+boolstatus = JournalMgr.RunCommand(swCommands_Tools_Addins, "")   ' Launch the add-in manager.
+JournalMgr.RecordDialogControl "IDD_ADDINS","IDOK"   ' OK
+boolstatus = JournalMgr.RunCommand(swCommands_Tools_Addins, "")   ' Launch the add-in manager.
+
+'------------------------------------------
+swApp.FrameLeft = ScreenLeft
+swApp.FrameWidth = ScreenWidth
+swApp.FrameTop = ScreenTop
+swApp.FrameHeight = ScreenHeight
+swApp.FrameState = ScreenState
+Set mouseObj = Nothing
+Set ModelView = Nothing
+swApp.SetCurrentWorkingDirectory originalWorkingDirectory
+'JournalMgr.ImportSwSettings("C:\Users\jpehl\AppData\Roaming\SolidWorks\SOLIDWORKS 2016\Journal\swJournalCurrent.swb.reg")
+
+End Sub
