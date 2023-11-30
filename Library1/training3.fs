@@ -71,11 +71,13 @@ let systemOptions(swApp: ISldWorks) =
     sysPref.swBackupDirectory
     |> swApp.SendMsgToUser
 
-    swApp
-    |> SldWorksUtils.setUserPreferenceIntegerValue
-        swUserPreferenceIntegerValue_e.swEdgesHiddenEdgeDisplay
-        (int swEdgesHiddenEdgeDisplay_e.swEdgesHiddenEdgeDisplayDashed)
-    |> ignore
+    sysPref.swEdgesHiddenEdgeDisplay <- int swEdgesHiddenEdgeDisplay_e.swEdgesHiddenEdgeDisplayDashed
+
+    //swApp
+    //|> SldWorksUtils.setUserPreferenceIntegerValue
+    //    swUserPreferenceIntegerValue_e.swEdgesHiddenEdgeDisplay
+    //    (int swEdgesHiddenEdgeDisplay_e.swEdgesHiddenEdgeDisplayDashed)
+    //|> ignore
 
     // View Rotation - Mouse Speed
     //
@@ -100,10 +102,11 @@ let systemOptions(swApp: ISldWorks) =
     // 2.0
     // 2.5
     // 3.0 = Slow
-    swApp
-    |> SldWorksUtils.setUserPreferenceDoubleValue
-        swUserPreferenceDoubleValue_e.swViewAnimationSpeed 2.0
-    |> ignore
+    sysPref.swViewAnimationSpeed <- 2.0
+    //swApp
+    //|> SldWorksUtils.setUserPreferenceDoubleValue
+    //    swUserPreferenceDoubleValue_e.swViewAnimationSpeed 2.0
+    //|> ignore
 
     sysPref.swViewAnimationSpeed <- 2.0
 

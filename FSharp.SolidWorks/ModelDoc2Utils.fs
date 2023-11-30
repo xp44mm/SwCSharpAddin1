@@ -64,7 +64,7 @@ let getFeatureSeq (swModel: IModelDoc2) =
 
 let getSelectionMgr (swModel: IModelDoc2) =
     swModel.SelectionManager
-    |> unbox<SelectionMgr>
+    :?> SelectionMgr
 
 /// 获取文件名
 let partfile (swModel: IModelDoc2) =

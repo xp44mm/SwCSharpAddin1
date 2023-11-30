@@ -26,7 +26,7 @@ let cmdGenerate_Click
     =
     let swSelMgr =
         swModel.SelectionManager
-        |> unbox<SelectionMgr>
+        :?> SelectionMgr
 
     let count =
         swSelMgr
@@ -43,7 +43,7 @@ let cmdGenerate_Click
         let feat =
             swSelMgr
             |> SelectionMgrUtils.getSelectedObject6 1 SelectionMgrUtils.Mark.All
-            |> unbox<Feature>
+            :?> Feature
 
         if feat.GetTypeName2() <> "Extrusion" then
             swApp
@@ -57,7 +57,7 @@ let cmdGenerate_Click
             //修改特征的代码
             let extrudeFeatureData =
                 feat.GetDefinition()
-                |> unbox<ExtrudeFeatureData2>
+                :?> ExtrudeFeatureData2
 
             let depth = extrudeFeatureData.GetDepth(true)
             extrudeFeatureData.SetDepth(true, depth * factor)

@@ -21,7 +21,7 @@ open FSharp.SolidWorks.FeatureManagerUtils
 let main(swApp: ISldWorks) =
     let swModel =
         swApp.ActiveDoc
-        |> unbox<ModelDoc2>
+        :?> ModelDoc2
 
     let boolstatus =
         swModel.Extension.SelectByID2("Front Plane", "PLANE", 0.0, 0.0, 0.0, false, 0, null, 0)

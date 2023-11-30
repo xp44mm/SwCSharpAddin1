@@ -18,7 +18,7 @@ open SolidWorksTools.File
 
 let activeDoc (swApp: ISldWorks) =
     swApp.ActiveDoc
-    |> unbox<ModelDoc2>
+    :?> ModelDoc2
 
 ///https://help.solidworks.com/2023/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.isldworks~opendoc6.html
 let openDoc6
@@ -82,52 +82,54 @@ let loadFile4 fileName argString importData (swApp: ISldWorks) =
          
 let getMathUtility (swApp: ISldWorks) =
     swApp.GetMathUtility()
-    |> unbox<MathUtility>
+    :?> MathUtility
 
-let setUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (onFlag:bool) (swApp: ISldWorks) =
-    swApp.SetUserPreferenceToggle(int toggle, onFlag)
+//let setUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (onFlag:bool) (swApp: ISldWorks) =
+//    swApp.SetUserPreferenceToggle(int toggle, onFlag)
 
-let getUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (swApp: ISldWorks) =
-    swApp.GetUserPreferenceToggle(int toggle)
+//let getUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (swApp: ISldWorks) =
+//    swApp.GetUserPreferenceToggle(int toggle)
 
-let setUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (value:float) (swApp: ISldWorks) =
-    swApp.SetUserPreferenceDoubleValue(int pref, value)
-    |> ignore
+//let setUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (value:float) (swApp: ISldWorks) =
+//    swApp.SetUserPreferenceDoubleValue(int pref, value)
+//    |> ignore
 
-let getUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (swApp: ISldWorks) =
-    swApp.GetUserPreferenceDoubleValue(int pref)
+//let getUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (swApp: ISldWorks) =
+//    swApp.GetUserPreferenceDoubleValue(int pref)
 
-let setUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (value:int) (swApp: ISldWorks) =
-    swApp.SetUserPreferenceIntegerValue(int pref, value)
-    |> ignore
+//let setUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (value:int) (swApp: ISldWorks) =
+//    swApp.SetUserPreferenceIntegerValue(int pref, value)
+//    |> ignore
 
-let getUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (swApp: ISldWorks) =
-    swApp.GetUserPreferenceIntegerValue(int pref)
+//let getUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (swApp: ISldWorks) =
+//    swApp.GetUserPreferenceIntegerValue(int pref)
 
-let setUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (value:string) (swApp: ISldWorks) =
-    swApp.SetUserPreferenceStringValue(int pref, value)
-    |> ignore
+//let setUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (value:string) (swApp: ISldWorks) =
+//    swApp.SetUserPreferenceStringValue(int pref, value)
+//    |> ignore
 
-let getUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (swApp: ISldWorks) =
-    swApp.GetUserPreferenceStringValue(int pref)
+//let getUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (swApp: ISldWorks) =
+//    swApp.GetUserPreferenceStringValue(int pref)
 
 //用默认模板新建一个零件文件
 let newPartDoc (swApp: ISldWorks) =
-    let dir =
-        swApp
-        |> getUserPreferenceStringValue swUserPreferenceStringValue_e.swDefaultTemplatePart
+    let p = SysUserPreference(swApp)
+
+    let dir = p.swDefaultTemplatePart
+        //swApp
+        //|> getUserPreferenceStringValue swUserPreferenceStringValue_e.swDefaultTemplatePart
+
     swApp
     |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
-    :?> PartDoc
 
 //用默认模板新建一个装配体文件
 let newAssemblyDoc (swApp: ISldWorks) =
-    let dir =
-        swApp
-        |> getUserPreferenceStringValue swUserPreferenceStringValue_e.swDefaultTemplateAssembly
+    let p = SysUserPreference(swApp)
+    let dir = p.swDefaultTemplateAssembly
+        //swApp
+        //|> getUserPreferenceStringValue swUserPreferenceStringValue_e.swDefaultTemplateAssembly
     swApp
     |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
-    :?> AssemblyDoc
 
 let sendMsgToUser2
     (message:string)
@@ -143,4 +145,4 @@ let sendMsgToUser2
 
 let defineAttribute (name:string) (swApp:ISldWorks) =
     swApp.DefineAttribute name
-    |> unbox<AttributeDef>
+    :?> AttributeDef

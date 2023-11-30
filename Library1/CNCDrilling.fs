@@ -30,7 +30,7 @@ let UserForm_Activate
     //Create an Attribute Definition here.
     let swAttDef =
         swApp.DefineAttribute ("pubMyFaceAttributeDef")
-        |> unbox<AttributeDef>
+        :?> AttributeDef
 
     swAttDef
     |>AttributeDefUtils.addParameter "FeedRate" swParamType_e.swParamTypeDouble 10.0
@@ -166,43 +166,43 @@ let cmdGenerateCNCCode_Click
     |> Seq.filter(fun swFeature -> swFeature.GetTypeName2() = "Attribute")
     |> Seq.map(fun swFeature ->
         swFeature.Select2(true, 0) |> ignore
-        let swAtt = swFeature.GetSpecificFeature2() |> unbox<Attribute>
+        let swAtt = swFeature.GetSpecificFeature2() :?> Attribute
 
         // Getting parameters from current attribute
         // let paramHoleDia: Parameter
         let paramHoleDia =
             swAtt
-            |> AttributeUtils.getParameter ("HoleDiameter")// |> unbox<Parameter>
+            |> AttributeUtils.getParameter ("HoleDiameter")// :?> Parameter
 
         //let paramFeedRate: Parameter
         let paramFeedRate =
             swAtt
-            |> AttributeUtils.getParameter("FeedRate") //|> unbox<Parameter>
+            |> AttributeUtils.getParameter("FeedRate") //:?> Parameter
 
         //let paramSpeedRate: Parameter
         let paramSpeedRate =
             swAtt
-            |> AttributeUtils.getParameter("SpeedRate") // |> unbox<Parameter>
+            |> AttributeUtils.getParameter("SpeedRate") // :?> Parameter
 
         //let paramXPos: Parameter
         let paramXPos =
             swAtt
-            |> AttributeUtils.getParameter("XPos") // |> unbox<Parameter>
+            |> AttributeUtils.getParameter("XPos") // :?> Parameter
 
         //let paramYPos: Parameter
         let paramYPos =
             swAtt
-            |> AttributeUtils.getParameter("YPos") // |> unbox<Parameter>
+            |> AttributeUtils.getParameter("YPos") // :?> Parameter
 
         //let paramZPos: Parameter
         let paramZPos =
             swAtt
-            |> AttributeUtils.getParameter("ZPos") // |> unbox<Parameter>
+            |> AttributeUtils.getParameter("ZPos") // :?> Parameter
 
         //let paramDepth: Parameter
         let paramDepth =
             swAtt
-            |> AttributeUtils.getParameter("Depth") // |> unbox<Parameter>
+            |> AttributeUtils.getParameter("Depth") // :?> Parameter
         {|
             paramHoleDia   = paramHoleDia  
             paramFeedRate  = paramFeedRate 

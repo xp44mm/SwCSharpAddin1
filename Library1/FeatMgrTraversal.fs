@@ -80,7 +80,7 @@ let pos
     =
     let swFeature = 
         swModel.FeatureByPositionReverse(2)
-        |> unbox<Feature>
+        :?> Feature
     let FeatName = swFeature.Name
     let FeatType = swFeature.GetTypeName2()
     swApp.SendMsgToUser($"Feature screen name = {FeatName};Feature type name = {FeatType}")

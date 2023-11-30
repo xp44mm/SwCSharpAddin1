@@ -37,4 +37,4 @@ let getLoopSeq (swSelFace:Face2) =
 
 let getSurface (swFace:Face2) =
     swFace.GetSurface()
-    |> unbox<Surface>
+    :?> Surface

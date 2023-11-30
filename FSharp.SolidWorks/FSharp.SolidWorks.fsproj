@@ -58,12 +58,12 @@
 		<Compile Include="MathUtilityUtils.fs" />
 		<Compile Include="MathPointUtils.fs" />
 		<Compile Include="Component2Utils.fs" />
+		<Compile Include="UserPreference.fs" />
 		<Compile Include="ConfigurationUtils.fs" />
 		<Compile Include="AssemblyDocUtils.fs" />
 		<Compile Include="PartDocUtils.fs" />
 		<Compile Include="ModelDoc2Utils.fs" />
 		<Compile Include="SldWorksUtils.fs" />
-		<Compile Include="UserPreferences.fs" />
 		<Compile Include="CutList.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
 		<Compile Include="CommandItemCollection.fs" />

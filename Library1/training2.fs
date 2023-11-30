@@ -32,11 +32,11 @@ let FILEDIR = @"D:\崔胜利\My SolidWorks\API Fundamentals\Lesson02 - Object Mo
 let sampleNote (text) (swModel: ModelDoc2) =
     let swNote =
         swModel.InsertNote(text)
-        |> unbox<INote>
+        :?> INote
 
     let swAnnotation =
         swNote.GetAnnotation()
-        |> unbox<IAnnotation>
+        :?> IAnnotation
 
     swAnnotation.SetPosition(0.01, 0.01, 0.0)
     |> ignore

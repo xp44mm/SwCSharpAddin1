@@ -18,4 +18,4 @@ open FSharp.SolidWorks
 
 let getParameter (nameIn:string) (swAtt:IAttribute) = 
     swAtt.GetParameter nameIn 
-    |> unbox<Parameter>
+    :?> Parameter

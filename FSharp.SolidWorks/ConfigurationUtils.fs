@@ -10,4 +10,4 @@ open System.IO
 
 let getRootComponent (swConf:IConfiguration)= 
     swConf.GetRootComponent()
-    |> unbox<Component2>
+    :?> Component2

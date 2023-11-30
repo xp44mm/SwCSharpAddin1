@@ -10,7 +10,7 @@ open System.IO
 
 let getModelDoc2 (swComp:Component2) = 
     swComp.GetModelDoc2() 
-    |> unbox<ModelDoc2>
+    :?> ModelDoc2
 
 let activeConfiguration (swComp:Component2) = 
     let swModel = swComp |> getModelDoc2

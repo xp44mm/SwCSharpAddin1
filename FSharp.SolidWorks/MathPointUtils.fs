@@ -17,4 +17,4 @@ open SolidWorksTools.File
 //不符合交换率
 let multiplyTransform (swCompTransform:MathTransform) (swMathPoint:MathPoint) = 
     swMathPoint.MultiplyTransform(swCompTransform) 
-    |> unbox<MathPoint>
+    :?> MathPoint

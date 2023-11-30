@@ -20,7 +20,7 @@ open FSharp.Idioms
 
 let testGetFeatures (swApp: ISldWorks) =
     let logfile = "d:/partmat.txt"
-    let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
+    let swModel = swApp.ActiveDoc :?> ModelDoc2
     if File.Exists(logfile) then File.Delete logfile
 
     swModel.FirstFeature()
@@ -33,7 +33,7 @@ let testGetFeatures (swApp: ISldWorks) =
 
 
 let testPipeBom (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
+    let swModel = swApp.ActiveDoc :?> ModelDoc2
 
     let logfile = "d:/pipeBom.txt"
 
@@ -51,7 +51,7 @@ let testPipeBom (swApp: ISldWorks) =
 let readSWPipeLength (swApp: ISldWorks) =
     let swModel = 
         swApp.ActiveDoc
-        |> unbox<ModelDoc2>
+        :?> ModelDoc2
 
     let config = swModel.ConfigurationManager.ActiveConfiguration
     let swCustPrpMgr = swModel.Extension.CustomPropertyManager(config.Name)
@@ -61,7 +61,7 @@ let readSWPipeLength (swApp: ISldWorks) =
 
 ///单个文件
 let detectCutLists (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
+    let swModel = swApp.ActiveDoc :?> ModelDoc2
 
     let logfile = "d:/detectCutLists.txt"
 
@@ -131,7 +131,7 @@ let testCutLists (swApp: ISldWorks) =
     |> swApp.CloseDoc
 
 let setPartWeldment (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
+    let swModel = swApp.ActiveDoc :?> ModelDoc2
     try
         CutList.setWeldmentUserPreference swModel
         swApp.SendMsgToUser "setPartWeldment OK!"

@@ -53,6 +53,21 @@ type SysUserPreference(swApp: ISldWorks) =
             swApp.SetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swBackupDirectory, v)
             |> ignore
 
+    member this.swDefaultTemplatePart
+        with get () =
+            swApp.GetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swDefaultTemplatePart)
+        and set v =
+            swApp.SetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swDefaultTemplatePart, v)
+            |> ignore
+
+    member this.swDefaultTemplateAssembly
+        with get () =
+            swApp.GetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swDefaultTemplateAssembly)
+        and set v =
+            swApp.SetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swDefaultTemplateAssembly, v)
+            |> ignore
+
+
     member this.swEdgesHiddenEdgeDisplay
         with get () =
             swApp.GetUserPreferenceIntegerValue(int swUserPreferenceIntegerValue_e.swEdgesHiddenEdgeDisplay)

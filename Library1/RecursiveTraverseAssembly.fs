@@ -13,12 +13,12 @@ type RecursiveTraverseAssembly(swApp: ISldWorks) =
     let logfile = "d:/RecursiveTraverseAssembly.txt"
 
     let traverseComponent (swComp:Component2) =
-        let getPipeInfo (swComp:Component2)  =
+        let getPipeInfo (swComp:Component2) =
             let swModel = 
                 swComp
                 |> Component2Utils.getModelDoc2
 
-                //|> unbox<ModelDoc2>
+                //:?> ModelDoc2
             let config = swModel.ConfigurationManager.ActiveConfiguration
             let swCustPrpMgr = swModel.Extension.CustomPropertyManager(config.Name)
             let prpName = "SWPipeLength"
@@ -66,15 +66,13 @@ type RecursiveTraverseAssembly(swApp: ISldWorks) =
         |> Seq.collect(loop 0)
         |> String.concat "\n"
 
-
     let TraverseComponentFeatures (swComp:Component2) (nLevel:int) =
-        let swFeat = swComp.FirstFeature() |> unbox<Feature>
+        let swFeat = swComp.FirstFeature()
         TraverseFeatureFeatures swFeat
 
     let TraverseModelFeatures (swModel:ModelDoc2) (nLevel:int) =
-        let swFeat = swModel.FirstFeature() |> unbox<Feature>
+        let swFeat = swModel.FirstFeature() :?> Feature
         TraverseFeatureFeatures swFeat
-
 
     member _.Main() =
         if File.Exists(logfile) then File.Delete logfile
@@ -89,7 +87,7 @@ type RecursiveTraverseAssembly(swApp: ISldWorks) =
             swConf
             |> ConfigurationUtils.getRootComponent
 
-        File.AppendAllText(logfile,$"File ={ swModel.GetPathName() }\n")
+        File.AppendAllText(logfile,$"File = {swModel.GetPathName()}\n")
         File.AppendAllText(logfile,$"{Component2Utils.renderComponent2 swRootComp}\n")
 
         traverseComponent swRootComp

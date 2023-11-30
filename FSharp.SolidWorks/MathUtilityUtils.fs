@@ -18,5 +18,5 @@ open SolidWorksTools.File
 let createPoint (arrayData:float[]) (swMathUtility:MathUtility) =
     //use the math point class to store these points
     swMathUtility.CreatePoint(arrayData)         //Create the mathpoint using the location data
-    |> unbox<MathPoint>
+    :?> MathPoint
 

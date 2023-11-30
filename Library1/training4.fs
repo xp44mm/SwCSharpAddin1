@@ -24,7 +24,8 @@ let newPart (swApp: ISldWorks) =
     let swModel = 
         swApp
         |> SldWorksUtils.newPartDoc
-    let docPref = DocUserPreference(swModel :?> IModelDoc2)
+
+    let docPref = DocUserPreference(swModel)
 
     //swModel :?> IModelDoc2
     //|> ModelDoc2Utils.setUserPreferenceInteger
@@ -35,9 +36,11 @@ let newPart (swApp: ISldWorks) =
 
     docPref.swUnitsLinear swUserPreferenceOption_e.swDetailingNoOptionSpecified <- (int swLengthUnit_e.swMM)
     //Turn off dimension dialogs
-    swApp
-    |> SldWorksUtils.setUserPreferenceToggle 
-        swUserPreferenceToggle_e.swInputDimValOnCreate false
+    let p = SysUserPreference(swApp)
+    p.swInputDimValOnCreate <- false
+    //swApp
+    //|> SldWorksUtils.setUserPreferenceToggle 
+    //    swUserPreferenceToggle_e.swInputDimValOnCreate false
 
     swModel
 
@@ -201,12 +204,12 @@ let featureExtrusion (depth:float) (swModel: IModelDoc2) =
     |> ignore
 
 let testRectExtrusionUsingSketch (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> ModelDoc2
+    let swModel = newPart swApp
     //drawSketch (drawRect 0.2 0.1) swModel swApp
     featureExtrusion 0.3 swModel
 
 let testCircleExtrusionUsingSketch (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> ModelDoc2
+    let swModel = newPart swApp
     //drawSketch (drawCircle 0.2) swModel swApp
     featureExtrusion 0.3 swModel
 
@@ -234,7 +237,7 @@ let featureRevolve (angle) (swModel: IModelDoc2) =
     |> ignore
 
 let testRectRevolveUsingSketch (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> IModelDoc2
+    let swModel = newPart swApp
     let draw (swModel) =
         drawRect 0.2 0.1 swModel
         //if Revolve was chosen, an axis of revolution is needed
@@ -245,7 +248,7 @@ let testRectRevolveUsingSketch (swApp: ISldWorks) =
     featureRevolve 90.0 swModel
 
 let testCircleRevolveUsingSketch (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> IModelDoc2
+    let swModel = newPart swApp
     let draw (swModel) =
         drawCircle 0.2 swModel
         //if Revolve was chosen, an axis of revolution is needed
@@ -282,7 +285,7 @@ let circleContour2 (radius:float) (swModel: IModelDoc2) =
     |> ignore
 
 let testRectContourExtrusion (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> IModelDoc2
+    let swModel = newPart swApp
     //drawSketch (drawRect 0.2 0.1) swModel swApp
     procContourSelection (rectContour1 0.1) swModel
     procContourSelection (rectContour2 0.1) swModel
@@ -290,7 +293,7 @@ let testRectContourExtrusion (swApp: ISldWorks) =
     featureExtrusion 0.3 swModel
 
 let testCircleContourExtrusion (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> IModelDoc2
+    let swModel = newPart swApp
     //drawSketch (drawCircle 0.1) swModel swApp
     let contour swModel =
         circleContour1 0.1 swModel
@@ -300,7 +303,7 @@ let testCircleContourExtrusion (swApp: ISldWorks) =
     featureExtrusion 0.3 swModel
 
 let testRectContourRevolve (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> IModelDoc2
+    let swModel = newPart swApp
     let draw (swModel) =
         drawRect 0.2 0.1 swModel
         //if Revolve was chosen, an axis of revolution is needed
@@ -315,7 +318,7 @@ let testRectContourRevolve (swApp: ISldWorks) =
     featureRevolve 90 swModel
 
 let testCircleContourRevolve (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> IModelDoc2
+    let swModel = newPart swApp
     let draw (swModel) =
         drawCircle 0.1 swModel
         //if Revolve was chosen, an axis of revolution is needed
@@ -331,7 +334,7 @@ let testCircleContourRevolve (swApp: ISldWorks) =
     featureRevolve 90 swModel
 
 let PartMaterial (swApp: ISldWorks) =
-    newPart swApp :?> IModelDoc2
+    newPart swApp
     |> PartMaterialProperty <| swApp
 
 let InsertSketchOnFront (swModel : ModelDoc2) =
@@ -349,7 +352,7 @@ let InsertSketchOnFront (swModel : ModelDoc2) =
 
 
 let profileRect (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> ModelDoc2
+    let swModel = newPart swApp
     swModel.SketchManager.AddToDB <- true
     
     swModel
@@ -362,7 +365,7 @@ let profileRect (swApp: ISldWorks) =
     swModel.ViewZoomtofit2()
 
 let profileCircle (swApp: ISldWorks) =
-    let swModel = newPart swApp :?> ModelDoc2
+    let swModel = newPart swApp
     swModel.SketchManager.AddToDB <- true
 
     swModel

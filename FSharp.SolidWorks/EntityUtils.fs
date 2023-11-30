@@ -18,4 +18,4 @@ open SolidWorksTools.File
 //get the component to the entity objects owning component
 let getComponent2 (ent:Entity) = 
     ent.GetComponent() 
-    |> unbox<Component2>
+    :?> Component2

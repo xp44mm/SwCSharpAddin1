@@ -27,7 +27,7 @@ let FILEDIR = LESSONDIR + @"Case Study\Guitar Effect Pedal\"
 let testSelectFace (swApp: ISldWorks) =
     let swModel = 
         swApp.ActiveDoc
-        |> unbox<ModelDoc2>
+        :?> ModelDoc2
 
     let swSelMgr = swModel.SelectionManager :?> SelectionMgr
   
@@ -42,7 +42,7 @@ let testSelectFace (swApp: ISldWorks) =
         let swSelFace =
             swSelMgr
             |> SelectionMgrUtils.getSelectedObject6 1 SelectionMgrUtils.Mark.All
-            |> unbox<Entity>
+            :?> Entity
         //Create a Safe Entity so we can select it when the face
         //becomes invalid
         let swSafeSelFace = swSelFace.GetSafeEntity()
@@ -53,7 +53,7 @@ let testSelectFace (swApp: ISldWorks) =
 let cmdAddComponentsAndMate_Click(swApp: ISldWorks) =
   let swModel = 
     swApp.ActiveDoc
-    |> unbox<ModelDoc2>
+    :?> ModelDoc2
 
   let swSelMgr = swModel.SelectionManager :?> SelectionMgr
   
@@ -66,7 +66,7 @@ let cmdAddComponentsAndMate_Click(swApp: ISldWorks) =
 let EstablishTargetComponentsTransform(swSafeSelFace:Entity) =
     let swComponent = 
         swSafeSelFace.GetComponent() //Set the component to the entity objects owning component
-        |> unbox<Component2>
+        :?> Component2
 
     //Set the forms swCompTransform member to store this transform for later use.
     let swCompTransform = swComponent.Transform2
@@ -119,7 +119,7 @@ let EstablishCircularCurveAndEdgeCollections(swSelFace:Face2) =
     |> Seq.map(fun swEdge ->
         //let swCurve = 
             swEdge.GetCurve() //Set the current curve object
-            |> unbox<Curve>
+            :?> Curve
             |> Pair.ofApp swEdge
         //swEdge,swCurve
     )
@@ -186,12 +186,12 @@ let EstablishPointsCollection (circularCurveCollection:Curve[])(swCompTransform:
             //use the math point class to store these points
             swMathUtility
             |> MathUtilityUtils.createPoint(arrayData)         //Create the mathpoint using the location data
-            //|> unbox<MathPoint>
+            //:?> MathPoint
 
         let swMathPoint = 
             swMathPoint
             |> MathPointUtils.multiplyTransform(swCompTransform) //Now multiply the math point by the Target component//s transform.
-            //|> unbox<MathPoint>
+            //:?> MathPoint
         swMathPoint
     [
         for circularCurve in circularCurveCollection do //For every circular curve get it's center point and multiply by the transform and add it to the collection.
