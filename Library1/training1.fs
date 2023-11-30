@@ -15,14 +15,15 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 open FSharp.SolidWorks
+open FSharp.SolidWorks.FeatureManagerUtils
 
 /// 画一个圆柱体
 let main(swApp: ISldWorks) =
-    let swModel = 
-        swApp.ActiveDoc 
+    let swModel =
+        swApp.ActiveDoc
         |> unbox<ModelDoc2>
 
-    let boolstatus = 
+    let boolstatus =
         swModel.Extension.SelectByID2("Front Plane", "PLANE", 0.0, 0.0, 0.0, false, 0, null, 0)
     swModel.SketchManager.InsertSketch true
     let skSegment = swModel.SketchManager.CreateCircleByRadius(0.0, 0.0, 0.0, 0.04)
@@ -30,7 +31,7 @@ let main(swApp: ISldWorks) =
     ()
 
 let exec (swApp: ISldWorks) =
-    let swModel = 
+    let swModel =
         swApp.ActiveDoc :?> ModelDoc2
 
     swModel
@@ -49,32 +50,18 @@ let exec (swApp: ISldWorks) =
     |> SketchManagerUtils.createCircleByRadius (0.0, 0.0, 0.0) 0.04
 
     swModel.FeatureManager
-    |> FeatureManagerUtils.featureExtrusion {|
-        sd              = true 
-        flip            = false
-        dir             = false
-        direction1      = {
-            t                = swEndConditions_e.swEndCondBlind
-            d                = 0.01
-            dchk             = false
-            ddir             = false
-            dang             = 1.74532925199433e-02
-            offsetReverse    = false
-            translateSurface = false
-        }
-        direction2      = {
-            t                = swEndConditions_e.swEndCondBlind
-            d                = 0.01
-            dchk             = false
-            ddir             = false
-            dang             = 1.74532925199433e-02
-            offsetReverse    = false
-            translateSurface = false
-        }
-        merge           = true 
-        useFeatScope    = true 
-        useAutoSelect   = true 
-        t0              = swStartConditions_e.swStartSketchPlane    
-        startOffset     = 0    
-        flipStartOffset = false
-    |}
+    |> FeatureManagerUtils.featureExtrusion {
+        sd = true
+        flip = false
+        dir = false
+        direction1 = {
+            EndCond = EndCond.Blind 0.01
+            Drafting = None }
+        direction2 = {
+            EndCond = EndCond.Blind 0.0
+            Drafting = None }
+        merge = true
+        useFeatScope = true
+        useAutoSelect = true
+        startCond = StartCondition.SketchPlane
+    }

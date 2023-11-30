@@ -151,12 +151,15 @@ let CustomPropsConfig
     //Set swApp = Application.SldWorks
     //Set swModel = swApp.ActiveDoc
     let density = 2700.0
-    swModel
-    |> ModelDoc2Utils.setUserPreferenceDouble
-        swUserPreferenceDoubleValue_e.swMaterialPropertyDensity
-        swUserPreferenceOption_e.swDetailingNoOptionSpecified
-        density
-    |> ignore
+    //swModel
+    //|> ModelDoc2Utils.setUserPreferenceDouble
+    //    swUserPreferenceDoubleValue_e.swMaterialPropertyDensity
+    //    swUserPreferenceOption_e.swDetailingNoOptionSpecified
+    //    density
+    //|> ignore
+
+    let docPref = DocUserPreference(swModel)
+    docPref.swMaterialPropertyDensity swUserPreferenceOption_e.swDetailingNoOptionSpecified <- density
 
     //let retval = 
     //    swModel.GetConfigurationNames()

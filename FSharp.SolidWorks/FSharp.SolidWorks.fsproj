@@ -63,6 +63,7 @@
 		<Compile Include="PartDocUtils.fs" />
 		<Compile Include="ModelDoc2Utils.fs" />
 		<Compile Include="SldWorksUtils.fs" />
+		<Compile Include="UserPreferences.fs" />
 		<Compile Include="CutList.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
 		<Compile Include="CommandItemCollection.fs" />

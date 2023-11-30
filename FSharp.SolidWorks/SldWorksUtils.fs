@@ -16,8 +16,6 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-open FSharp.SolidWorks
-
 let activeDoc (swApp: ISldWorks) =
     swApp.ActiveDoc
     |> unbox<ModelDoc2>

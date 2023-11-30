@@ -13,35 +13,74 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-type CommandItemInfo = {
-    hintString      :string
-    toolTip         :string
-    callbackFunction:string
-    enableMethod    :string
-    menuTBOption    :swCommandItemType_e
+type AddCommandItem2Params = {
+    Name : string
+    Position : int
+    HintString : string
+    ToolTip : string
+    ImageListIndex : int
+    CallbackFunction : string
+    EnableMethod : string
+    UserID : int
+    MenuTBOption : swCommandItemType_e
 }
-///1.回调函数名作为命令名;
-///2.位置为-1;
-///3.按index顺序值作为命令ID;
-///4.按index顺序值作为位图索引;
-type CommandItemCollection() =
-    let mutable ls:list<CommandItemInfo> = []
 
+type CommandItemCollection() =
+    let mutable ls:list<AddCommandItem2Params> = []
+
+    ///全参数添加
     member _.add(
+        name : string                      ,
+        position : int                     ,
+        hintString : string                ,
+        toolTip : string                   ,
+        imageListIndex : int               ,
+        callbackFunction : string          ,
+        enableMethod : string              ,
+        userID : int                       ,
+        menuTBOption : swCommandItemType_e ) =
+        let x = {
+            Name             = name             ;
+            Position         = position         ;
+            HintString       = hintString       ;
+            ToolTip          = toolTip          ;
+            ImageListIndex   = imageListIndex   ;
+            CallbackFunction = callbackFunction ;
+            EnableMethod     = enableMethod     ;
+            UserID           = userID           ;
+            MenuTBOption     = menuTBOption     ;
+        }
+        ls <- x::ls
+
+    member this.add(
         hintString       : string,
         toolTip          : string,
         callbackFunction : string,
         enableMethod     : string,
-        menuTBOption     : swCommandItemType_e
+        menuTBOption     : swCommandItemType_e ) =
+
+        this.add(
+            name             = callbackFunction , //.回调函数名作为命令名;
+            position         = -1 , //.位置为-1;
+            hintString       = hintString ,
+            toolTip          = toolTip ,
+            imageListIndex   = -1 ,
+            callbackFunction = callbackFunction ,
+            enableMethod     = enableMethod ,
+            userID           = -1 ,
+            menuTBOption     = menuTBOption )
+                
+    member this.add(
+        hintOrTip       : string,
+        callbackFunction : string
         ) =
-        let x = {
-            hintString       = hintString
-            toolTip          = toolTip
-            callbackFunction = callbackFunction
-            enableMethod     = enableMethod
-            menuTBOption     = menuTBOption
-        }
-        ls <- x::ls
+        this.add(
+        hintString       = hintOrTip,
+        toolTip          = hintOrTip,
+        callbackFunction = callbackFunction,
+        enableMethod     = "",
+        menuTBOption     = swCommandItemType_e.swMenuItem
+        )
 
     member this.getUserIDs() =
         ls
@@ -53,15 +92,15 @@ type CommandItemCollection() =
         |> List.rev
         |> List.iteri(fun i x ->
             cmdGroup.AddCommandItem2(
-                Name             = x.callbackFunction,
-                Position         = -1,
-                HintString       = x.hintString,
-                ToolTip          = x.toolTip,
-                ImageListIndex   = i,
-                CallbackFunction = x.callbackFunction,
-                EnableMethod     = x.enableMethod,
-                UserID           = i,
-                MenuTBOption     = int x.menuTBOption)
+                Name             = x.Name,
+                Position         = x.Position,
+                HintString       = x.HintString,
+                ToolTip          = x.ToolTip,
+                ImageListIndex   = i,///.按index顺序值作为命令ID;
+                CallbackFunction = x.CallbackFunction,
+                EnableMethod     = x.EnableMethod,
+                UserID           = i,///.按index顺序值作为位图索引;
+                MenuTBOption     = int x.MenuTBOption)
             |> ignore
         )
 

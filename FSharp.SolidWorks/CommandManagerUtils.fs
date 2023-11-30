@@ -13,11 +13,17 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-let ignorePreviousVersion (cmdGroupId:int) (cmdItemIDs:HashSet<int>) (iCmdMgr:ICommandManager) =
+let getIDsFromRegistry (cmdGroupId:int) (iCmdMgr:ICommandManager) =
     match iCmdMgr.GetGroupDataFromRegistry(cmdGroupId) with
     | true, userIDs ->        
-        cmdItemIDs.SetEquals(userIDs :?> seq<int>)
-    | _ -> false
+        userIDs :?> array<int>
+    | _ -> [||]
+
+//let ignorePreviousVersion (cmdGroupId:int) (cmdItemIDs:HashSet<int>) (iCmdMgr:ICommandManager) =
+//    match iCmdMgr.GetGroupDataFromRegistry(cmdGroupId) with
+//    | true, userIDs ->        
+//        cmdItemIDs.SetEquals(userIDs :?> seq<int>)
+//    | _ -> false
 
 ///命令组：菜单，工具栏共用
 let createCommandGroup2

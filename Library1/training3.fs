@@ -19,43 +19,56 @@ open FSharp.SolidWorks
 
 
 let systemOptions(swApp: ISldWorks) =
-    swApp
-    |> SldWorksUtils.setUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate true
+    let sysPref = SysUserPreference(swApp)
 
-    swApp
-    |> SldWorksUtils.getUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate
+    //swApp
+    //|> SldWorksUtils.setUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate true
+    sysPref.swInputDimValOnCreate <- true
+
+    //swApp
+    //|> SldWorksUtils.getUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate
+    sysPref.swInputDimValOnCreate
     |> sprintf "%b"
     |> swApp.SendMsgToUser
 
-    swApp
-    |> SldWorksUtils.setUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate true
+    //swApp
+    //|> SldWorksUtils.setUserPreferenceDoubleValue swUserPreferenceDoubleValue_e.swDrawingDetailViewScale 1.5
 
-    swApp
-    |> SldWorksUtils.setUserPreferenceDoubleValue swUserPreferenceDoubleValue_e.swDrawingDetailViewScale 1.5
+    //swApp
+    //|> SldWorksUtils.getUserPreferenceDoubleValue swUserPreferenceDoubleValue_e.swDrawingDetailViewScale
 
-    swApp
-    |> SldWorksUtils.getUserPreferenceDoubleValue swUserPreferenceDoubleValue_e.swDrawingDetailViewScale
+    sysPref.swDrawingDetailViewScale <- 1.5
+
+    sysPref.swDrawingDetailViewScale
     |> sprintf "%f"
     |> swApp.SendMsgToUser
 
     let viewportColor = Color.FromArgb(128, 255, 128).ToArgb()
-    swApp
-    |> SldWorksUtils.setUserPreferenceIntegerValue swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground viewportColor
-    |> ignore
 
-    swApp
-    |> SldWorksUtils.getUserPreferenceIntegerValue swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground
+    //swApp
+    //|> SldWorksUtils.setUserPreferenceIntegerValue swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground viewportColor
+    //|> ignore
+
+    //swApp
+    //|> SldWorksUtils.getUserPreferenceIntegerValue swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground
+    sysPref.swSystemColorsViewportBackground <- viewportColor
+
+    sysPref.swSystemColorsViewportBackground
     |> sprintf "%d"
     |> swApp.SendMsgToUser
 
     let value = @"C:\Temp"
 
-    swApp
-    |> SldWorksUtils.setUserPreferenceStringValue swUserPreferenceStringValue_e.swBackupDirectory value
-    |> ignore
+    //swApp
+    //|> SldWorksUtils.setUserPreferenceStringValue swUserPreferenceStringValue_e.swBackupDirectory value
+    //|> ignore
 
-    swApp
-    |> SldWorksUtils.getUserPreferenceStringValue swUserPreferenceStringValue_e.swBackupDirectory
+    //swApp
+    //|> SldWorksUtils.getUserPreferenceStringValue swUserPreferenceStringValue_e.swBackupDirectory
+
+    sysPref.swBackupDirectory <- value
+
+    sysPref.swBackupDirectory
     |> swApp.SendMsgToUser
 
     swApp
@@ -68,10 +81,16 @@ let systemOptions(swApp: ISldWorks) =
     //
     // 0 = Slow
     // 100 = Fast
-    swApp
-    |> SldWorksUtils.setUserPreferenceIntegerValue
-        swUserPreferenceIntegerValue_e.swViewRotationMouseSpeed 50
-    |> ignore
+    //swApp
+    //|> SldWorksUtils.setUserPreferenceIntegerValue
+    //    swUserPreferenceIntegerValue_e.swViewRotationMouseSpeed 50
+    //|> ignore
+
+    sysPref.swViewRotationMouseSpeed <- 50
+
+    sysPref.swViewRotationMouseSpeed
+    |> sprintf "swViewRotationMouseSpeed:%d"
+    |> swApp.SendMsgToUser
 
     // View Rotation - ViewAnimationSpeed
     // 0 = Off
@@ -86,21 +105,31 @@ let systemOptions(swApp: ISldWorks) =
         swUserPreferenceDoubleValue_e.swViewAnimationSpeed 2.0
     |> ignore
 
+    sysPref.swViewAnimationSpeed <- 2.0
+
+    sysPref.swViewAnimationSpeed
+    |> sprintf "swViewAnimationSpeed:%f"
+    |> swApp.SendMsgToUser
+
 /// 先打开一个文档，再运行宏
 let documentProperties (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc |> unbox<ModelDoc2>
+    let swModel = swApp.ActiveDoc :?> ModelDoc2
 
-    swModel
-    |> ModelDoc2Utils.setUserPreferenceToggle
-        swUserPreferenceToggle_e.swDetailingDualDimensions
-        swUserPreferenceOption_e.swDetailingDimension
-        true
-    |> ignore
+    let docPref = DocUserPreference(swModel)
 
-    swModel
-    |> ModelDoc2Utils.getUserPreferenceToggle
-        swUserPreferenceToggle_e.swDetailingDualDimensions
-        swUserPreferenceOption_e.swDetailingDimension
+    docPref.swDetailingDualDimensions(swUserPreferenceOption_e.swDetailingDimension) <- true
+    docPref.swDetailingDualDimensions(swUserPreferenceOption_e.swDetailingDimension)
+    //swModel
+    //|> ModelDoc2Utils.setUserPreferenceToggle
+    //    swUserPreferenceToggle_e.swDetailingDualDimensions
+    //    swUserPreferenceOption_e.swDetailingDimension
+    //    true
+    //|> ignore
+
+    //swModel
+    //|> ModelDoc2Utils.getUserPreferenceToggle
+    //    swUserPreferenceToggle_e.swDetailingDualDimensions
+    //    swUserPreferenceOption_e.swDetailingDimension
     |> sprintf "%b"
     |> swApp.SendMsgToUser
 

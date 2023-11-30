@@ -34,18 +34,19 @@ let selectByID2 name selecttype (x,y,z) append mark (selectOption:swSelectOption
     |> ignore
 
 let selectByID
-    (cfg:{|
+    (w:{|
     name        :string;
     stype       :string;
     location    :float*float*float;
     append      :bool;
     mark        :int;
-    selectOption:swSelectOption_e
-    |})
+    selectOption:swSelectOption_e;
+    |}) 
     (swModel: IModelDoc2) =
+
     let callout:Callout = null
-    let x,y,z = cfg.location
-    swModel.Extension.SelectByID2(cfg.name, cfg.stype, x, y, z, cfg.append, cfg.mark, callout,int cfg.selectOption)
+    let x,y,z = w.location
+    swModel.Extension.SelectByID2(w.name, w.stype, x, y, z, w.append, w.mark, callout,int w.selectOption)
     |> ignore
 
 let deSelectByID
@@ -69,29 +70,36 @@ let getSelectionMgr (swModel: IModelDoc2) =
 let partfile (swModel: IModelDoc2) =
     Path.GetFileNameWithoutExtension(swModel.GetTitle())
 
-let setUserPreferenceToggle (userPref:swUserPreferenceToggle_e) (userPrefOption:swUserPreferenceOption_e) (value:bool) (swModel:IModelDoc2) =
-    swModel.Extension.SetUserPreferenceToggle(int userPref,int userPrefOption,value)
+//let setUserPreferenceToggle 
+//    (userPref:swUserPreferenceToggle_e) 
+//    (userPrefOption:swUserPreferenceOption_e) 
+//    (value:bool) 
+//    (swModel:IModelDoc2) =
+//    swModel.Extension.SetUserPreferenceToggle(int userPref,int userPrefOption,value)
 
-let getUserPreferenceToggle (userPref:swUserPreferenceToggle_e) (userPrefOption:swUserPreferenceOption_e) (swModel:IModelDoc2) =
-    swModel.Extension.GetUserPreferenceToggle(int userPref, int userPrefOption)
+//let getUserPreferenceToggle 
+//    (userPref:swUserPreferenceToggle_e) 
+//    (userPrefOption:swUserPreferenceOption_e) 
+//    (swModel:IModelDoc2) =
+//    swModel.Extension.GetUserPreferenceToggle(int userPref, int userPrefOption)
 
-let setUserPreferenceInteger (userPref:swUserPreferenceIntegerValue_e) (userPrefOption:swUserPreferenceOption_e) (value:int) (swModel: IModelDoc2) =
-    swModel.Extension.SetUserPreferenceInteger(
-        int userPref,int userPrefOption,value)
-    |> ignore
+//let setUserPreferenceInteger (userPref:swUserPreferenceIntegerValue_e) (userPrefOption:swUserPreferenceOption_e) (value:int) (swModel: IModelDoc2) =
+//    swModel.Extension.SetUserPreferenceInteger(
+//        int userPref,int userPrefOption,value)
+//    |> ignore
 
-let getUserPreferenceInteger (userPref:swUserPreferenceIntegerValue_e) (userPrefOption:swUserPreferenceOption_e) (swModel: IModelDoc2) =
-    swModel.Extension.GetUserPreferenceInteger(
-        int userPref,int userPrefOption)
+//let getUserPreferenceInteger (userPref:swUserPreferenceIntegerValue_e) (userPrefOption:swUserPreferenceOption_e) (swModel: IModelDoc2) =
+//    swModel.Extension.GetUserPreferenceInteger(
+//        int userPref,int userPrefOption)
 
-let setUserPreferenceDouble (userPref:swUserPreferenceDoubleValue_e) (userPrefOption:swUserPreferenceOption_e) (value:float) (swModel: IModelDoc2) =
-    swModel.Extension.SetUserPreferenceDouble(
-        int userPref, int userPrefOption,value)
-    |> ignore
+//let setUserPreferenceDouble (userPref:swUserPreferenceDoubleValue_e) (userPrefOption:swUserPreferenceOption_e) (value:float) (swModel: IModelDoc2) =
+//    swModel.Extension.SetUserPreferenceDouble(
+//        int userPref, int userPrefOption,value)
+//    |> ignore
 
-let getUserPreferenceDouble (userPref:swUserPreferenceDoubleValue_e) (userPrefOption:swUserPreferenceOption_e) (swModel: IModelDoc2) =
-    swModel.Extension.GetUserPreferenceDouble(
-        int userPref, int userPrefOption)
+//let getUserPreferenceDouble (userPref:swUserPreferenceDoubleValue_e) (userPrefOption:swUserPreferenceOption_e) (swModel: IModelDoc2) =
+//    swModel.Extension.GetUserPreferenceDouble(
+//        int userPref, int userPrefOption)
 
 let setToolbarVisibility (tb:swToolbar_e) (visible:bool) (swModel:IModelDoc2) =
     swModel.SetToolbarVisibility(int tb,visible)

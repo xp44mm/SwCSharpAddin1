@@ -14,76 +14,138 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-type DirectionExtrusion =
-    {
-        t : swEndConditions_e //改为可区分联合
-        d : float
-        dchk : bool
-        ddir : bool
-        dang : float
-        offsetReverse : bool
-        translateSurface : bool
-    }
+// swStartConditions_e
+type StartCondition =
+    | Offset of StartOffset:float * FlipStartOffset: bool
+    | SketchPlane
+    | Surface
+    | Vertex
 
-type DirectionRevolve = {
-    dirType       :swEndConditions_e
-    dirAngle      :float
-    offsetReverse :bool
-    offsetDistance:float
-    thinThickness :float
+    member this.getT0() =
+        match this with
+        | Offset _    -> swStartConditions_e.swStartOffset
+        | SketchPlane -> swStartConditions_e.swStartSketchPlane
+        | Surface     -> swStartConditions_e.swStartSurface
+        | Vertex      -> swStartConditions_e.swStartVertex
+
+    member this.getOffsetParams() =
+        match this with
+        | Offset (startOffset, flipStartOffset) ->
+            startOffset,flipStartOffset
+        | _ ->
+            0.0, false
+
+// swEndConditions_e
+type EndCond =
+    | Blind of depth:float
+    | MidPlane of depth:float
+    | OffsetFromSurface of offset:float*OffsetReverse:bool*TranslateSurface:bool
+    | ThroughAll
+    | ThroughAllBoth
+    | ThroughNext
+    | UpToBody
+    | UpToNext
+    | UpToSelection
+
+    member this.getT () =
+        match this with
+        | Blind _             -> swEndConditions_e.swEndCondBlind
+        | MidPlane _          -> swEndConditions_e.swEndCondMidPlane
+        | OffsetFromSurface _ -> swEndConditions_e.swEndCondOffsetFromSurface
+        | ThroughAll          -> swEndConditions_e.swEndCondThroughAll
+        | ThroughAllBoth      -> swEndConditions_e.swEndCondThroughAllBoth
+        | ThroughNext         -> swEndConditions_e.swEndCondThroughNext
+        | UpToBody            -> swEndConditions_e.swEndCondUpToBody
+        | UpToNext            -> swEndConditions_e.swEndCondUpToNext
+        | UpToSelection       -> swEndConditions_e.swEndCondUpToSelection
+
+    member this.getOffsetParams () =
+        match this with
+        | Blind d | MidPlane d ->
+            d,false,false
+        | OffsetFromSurface(offset,offsetReverse, translateSurface) -> 
+            offset,offsetReverse,translateSurface
+        | _ -> 
+            0.0,false,false
+
+type Drafting = {
+    Ddir : bool
+    Dang : float
 }
 
+type DirectionExtrusionParams =
+    {
+        EndCond: EndCond
+        Drafting: option<Drafting>
+    }
+
+    member this.toTuple() =
+        let t = this.EndCond.getT()
+        let d,offsetReverse, translateSurface =
+            this.EndCond.getOffsetParams()
+        let Dchk = this.Drafting.IsSome
+        let Ddir,Dang =
+            match this.Drafting with 
+            | Some df -> df.Ddir,df.Dang 
+            | _ -> false,0.0
+        t,d,offsetReverse,translateSurface,Dchk,Ddir,Dang
+
+type ExtrusionParams = {
+    sd: bool
+    flip: bool
+    dir: bool
+    direction1: DirectionExtrusionParams
+    direction2: DirectionExtrusionParams
+    merge: bool
+    useFeatScope: bool
+    useAutoSelect: bool
+    startCond: StartCondition
+    }
+
 // https://help.solidworks.com/2023/english/api/sldworksapi/SolidWorks.Interop.sldworks~SolidWorks.Interop.sldworks.IFeatureManager~FeatureExtrusion3.html
-let featureExtrusion3
-    (sd: bool)
-    (flip: bool)
-    (dir: bool)
-    (direction1: DirectionExtrusion)
-    (direction2: DirectionExtrusion)
-    (merge: bool)
-    (useFeatScope: bool)
-    (useAutoSelect: bool)
-    (t0: swStartConditions_e)
-    (startOffset: float)
-    (flipStartOffset: bool)
-    (mgr: IFeatureManager)
-    : Feature =
+let featureExtrusion (w: ExtrusionParams) (mgr: IFeatureManager) =
+    let t1,d1,offsetReverse1,translateSurface1,Dchk1,Ddir1,Dang1 =
+        w.direction1.toTuple()
 
-    let {
-        t=t1
-        d=d1
-        dchk=dchk1
-        ddir=ddir1
-        dang=dang1
-        offsetReverse=offsetReverse1
-        translateSurface=translateSurface1
-    } = direction1
+    let t2,d2,offsetReverse2,translateSurface2,Dchk2,Ddir2,Dang2 =
+        w.direction2.toTuple()
 
-    let {
-        t=t2
-        d=d2
-        dchk=dchk2
-        ddir=ddir2
-        dang=dang2
-        offsetReverse=offsetReverse2
-        translateSurface=translateSurface2
-    } = direction2
+    let StartOffset,FlipStartOffset =
+        w.startCond.getOffsetParams()
 
-    mgr.FeatureExtrusion3(
-        sd, flip, dir,
-        int t1, int t2,
-        d1, d2,
-        dchk1, dchk2,
-        ddir1, ddir2,
-        dang1, dang2,
-        offsetReverse1, offsetReverse2,
-        translateSurface1, translateSurface2,
-        merge,
-        useFeatScope,
-        useAutoSelect,
-        int t0,
-        startOffset,
-        flipStartOffset)
+    mgr.FeatureExtrusion3 (
+        Sd = w.sd ,
+        Flip = w.flip ,
+        Dir = w.dir ,
+        T1 = int t1 ,
+        T2 = int t2 ,
+        D1 = d1 ,
+        D2 = d2 ,
+        Dchk1 = Dchk1 ,
+        Dchk2 = Dchk2 ,
+        Ddir1 = Ddir1 ,
+        Ddir2 = Ddir2 ,
+        Dang1 = Dang1 ,
+        Dang2 = Dang2 ,
+        OffsetReverse1 = offsetReverse1 ,
+        OffsetReverse2 = offsetReverse2 ,
+        TranslateSurface1 = translateSurface1 ,
+        TranslateSurface2 = translateSurface2 ,
+        Merge = w.merge ,
+        UseFeatScope = w.useFeatScope ,
+        UseAutoSelect = w.useAutoSelect ,
+        T0 = int (w.startCond.getT0()) ,
+        StartOffset = StartOffset ,
+        FlipStartOffset = FlipStartOffset
+        )
+
+type DirectionRevolve = {
+    dirType        : swEndConditions_e
+    dirAngle       : float
+    offsetReverse  : bool
+    offsetDistance : float
+    thinThickness  : float
+}
 
 //type
 let featureRevolve2
@@ -135,53 +197,3 @@ let featureRevolve2
         useFeatScope,
         useAutoSelect
         )
-
-let featureExtrusion (c:{|
-    sd: bool                      
-    flip: bool                    
-    dir: bool                     
-    direction1: DirectionExtrusion
-    direction2: DirectionExtrusion
-    merge: bool                   
-    useFeatScope: bool            
-    useAutoSelect: bool           
-    t0: swStartConditions_e       
-    startOffset: float            
-    flipStartOffset: bool
-    |})
-    (mgr: IFeatureManager)
-    =
-    let {
-        t=t1
-        d=d1
-        dchk=dchk1
-        ddir=ddir1
-        dang=dang1
-        offsetReverse=offsetReverse1
-        translateSurface=translateSurface1
-    } = c.direction1
-    let {
-        t=t2
-        d=d2
-        dchk=dchk2
-        ddir=ddir2
-        dang=dang2
-        offsetReverse=offsetReverse2
-        translateSurface=translateSurface2
-    } = c.direction2
-    mgr.FeatureExtrusion3(
-        c.sd, c.flip, c.dir,
-        int t1, int t2,
-        d1, d2,
-        dchk1, dchk2,
-        ddir1, ddir2,
-        dang1, dang2,
-        offsetReverse1, offsetReverse2,
-        translateSurface1, translateSurface2,
-        c.merge,
-        c.useFeatScope,
-        c.useAutoSelect,
-        int c.t0,
-        c.startOffset,
-        c.flipStartOffset)
-    |> ignore

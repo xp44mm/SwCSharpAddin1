@@ -45,5 +45,24 @@ let sketchOffset2
         addDimensions)
     |> ignore
 
+let sketchOffset (w:{|
+    offset : float
+    bothDirections : bool
+    chain : bool
+    capEnds : swSkOffsetCapEndType_e
+    makeConstruction :swSkOffsetMakeConstructionType_e
+    addDimensions : bool
+    |})
+    (mgr:ISketchManager) =
+    match 
+        mgr.SketchOffset2(
+            w.offset,
+            w.bothDirections,
+            w.chain,
+            int w.capEnds,
+            int w.makeConstruction,
+            w.addDimensions)
+    with true -> () | _ -> failwith "mgr.SketchOffset2"
+
 let createCornerRectangle (x1,y1,z1) (x2,y2,z2) (mgr:ISketchManager) =
     mgr.CreateCornerRectangle(x1, y1, z1, x2, y2, z2)

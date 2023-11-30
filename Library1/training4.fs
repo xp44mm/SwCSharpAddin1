@@ -18,29 +18,22 @@ open SolidWorksTools.File
 
 open FSharp.Idioms.Literal
 open FSharp.SolidWorks
-
-let testPartMat (swModel: IModelDoc2) (swApp: ISldWorks) =
-    let setPartMat (mat:string) =
-        let swPart = swModel :?> IPartDoc
-        /// 设置零件，当前配置，当前材料数据库
-        swPart.SetMaterialPropertyName2("", "", mat)
-        let mat1,db1 = swPart.GetMaterialPropertyName2 ""
-        swApp.SendMsgToUser $"{mat1},{db1}"
-
-    setPartMat "1060 Alloy"
-    setPartMat "Brass"
+open FSharp.SolidWorks.FeatureManagerUtils
 
 let newPart (swApp: ISldWorks) =
     let swModel = 
         swApp
         |> SldWorksUtils.newPartDoc
+    let docPref = DocUserPreference(swModel :?> IModelDoc2)
 
-    swModel :?> IModelDoc2
-    |> ModelDoc2Utils.setUserPreferenceInteger
-        swUserPreferenceIntegerValue_e.swUnitsLinear
-        swUserPreferenceOption_e.swDetailingNoOptionSpecified
-        (int swLengthUnit_e.swMM)
+    //swModel :?> IModelDoc2
+    //|> ModelDoc2Utils.setUserPreferenceInteger
+    //    swUserPreferenceIntegerValue_e.swUnitsLinear
+    //    swUserPreferenceOption_e.swDetailingNoOptionSpecified
+    //    (int swLengthUnit_e.swMM)
 
+
+    docPref.swUnitsLinear swUserPreferenceOption_e.swDetailingNoOptionSpecified <- (int swLengthUnit_e.swMM)
     //Turn off dimension dialogs
     swApp
     |> SldWorksUtils.setUserPreferenceToggle 
@@ -48,24 +41,29 @@ let newPart (swApp: ISldWorks) =
 
     swModel
 
-/// draw skech PROFILE
-let drawSketch draw (swModel: IModelDoc2) (swApp: ISldWorks) =
-    swModel.SketchManager.AddToDB <- true
-    //PROFILE
-    let boolstatus = 
-        swModel
-        |> ModelDoc2Utils.selectByID2 "Front Plane" "PLANE" (0.0, 0.0, 0.0) false 0 swSelectOption_e.swSelectOptionDefault
-    swModel.SketchManager.InsertSketch false
+let PartMaterialProperty (swModel: IModelDoc2) (swApp: ISldWorks) =
+    let setPartMat (mat:string) =
+        let swPart = swModel :?> IPartDoc
+        swPart.SetMaterialPropertyName2(
+            ConfigName = "", // 当前配置
+            Database   = "", // 当前材料数据库
+            Name       = mat
+            )
+        let mat1,db1 = 
+            swPart.GetMaterialPropertyName2 (
+                ConfigName = ""
+            )
+        swApp.SendMsgToUser $"{mat1},{db1}"
 
-    draw swModel
-    swModel.SketchManager.AddToDB <- false
-    //swModel.ViewZoomtofit2()
+    setPartMat "1060 Alloy"
+    setPartMat "Brass"
 
 //画个矩形带标注
 let drawRect height width (swModel: IModelDoc2) =
     let SketchSegmentObj = 
         swModel.SketchManager
         |> SketchManagerUtils.createLine (0.05, 0.05, 0.0) (0.05, 0.05 + height, 0.0)
+    swModel.SketchAddConstraints "sgVERTICAL2D"
 
     //Add a dimension to the selected entity
     swModel
@@ -73,30 +71,47 @@ let drawRect height width (swModel: IModelDoc2) =
     |> ignore
 
     swModel.SketchManager
-    |> SketchManagerUtils.createLine(0.05, 0.05 + height, 0.0) ( 0.05 + width, 0.05 + height, 0.0)
+    |> SketchManagerUtils.createLine (0.05, 0.05 + height, 0.0) ( 0.05 + width, 0.05 + height, 0.0)
     |> ignore
+    swModel.SketchAddConstraints "sgHORIZONTAL2D"
 
     swModel.SketchManager
-    |> SketchManagerUtils.createLine(0.05 + width, 0.05 + height, 0.0) (0.05 + width, 0.05, 0.0)
+    |> SketchManagerUtils.createLine (0.05 + width, 0.05 + height, 0.0) (0.05 + width, 0.05, 0.0)
     |> ignore
+    swModel.SketchAddConstraints "sgVERTICAL2D"
 
     swModel.SketchManager
-    |> SketchManagerUtils.createLine(0.05 + width, 0.05, 0.0) (0.05, 0.05, 0.0)
+    |> SketchManagerUtils.createLine (0.05 + width, 0.05, 0.0) (0.05, 0.05, 0.0)
     |> ignore
+    swModel.SketchAddConstraints "sgHORIZONTAL2D"
 
     swModel
-    |> ModelDoc2Utils.addDimension(0.05 + width / 2.0, 0.0, 0.0) swSmartDimensionDirection_e.swSmartDimensionDirection_Down
+    |> ModelDoc2Utils.addDimension (0.05 + width / 2.0, 0.0, 0.0) swSmartDimensionDirection_e.swSmartDimensionDirection_Down
     |> ignore
 
     swModel.ClearSelection2 true
 
     //Select the origin
     swModel
-    |> ModelDoc2Utils.selectByID2 "" "EXTSKETCHPOINT" (0.0, 0.0, 0.0) false 0 swSelectOption_e.swSelectOptionDefault
+    |> ModelDoc2Utils.selectByID {| 
+        name         = "" 
+        stype        = "EXTSKETCHPOINT" 
+        location     = (0.0, 0.0, 0.0) 
+        append       = false 
+        mark         = 0 
+        selectOption = swSelectOption_e.swSelectOptionDefault
+    |} 
 
     //Select an end point on the profile
     swModel
-    |> ModelDoc2Utils.selectByID2 "" "SKETCHPOINT" (0.05, 0.05, 0.0) true 0 swSelectOption_e.swSelectOptionDefault
+    |> ModelDoc2Utils.selectByID {|
+        name         = "" 
+        stype        = "SKETCHPOINT" 
+        location     = (0.05, 0.05, 0.0) 
+        append       = true 
+        mark         = 0 
+        selectOption = swSelectOption_e.swSelectOptionDefault
+    |} 
 
     //Add a vertical dimension
     swModel.AddVerticalDimension2(0, 0.025, 0.0)
@@ -106,12 +121,25 @@ let drawRect height width (swModel: IModelDoc2) =
 
     //Select the origin
     swModel
-    |> ModelDoc2Utils.selectByID2 "" "EXTSKETCHPOINT" (0.0, 0.0, 0.0) false 0 swSelectOption_e.swSelectOptionDefault
+    |> ModelDoc2Utils.selectByID {| 
+        name         = "" 
+        stype        = "EXTSKETCHPOINT" 
+        location     = (0.0, 0.0, 0.0) 
+        append       = false 
+        mark         = 0 
+        selectOption = swSelectOption_e.swSelectOptionDefault
+    |} 
 
     //Select an end point on the profile
     swModel
-    |> ModelDoc2Utils.selectByID2 "" "SKETCHPOINT" (0.05, 0.05, 0.0) true 0 swSelectOption_e.swSelectOptionDefault
-    //|> ignore
+    |> ModelDoc2Utils.selectByID {|
+        name         = "" 
+        stype        = "SKETCHPOINT" 
+        location     = (0.05, 0.05, 0.0) 
+        append       = true 
+        mark         = 0 
+        selectOption = swSelectOption_e.swSelectOptionDefault
+    |} 
 
     //Add a horizontal dimension
     //to fully constrain the sketch
@@ -121,16 +149,20 @@ let drawRect height width (swModel: IModelDoc2) =
     swModel.ClearSelection2 true
 
     //Select a profile edge
-    SketchSegmentObj.Select4(false, null)
+    SketchSegmentObj.Select4(Append = false, Data = null)
     |> ignore
 
     //Create the offset sketch profile from the selected edge
     //and its chain of sketch entities
     swModel.SketchManager
-    |> SketchManagerUtils.sketchOffset2 0.002 false true
-        swSkOffsetCapEndType_e.swSkOffsetArcCaps
-        swSkOffsetMakeConstructionType_e.swSkOffsetDontMakeConstruction
-        false
+    |> SketchManagerUtils.sketchOffset {|
+        offset = 0.002 
+        bothDirections = false 
+        chain = true
+        capEnds = swSkOffsetCapEndType_e.swSkOffsetArcCaps
+        makeConstruction = swSkOffsetMakeConstructionType_e.swSkOffsetDontMakeConstruction
+        addDimensions = false
+    |}
 
 //else
 let drawCircle (radius:float) (swModel: IModelDoc2) =
@@ -139,53 +171,43 @@ let drawCircle (radius:float) (swModel: IModelDoc2) =
     |> ignore
 
     swModel.SketchManager
-    |> SketchManagerUtils.sketchOffset2 0.002 false true
-        swSkOffsetCapEndType_e.swSkOffsetArcCaps
-        swSkOffsetMakeConstructionType_e.swSkOffsetDontMakeConstruction
-        false
+    |> SketchManagerUtils.sketchOffset {|
+        offset = 0.002 
+        bothDirections = false 
+        chain = true
+        capEnds = swSkOffsetCapEndType_e.swSkOffsetArcCaps
+        makeConstruction = swSkOffsetMakeConstructionType_e.swSkOffsetDontMakeConstruction
+        addDimensions = false
+    |}  
     |> ignore
-
-//let testDrawRect (swApp: ISldWorks) =
-//    let swModel = newPart swApp
-//    drawSketch (drawRect 0.2 0.1) swModel swApp
-
-//let testDrawCirc (swApp: ISldWorks) =
-//    let swModel = newPart swApp
-//    drawSketch (drawCircle 0.2) swModel swApp
 
 let featureExtrusion (depth:float) (swModel: IModelDoc2) =
     swModel.FeatureManager
-    |> FeatureManagerUtils.featureExtrusion3 true false true
-        {
-            t = swEndConditions_e.swEndCondBlind
-            d = depth
-            dchk = false
-            ddir = false
-            dang = 0.0   
-            offsetReverse = false
-            translateSurface = false
-        }
-        {
-            t = swEndConditions_e.swEndCondBlind     
-            d = 0
-            dchk = false
-            ddir = false
-            dang = 0.0   
-            offsetReverse = false
-            translateSurface = false
-        }
-        false false false
-        swStartConditions_e.swStartSketchPlane 0.0 false
+    |> FeatureManagerUtils.featureExtrusion {
+        sd = true
+        flip = false
+        dir = true
+        direction1 = { 
+            EndCond = EndCond.Blind depth
+            Drafting = None } 
+        direction2 = { 
+            EndCond = EndCond.Blind 0.0 
+            Drafting = None } 
+        merge = false 
+        useFeatScope = false 
+        useAutoSelect = false 
+        startCond = StartCondition.SketchPlane
+    }
     |> ignore
 
 let testRectExtrusionUsingSketch (swApp: ISldWorks) =
     let swModel = newPart swApp :?> ModelDoc2
-    drawSketch (drawRect 0.2 0.1) swModel swApp
+    //drawSketch (drawRect 0.2 0.1) swModel swApp
     featureExtrusion 0.3 swModel
 
 let testCircleExtrusionUsingSketch (swApp: ISldWorks) =
     let swModel = newPart swApp :?> ModelDoc2
-    drawSketch (drawCircle 0.2) swModel swApp
+    //drawSketch (drawCircle 0.2) swModel swApp
     featureExtrusion 0.3 swModel
 
 let featureRevolve (angle) (swModel: IModelDoc2) =
@@ -219,7 +241,7 @@ let testRectRevolveUsingSketch (swApp: ISldWorks) =
         swModel.SketchManager
         |> SketchManagerUtils.createCenterLine(0., 0., 0.)(0., 0.05, 0.)
         |> ignore
-    drawSketch draw swModel swApp
+    //drawSketch draw swModel swApp
     featureRevolve 90.0 swModel
 
 let testCircleRevolveUsingSketch (swApp: ISldWorks) =
@@ -230,7 +252,7 @@ let testCircleRevolveUsingSketch (swApp: ISldWorks) =
         swModel.SketchManager
         |> SketchManagerUtils.createCenterLine(0., 0., 0.)(0., 0.05, 0.)
         |> ignore
-    drawSketch draw swModel swApp
+    //drawSketch draw swModel swApp
     featureRevolve 90 swModel
 
 let procContourSelection selectFn (swModel: IModelDoc2) =
@@ -261,7 +283,7 @@ let circleContour2 (radius:float) (swModel: IModelDoc2) =
 
 let testRectContourExtrusion (swApp: ISldWorks) =
     let swModel = newPart swApp :?> IModelDoc2
-    drawSketch (drawRect 0.2 0.1) swModel swApp
+    //drawSketch (drawRect 0.2 0.1) swModel swApp
     procContourSelection (rectContour1 0.1) swModel
     procContourSelection (rectContour2 0.1) swModel
 
@@ -269,7 +291,7 @@ let testRectContourExtrusion (swApp: ISldWorks) =
 
 let testCircleContourExtrusion (swApp: ISldWorks) =
     let swModel = newPart swApp :?> IModelDoc2
-    drawSketch (drawCircle 0.1) swModel swApp
+    //drawSketch (drawCircle 0.1) swModel swApp
     let contour swModel =
         circleContour1 0.1 swModel
         circleContour2 0.1 swModel
@@ -285,7 +307,7 @@ let testRectContourRevolve (swApp: ISldWorks) =
         swModel.SketchManager
         |> SketchManagerUtils.createCenterLine (0., 0., 0.) (0., 0.05, 0.)
         |> ignore
-    drawSketch draw swModel swApp
+    //drawSketch draw swModel swApp
     let contour swModel =
         rectContour1 0.1 swModel
         rectContour2 0.1 swModel
@@ -301,13 +323,52 @@ let testCircleContourRevolve (swApp: ISldWorks) =
         |> SketchManagerUtils.createCenterLine (0., 0., 0.) (0., 0.05, 0.)
         |> ignore
 
-    drawSketch draw swModel swApp
+    //drawSketch draw swModel swApp
     let contour swModel =
         circleContour2 0.1 swModel
         circleContour1 0.1 swModel
     procContourSelection contour swModel
     featureRevolve 90 swModel
 
+let PartMaterial (swApp: ISldWorks) =
+    newPart swApp :?> IModelDoc2
+    |> PartMaterialProperty <| swApp
+
+let InsertSketchOnFront (swModel : ModelDoc2) =
+    swModel
+    |> ModelDoc2Utils.selectByID {|
+        name         = "Front Plane"
+        stype        = "PLANE"
+        location     = (0.0, 0.0, 0.0)
+        append       = false
+        mark         = 0
+        selectOption = swSelectOption_e.swSelectOptionDefault
+    |}
+
+    swModel.SketchManager.InsertSketch false
 
 
+let profileRect (swApp: ISldWorks) =
+    let swModel = newPart swApp :?> ModelDoc2
+    swModel.SketchManager.AddToDB <- true
+    
+    swModel
+    |> InsertSketchOnFront
 
+    swModel.SketchManager.InsertSketch false
+
+    drawRect 0.2 0.1 swModel
+    swModel.SketchManager.AddToDB <- false
+    swModel.ViewZoomtofit2()
+
+let profileCircle (swApp: ISldWorks) =
+    let swModel = newPart swApp :?> ModelDoc2
+    swModel.SketchManager.AddToDB <- true
+
+    swModel
+    |> InsertSketchOnFront
+
+    drawCircle 0.2 swModel
+
+    swModel.SketchManager.AddToDB <- false
+    swModel.ViewZoomtofit2()

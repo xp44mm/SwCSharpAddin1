@@ -273,15 +273,40 @@ namespace SwCSharpAddin1
                 menuTBOption: swCommandItemType_e.swMenuItem
                 );
 
-            // 命令项目id
-            var itemIDs = cmds.getUserIDs();
+            //命令
+            cmds.add(
+                hintString: "第4章之零件材料",
+                toolTip: "",
+                callbackFunction: nameof(this.Training4_PartMaterial),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
 
+            //命令
+            cmds.add(
+                hintString: "第4章之草图矩形带偏移",
+                toolTip: "",
+                callbackFunction: nameof(this.Training4_profileRect),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            //命令
+            cmds.add(
+                hintString: "第4章之草图圆形带偏移",
+                toolTip: "",
+                callbackFunction: nameof(this.Training4_profileCircle),
+                enableMethod: nameof(this.Always),
+                menuTBOption: swCommandItemType_e.swMenuItem
+                );
+
+            // 命令组
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
                     title: "CuiShengLi",
                     toolTip: "CuiShengLi tool tip",
                     hint: "hint",
-                    ignorePreviousVersion: CommandManagerUtils.ignorePreviousVersion(cmdGroupID, itemIDs, this.iCmdMgr),
+                    ignorePreviousVersion: cmds.getUserIDs().SetEquals(CommandManagerUtils.getIDsFromRegistry(cmdGroupID, this.iCmdMgr)),
                     cmdMgr: this.iCmdMgr
                 );
 
@@ -407,7 +432,20 @@ namespace SwCSharpAddin1
             training3.documentProperties(this.iSwApp);
         }
 
+        public void Training4_PartMaterial()
+        {
+            training4.PartMaterial(this.iSwApp);
+        }
 
+        public void Training4_profileRect()
+        {
+            training4.profileRect(this.iSwApp);
+        }
+
+        public void Training4_profileCircle()
+        {
+            training4.profileCircle(this.iSwApp);
+        }
 
         public bool Always() { return true; }
     }
