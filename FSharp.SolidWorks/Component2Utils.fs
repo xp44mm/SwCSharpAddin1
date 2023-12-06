@@ -26,8 +26,8 @@ let renderComponent2 (swComp:Component2) =
 
 let getChildren (swComp:Component2) =
     swComp.GetChildren()
-    |> unbox<obj[]>
-    |> Array.map(unbox<Component2>)
+    :?> obj[]
+    |> Array.map(fun obj -> obj :?> Component2)
 
 type Component2Node = Component2Node of Component2 * Component2Node []
 

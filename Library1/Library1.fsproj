@@ -7,12 +7,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Include="Consts.fs" />
 		<Compile Include="CustomPropsConfig1.fs" />
 		<Compile Include="training1.fs" />
 		<Compile Include="training2.fs" />
 		<Compile Include="training2_existingDocs.fs" />
 		<Compile Include="training3.fs" />
 		<Compile Include="training4.fs" />
+		<Compile Include="training4_circle.fs" />
 		<Compile Include="training5.fs" />
 		<Compile Include="Preselection.fs" />
 		<Compile Include="BodyFaceTraversal.fs" />

@@ -24,5 +24,5 @@ let mirrorPart2
 
 let getBodies2 (typ:swBodyType_e)(visibleOnly:bool)(swPart:IPartDoc) = 
     swPart.GetBodies2(int typ, visibleOnly)
-    |> unbox<obj[]>
-    |> Array.map(unbox<Body2>)
+    :?> obj[]
+    |> Array.map(fun obj -> obj :?> Body2)

@@ -23,6 +23,6 @@ let getCurve (swEdge:IEdge) =
 
 let getTwoAdjacentFaces2 (swEdge:IEdge) =
     swEdge.GetTwoAdjacentFaces2() //use this to get the 2 faces sharing the Circular edge
-    |> unbox<Face2[]>
-
+    :?> obj[]
+    |> Array.map(fun obj -> obj :?> Face2)
 

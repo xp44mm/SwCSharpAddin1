@@ -18,4 +18,5 @@ open SolidWorksTools.File
 
 let getEdges (swLoop:Loop2) = 
     swLoop.GetEdges()      //if it's an inner loop, get the array of edges belonging to the loop
-    |> unbox<Edge[]>
+    :?> obj[]
+    |> Array.map(fun obj -> obj :?> Edge)

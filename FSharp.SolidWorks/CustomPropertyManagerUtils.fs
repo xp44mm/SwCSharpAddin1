@@ -19,7 +19,7 @@ open SolidWorksTools.File
 let getCustomPropertyNames (custPrpMgr: ICustomPropertyManager) =
         let hs = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         custPrpMgr.GetNames()
-        |> unbox<string[]>
+        :?> string[]
         |> Array.iter(fun e -> hs.Add e |> ignore)
         hs
 /// 
@@ -79,7 +79,7 @@ let pickResolvedValOut (fieldNames: seq<string>) (custPrpMgr: ICustomPropertyMan
     | c -> 
         let AllNames = 
             custPrpMgr.GetNames()
-            |> unbox<string[]>
+            :?> string[]
             |> Array.toList
         failwith $"{c}!=1,\n{fieldNames |> Seq.toList}\n{AllNames}"
 
@@ -98,7 +98,7 @@ let set2 fieldName fieldValue (custPrpMgr:ICustomPropertyManager) =
 
 let getNames (custPrpMgr: ICustomPropertyManager) =
     custPrpMgr.GetNames() 
-    |> unbox<string[]>
+    :?> string[]
 
 let count (custPrpMgr: ICustomPropertyManager) =
     custPrpMgr.Count

@@ -17,7 +17,7 @@ let PrintProperties (custPrpMgr:CustomPropertyManager) (useCached:bool) (indent:
 
     let vPrpNames = 
         custPrpMgr.GetNames()
-        |> unbox<string[]>
+        :?> string[]
 
     match vPrpNames with
     | [||] -> 
@@ -40,7 +40,7 @@ let PrintPropertiesAtConfigurationSpecific (model:ModelDoc2) (cached:bool) (conf
 let PrintConfigurationSpecificProperties(model:ModelDoc2) (cached:bool) =
     let vNames = 
         model.GetConfigurationNames()
-        |> unbox<string[]>              
+        :?> string[]              
     
     for confName in vNames do
         let swCustPrpMgr = model.Extension.CustomPropertyManager(confName)

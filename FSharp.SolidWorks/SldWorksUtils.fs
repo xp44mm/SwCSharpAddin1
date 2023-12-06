@@ -39,9 +39,9 @@ let openDoc6
     else
         [
             if errors > 0 then 
-                sprintf "%A" (enum<swFileLoadError_e>errors)
+                sprintf "openDoc6 util: %A" (enum<swFileLoadError_e> errors)
             if warnings > 0 then 
-                sprintf "%A" (enum<swFileLoadWarning_e>warnings)
+                sprintf "openDoc6 util: %A" (enum<swFileLoadWarning_e> warnings)
         ]
         |> String.concat " and "
         |> failwith
@@ -84,40 +84,10 @@ let getMathUtility (swApp: ISldWorks) =
     swApp.GetMathUtility()
     :?> MathUtility
 
-//let setUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (onFlag:bool) (swApp: ISldWorks) =
-//    swApp.SetUserPreferenceToggle(int toggle, onFlag)
-
-//let getUserPreferenceToggle (toggle:swUserPreferenceToggle_e) (swApp: ISldWorks) =
-//    swApp.GetUserPreferenceToggle(int toggle)
-
-//let setUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (value:float) (swApp: ISldWorks) =
-//    swApp.SetUserPreferenceDoubleValue(int pref, value)
-//    |> ignore
-
-//let getUserPreferenceDoubleValue (pref:swUserPreferenceDoubleValue_e) (swApp: ISldWorks) =
-//    swApp.GetUserPreferenceDoubleValue(int pref)
-
-//let setUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (value:int) (swApp: ISldWorks) =
-//    swApp.SetUserPreferenceIntegerValue(int pref, value)
-//    |> ignore
-
-//let getUserPreferenceIntegerValue (pref:swUserPreferenceIntegerValue_e) (swApp: ISldWorks) =
-//    swApp.GetUserPreferenceIntegerValue(int pref)
-
-//let setUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (value:string) (swApp: ISldWorks) =
-//    swApp.SetUserPreferenceStringValue(int pref, value)
-//    |> ignore
-
-//let getUserPreferenceStringValue (pref:swUserPreferenceStringValue_e) (swApp: ISldWorks) =
-//    swApp.GetUserPreferenceStringValue(int pref)
-
 //用默认模板新建一个零件文件
 let newPartDoc (swApp: ISldWorks) =
     let p = SysUserPreference(swApp)
-
     let dir = p.swDefaultTemplatePart
-        //swApp
-        //|> getUserPreferenceStringValue swUserPreferenceStringValue_e.swDefaultTemplatePart
 
     swApp
     |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
@@ -126,8 +96,6 @@ let newPartDoc (swApp: ISldWorks) =
 let newAssemblyDoc (swApp: ISldWorks) =
     let p = SysUserPreference(swApp)
     let dir = p.swDefaultTemplateAssembly
-        //swApp
-        //|> getUserPreferenceStringValue swUserPreferenceStringValue_e.swDefaultTemplateAssembly
     swApp
     |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
 

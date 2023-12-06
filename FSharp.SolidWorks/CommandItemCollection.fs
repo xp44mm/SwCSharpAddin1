@@ -30,14 +30,14 @@ type CommandItemCollection() =
 
     ///全参数添加
     member _.add(
-        name : string                      ,
-        position : int                     ,
-        hintString : string                ,
-        toolTip : string                   ,
-        imageListIndex : int               ,
-        callbackFunction : string          ,
-        enableMethod : string              ,
-        userID : int                       ,
+        name             : string ,
+        position         : int    ,
+        hintString       : string ,
+        toolTip          : string ,
+        imageListIndex   : int    ,
+        callbackFunction : string ,
+        enableMethod     : string ,
+        userID           : int    ,
         menuTBOption : swCommandItemType_e ) =
         let x = {
             Name             = name             ;
@@ -96,10 +96,10 @@ type CommandItemCollection() =
                 Position         = x.Position,
                 HintString       = x.HintString,
                 ToolTip          = x.ToolTip,
-                ImageListIndex   = i,///.按index顺序值作为命令ID;
+                ImageListIndex   = i,//.按index顺序值作为命令ID;
                 CallbackFunction = x.CallbackFunction,
                 EnableMethod     = x.EnableMethod,
-                UserID           = i,///.按index顺序值作为位图索引;
+                UserID           = i,//.按index顺序值作为位图索引;
                 MenuTBOption     = int x.MenuTBOption)
             |> ignore
         )

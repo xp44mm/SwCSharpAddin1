@@ -129,14 +129,14 @@ namespace SwCSharpAddin1
         {
             //收集命令项目
             var cmds = new CommandItemCollection();
-            //命令
-            cmds.add(
-                hintString: "Create a cube",
-                toolTip: "Create cube",
-                callbackFunction: nameof(CreateCube),
-                enableMethod: nameof(this.Always),
-                menuTBOption: swCommandItemType_e.swMenuItem
-                );
+            ////命令
+            //cmds.add(
+            //    hintString: "Create a cube",
+            //    toolTip: "Create cube",
+            //    callbackFunction: nameof(CreateCube),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
 
             //命令
             cmds.add(
@@ -284,20 +284,32 @@ namespace SwCSharpAddin1
 
             //命令
             cmds.add(
-                hintString: "第4章之草图矩形带偏移",
-                toolTip: "",
-                callbackFunction: nameof(this.Training4_profileRect),
-                enableMethod: nameof(this.Always),
-                menuTBOption: swCommandItemType_e.swMenuItem
+                hintOrTip: "第4章之矩形拉伸",
+                callbackFunction: nameof(this.Training4_rectExtrusion)
                 );
 
             //命令
             cmds.add(
-                hintString: "第4章之草图圆形带偏移",
-                toolTip: "",
-                callbackFunction: nameof(this.Training4_profileCircle),
-                enableMethod: nameof(this.Always),
-                menuTBOption: swCommandItemType_e.swMenuItem
+                hintOrTip: "第4章之矩形旋转",
+                callbackFunction: nameof(this.Training4_rectRevolve)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "第4章之圆形拉伸",
+                callbackFunction: nameof(this.Training4_circleExtrusion)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "第4章之圆形旋转",
+                callbackFunction: nameof(this.Training4_circleRevolve)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "第5章",
+                callbackFunction: nameof(this.Training5_AddComponentsAndMate)
                 );
 
             // 命令组
@@ -333,6 +345,12 @@ namespace SwCSharpAddin1
 
         public void CreateCube()
         {
+
+        }
+
+        public void Training1()
+        {
+            training1.exec(this.iSwApp);
             //iSwApp.SendMsgToUser("这是占位的命令");
             //SldWorksUtils.testPipeBom(iSwApp);
             //var clss = new Library1.RecursiveTraverseAssembly(iSwApp);
@@ -341,6 +359,7 @@ namespace SwCSharpAddin1
             //SldWorksUtils.readSWPipeLength(iSwApp);
 
             //trainingcylinder.main(iSwApp);
+
             //training2.cmdConnect(iSwApp);
             //training2.cmdNewModel_Part(iSwApp);
 
@@ -349,17 +368,12 @@ namespace SwCSharpAddin1
             //training4.circularExtrude(iSwApp);
             //training4.testDrawCirc(iSwApp);
             //training4.testCircleContourRevolve(iSwApp);
-            training5.testSelectFace(this.iSwApp);
+            //training5.testSelectFace(this.iSwApp);
 
             //SldWorksUtils.testCutLists(iSwApp);
             //SldWorksUtils.detectCutLists(iSwApp);
             //SldWorksUtils.setPartWeldment(iSwApp);
 
-        }
-
-        public void Training1()
-        {
-            training1.exec(this.iSwApp);
         }
 
         public void Training2_3()
@@ -437,15 +451,31 @@ namespace SwCSharpAddin1
             training4.PartMaterial(this.iSwApp);
         }
 
-        public void Training4_profileRect()
+        public void Training4_rectExtrusion ()
         {
-            training4.profileRect(this.iSwApp);
+            training4.rectExtrusion(this.iSwApp);
         }
 
-        public void Training4_profileCircle()
+        public void Training4_rectRevolve()
         {
-            training4.profileCircle(this.iSwApp);
+            training4.rectRevolve(this.iSwApp);
         }
+
+        public void Training4_circleExtrusion()
+        {
+            training4_circle.circleExtrusion(this.iSwApp);
+        }
+
+        public void Training4_circleRevolve()
+        {
+            training4_circle.circleRevolve(this.iSwApp);
+        }
+
+        public void Training5_AddComponentsAndMate()
+        {
+            training5.AddComponentsAndMate(this.iSwApp);
+        }
+
 
         public bool Always() { return true; }
     }

@@ -32,8 +32,7 @@ type StartCondition =
         match this with
         | Offset (startOffset, flipStartOffset) ->
             startOffset,flipStartOffset
-        | _ ->
-            0.0, false
+        | _ -> 0.0, false
 
 // swEndConditions_e
 type EndCond =
@@ -65,8 +64,7 @@ type EndCond =
             d,false,false
         | OffsetFromSurface(offset,offsetReverse, translateSurface) -> 
             offset,offsetReverse,translateSurface
-        | _ -> 
-            0.0,false,false
+        | _ -> 0.0,false,false
 
 type Drafting = {
     Ddir : bool
@@ -87,7 +85,7 @@ type DirectionExtrusionParams =
         let Ddir,Dang =
             match this.Drafting with 
             | Some df -> df.Ddir,df.Dang 
-            | _ -> false,0.0
+            | _ -> false, 0.0
         t,d,offsetReverse,translateSurface,Dchk,Ddir,Dang
 
 type ExtrusionParams = {
@@ -189,10 +187,10 @@ let featureRevolve2
         bothDirectionUpToSameEntity,
         int dir1Type, int dir2Type,
         dir1Angle,  dir2Angle,
-        offsetReverse1,        offsetReverse2,
-        offsetDistance1,       offsetDistance2,
+        offsetReverse1, offsetReverse2,
+        offsetDistance1, offsetDistance2,
         int thinType,
-        thinThickness1 ,        thinThickness2 ,
+        thinThickness1, thinThickness2 ,
         merge,
         useFeatScope,
         useAutoSelect

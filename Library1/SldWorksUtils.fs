@@ -79,7 +79,7 @@ let detectCutLists (swApp: ISldWorks) =
         swModel
         |> CutList.getCutListCustomPropertyManager
         |> Seq.map(fun cpm ->
-            cpm.GetNames() |> unbox<string[]>
+            cpm.GetNames() :?> string[]
             |> Array.filter(props.Contains)
             |> Array.map(fun pnm ->
                 //if  pnm then

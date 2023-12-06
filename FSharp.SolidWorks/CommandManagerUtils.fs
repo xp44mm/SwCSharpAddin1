@@ -16,14 +16,8 @@ open SolidWorksTools.File
 let getIDsFromRegistry (cmdGroupId:int) (iCmdMgr:ICommandManager) =
     match iCmdMgr.GetGroupDataFromRegistry(cmdGroupId) with
     | true, userIDs ->        
-        userIDs :?> array<int>
+        userIDs :?> int[]
     | _ -> [||]
-
-//let ignorePreviousVersion (cmdGroupId:int) (cmdItemIDs:HashSet<int>) (iCmdMgr:ICommandManager) =
-//    match iCmdMgr.GetGroupDataFromRegistry(cmdGroupId) with
-//    | true, userIDs ->        
-//        cmdItemIDs.SetEquals(userIDs :?> seq<int>)
-//    | _ -> false
 
 ///命令组：菜单，工具栏共用
 let createCommandGroup2

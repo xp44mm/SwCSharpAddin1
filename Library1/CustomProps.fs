@@ -163,7 +163,7 @@ let CustomPropsConfig
 
     //let retval = 
     //    swModel.GetConfigurationNames()
-    //    |> unbox<string[]>
+    //    :?> string[]
 
     //for configname in retval do
     //    //swApp.SendMsgToUser2 configname, swMbInformation, swMbOk
@@ -173,7 +173,7 @@ let CustomPropsConfig
     //    let mutable status = 0
     //    let massprops = 
     //        swModel.Extension.GetMassProperties2(1, &status, false)
-    //        |> unbox<float[]>
+    //        :?> float[]
     //    let CusPropMgr = swModel.Extension.CustomPropertyManager(configname)
     //    let AddStatus = CusPropMgr.Add3("Density - " + configname, 
     //        int swCustomInfoType_e.swCustomInfoText, $"{density / 1000.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)

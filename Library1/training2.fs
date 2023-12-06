@@ -16,6 +16,10 @@ open SolidWorksTools
 open SolidWorksTools.File
 open FSharp.SolidWorks
 
+open Consts
+
+let FILEDIR() = Path.Combine(TRAININGDIR, @"Lesson02 - Object Model Basics\Case Study")
+
 let connectToSolidWorks (swApp: ISldWorks) =
     swApp.SendMsgToUser $"RevisionNumber:{swApp.RevisionNumber}"
 
@@ -24,10 +28,6 @@ let connectToSolidWorks (swApp: ISldWorks) =
 
     let lang = swApp.GetCurrentLanguage()
     swApp.SendMsgToUser $"SOLIDWORKS is currently using the {lang} language."
-
-let TRAININGDIR = @"D:\崔胜利\My SolidWorks\API Fundamentals"
-let TEMPLATEDIR = @"D:\崔胜利\My SolidWorks\Training Templates"
-let FILEDIR = @"D:\崔胜利\My SolidWorks\API Fundamentals\Lesson02 - Object Model Basics\Case Study"
 
 let sampleNote (text) (swModel: ModelDoc2) =
     let swNote =
@@ -79,7 +79,7 @@ let NewModel_DRW (swApp: ISldWorks) =
 
     let drawName = swModel.GetTitle()
     let partDoc =
-        let filename = Path.Combine(FILEDIR ,"BlockwithDesignTable.SLDPRT")
+        let filename = Path.Combine(FILEDIR() ,"BlockwithDesignTable.SLDPRT")
         swApp
         |> SldWorksUtils.openDoc6 filename swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
 
@@ -151,7 +151,7 @@ let NewPartDoc (swApp: ISldWorks) =
 
 let NewAssemblyDoc (swApp: ISldWorks) =
     let partDoc =
-        let prt = Path.Combine(FILEDIR, "Sample.SLDPRT")        
+        let prt = Path.Combine(FILEDIR(), "Sample.SLDPRT")        
         swApp
         |> SldWorksUtils.openDoc6 prt swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
             
@@ -161,11 +161,17 @@ let NewAssemblyDoc (swApp: ISldWorks) =
         |> SldWorksUtils.newDocument temp swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
         :?> IAssemblyDoc
 
-    swAssy
-    |> AssemblyDocUtils.addComponent5 
-        (partDoc.GetTitle())
-        swAddComponentConfigOptions_e.swAddComponentConfigOptions_CurrentSelectedConfig
-        "" false "" (0.0, 0.0, 0.0)
+    //swAssy
+    //|> AssemblyDocUtils.addComponent5 
+    //    (partDoc.GetTitle())
+    //    swAddComponentConfigOptions_e.swAddComponentConfigOptions_CurrentSelectedConfig
+    //    "" false "" (0.0, 0.0, 0.0)
+    {
+        CompName = partDoc.GetTitle()
+        ConfigOption = AddComponentConfigOptions.CurrentSelectedConfig
+        MaybeUseConfigForPartReferences = None
+        CompCenter = 0.0, 0.0, 0.0
+    }.exec swAssy
     |> ignore
 
 let NewDrawingDoc (swApp: ISldWorks) =

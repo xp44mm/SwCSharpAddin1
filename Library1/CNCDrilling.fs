@@ -86,7 +86,7 @@ let getCallouts
         //attribute
     |> Seq.mapi(fun j (swFace,swSurface) ->
         //if swSurface.IsCylinder() then
-            let cylParams = swSurface.CylinderParams |> unbox<float[]>
+            let cylParams = swSurface.CylinderParams :?> float[]
             //Create an instance of the attribute
             //described in the userform's activate
             //handler

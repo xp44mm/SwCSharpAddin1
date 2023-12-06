@@ -30,7 +30,7 @@ let save3 (opts:swSaveAsOptions_e) (swModel: IModelDoc2) =
 //https://help.solidworks.com/2023/english/api/sldworksapi/SolidWorks.Interop.sldworks~SolidWorks.Interop.sldworks.IModelDocExtension~SelectByID2.html
 let selectByID2 name selecttype (x,y,z) append mark (selectOption:swSelectOption_e) (swModel: IModelDoc2) =
     let callout:Callout = null
-    swModel.Extension.SelectByID2(name, selecttype, x, y, z, append, mark, callout,int selectOption)
+    swModel.Extension.SelectByID2(name, selecttype, x, y, z, append, mark, callout, int selectOption)
     |> ignore
 
 let selectByID
@@ -126,4 +126,4 @@ let setSummaryInfo (field:swSummInfoField_e) (text:string) (swModel:IModelDoc2) 
 
 let getConfigurationNames (swModel:IModelDoc2) =
     swModel.GetConfigurationNames()
-    |> unbox<string[]>
+    :?> string[]

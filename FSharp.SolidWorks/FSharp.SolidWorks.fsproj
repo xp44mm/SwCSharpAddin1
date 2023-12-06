@@ -60,6 +60,8 @@
 		<Compile Include="Component2Utils.fs" />
 		<Compile Include="UserPreference.fs" />
 		<Compile Include="ConfigurationUtils.fs" />
+		<Compile Include="AddComponent5Params.fs" />
+		<Compile Include="AddMate5Params.fs" />
 		<Compile Include="AssemblyDocUtils.fs" />
 		<Compile Include="PartDocUtils.fs" />
 		<Compile Include="ModelDoc2Utils.fs" />
@@ -67,6 +69,13 @@
 		<Compile Include="CutList.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
 		<Compile Include="CommandItemCollection.fs" />
+	</ItemGroup>
+
+
+
+
+	<ItemGroup>
+	  <PackageReference Include="FSharp.Idioms" Version="1.4.9" />
 	</ItemGroup>
 
 
