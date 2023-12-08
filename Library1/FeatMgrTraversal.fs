@@ -19,67 +19,58 @@ open SolidWorksTools.File
 open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 
-/// 7.4.2
-let msg
-    (swModel: ModelDoc2)
-    (swApp: SldWorks)
-    =
+/// 7.4.1, 7.4.2
+let msg (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
 
     swModel
     |> ModelDoc2Utils.getFeatureSeq
-    |> Seq.iter(fun swFeature ->
+    |> Seq.map(fun swFeature ->
         let FeatName = swFeature.Name
         let FeatType = swFeature.GetTypeName2()
-        swFeature.Select2(false, 0)
-        |> ignore
-        swApp.SendMsgToUser($"Feature screen name = {FeatName};Feature type name = {FeatType}")
+        $"{FeatName} & {FeatType}"
     )
+    |> String.concat "\n"
+    |> swApp.SendMsgToUser
 
 /// 7.4.3
-let suppr
-    (swApp: SldWorks)
-    (swModel: ModelDoc2)
-    =
+let suppress (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
 
     swModel
     |> ModelDoc2Utils.getFeatureSeq
+    |> Seq.filter(fun swFeature -> 
+        swFeature.GetTypeName2() = "Fillet"
+        )
     |> Seq.iter(fun swFeature ->
-        let FeatName = swFeature.Name
-        let FeatType = swFeature.GetTypeName2()
-
-        //swFeature.Select2( false, 0)
-        //|> ignore
-        if FeatType = "Fillet" then
-            let suppressSet =
-                swFeature.SetSuppression2(
-                    int swFeatureSuppressionAction_e.swUnSuppressFeature,
-                    int swInConfigurationOpts_e.swThisConfiguration, "")
-            ()
+        swFeature.SetSuppression2(
+            SuppressionState = int swFeatureSuppressionAction_e.swSuppressFeature,
+            Config_opt = int swInConfigurationOpts_e.swThisConfiguration, 
+            Config_names = "")
+        |> ignore
     )
-
 
 /// 7.4.4
-let hid
-    (swApp: SldWorks)
-    (swModel: ModelDoc2)
-    =
+let setUIState (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
 
     swModel
     |> ModelDoc2Utils.getFeatureSeq
     |> Seq.iter(fun swFeature ->
-        swFeature
-        |> FeatureUtils.setUIState swUIStates_e.swIsHiddenInFeatureMgr true
+        swFeature.SetUIState(
+        StateType = int swUIStates_e.swIsHiddenInFeatureMgr,
+        Flag = true
+        )
+        //|> FeatureUtils.setUIState true
     )
-
     swModel.FeatureManager.UpdateFeatureTree()
 
 /// 7.4.5
-let pos
-    (swApp: SldWorks)
-    (swModel: ModelDoc2)
-    =
+let featureByPositionReverse (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
+
     let swFeature = 
-        swModel.FeatureByPositionReverse(2)
+        swModel.FeatureByPositionReverse(Num=2)
         :?> Feature
     let FeatName = swFeature.Name
     let FeatType = swFeature.GetTypeName2()

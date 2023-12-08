@@ -16,7 +16,8 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-//open FSharp.Literals.Literal
+open FSharp.Idioms.Literal
+
 type Mark =
     | All
     | WithoutMark

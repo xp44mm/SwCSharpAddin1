@@ -1,7 +1,6 @@
 ﻿module CNCDrilling
 
 open System
-open System.Runtime.InteropServices
 open System.Collections
 open System.Collections.Generic
 open System.Drawing
@@ -9,6 +8,7 @@ open System.Diagnostics
 open System.Reflection
 open System.Text.RegularExpressions
 open System.IO
+open System.Runtime.InteropServices
 
 open SolidWorks.Interop.sldworks
 open SolidWorks.Interop.swpublished
@@ -16,9 +16,9 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
+open FSharp.Idioms
 open FSharp.Idioms.Literal
 open FSharp.SolidWorks
-open FSharp.Idioms
 
 // 学习1： 绘制 Callout
 // 学习2： 获取ModelDoc中所有Attribute，和他的所有Parameter

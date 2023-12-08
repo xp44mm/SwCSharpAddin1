@@ -16,6 +16,7 @@
 		<Compile Include="training4.fs" />
 		<Compile Include="training4_circle.fs" />
 		<Compile Include="training5.fs" />
+		<Compile Include="training6.fs" />
 		<Compile Include="Preselection.fs" />
 		<Compile Include="BodyFaceTraversal.fs" />
 		<Compile Include="FeatMgrTraversal.fs" />

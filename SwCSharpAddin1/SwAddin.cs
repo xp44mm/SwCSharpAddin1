@@ -129,14 +129,6 @@ namespace SwCSharpAddin1
         {
             //收集命令项目
             var cmds = new CommandItemCollection();
-            ////命令
-            //cmds.add(
-            //    hintString: "Create a cube",
-            //    toolTip: "Create cube",
-            //    callbackFunction: nameof(CreateCube),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
 
             //命令
             cmds.add(
@@ -312,6 +304,47 @@ namespace SwCSharpAddin1
                 callbackFunction: nameof(this.Training5_AddComponentsAndMate)
                 );
 
+            //命令
+            cmds.add(
+                hintOrTip: "第6章",
+                callbackFunction: nameof(this.Training6)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "第7章1节",
+                callbackFunction: nameof(this.Training7_Preselection)
+                );
+            //命令
+            cmds.add(
+                hintOrTip: "第7章3节",
+                callbackFunction: nameof(this.Training7_BodyFaceTraversal)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "第7章4节1~2",
+                callbackFunction: nameof(this.Training7_FeatMgrTraversal_msg)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "第7章4节之压缩圆角",
+                callbackFunction: nameof(this.Training7_FeatMgrTraversal_suppress)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "第7章4节之隐藏设计树所有特征",
+                callbackFunction: nameof(this.Training7_FeatMgrTraversal_setUIState)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "第7章4节之设计树指定位置的特征",
+                callbackFunction: nameof(this.Training7_FeatMgrTraversal_featureByPositionReverse)
+                );
+
             // 命令组
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
@@ -341,11 +374,6 @@ namespace SwCSharpAddin1
         public void RemoveCommandMgr()
         {
             this.iCmdMgr.RemoveCommandGroup(cmdGroupID);
-        }
-
-        public void CreateCube()
-        {
-
         }
 
         public void Training1()
@@ -474,6 +502,40 @@ namespace SwCSharpAddin1
         public void Training5_AddComponentsAndMate()
         {
             training5.AddComponentsAndMate(this.iSwApp);
+        }
+
+        public void Training6()
+        {
+            training6.main(this.iSwApp);
+        }
+
+        public void Training7_Preselection()
+        {
+            Preselection.generate(this.iSwApp);
+        }
+
+        public void Training7_BodyFaceTraversal()
+        {
+            BodyFaceTraversal.main(this.iSwApp);
+        }
+
+        public void Training7_FeatMgrTraversal_msg()
+        {
+            FeatMgrTraversal.msg(this.iSwApp);
+        }
+
+        public void Training7_FeatMgrTraversal_suppress()
+        {
+            FeatMgrTraversal.suppress(this.iSwApp);
+        }
+
+        public void Training7_FeatMgrTraversal_setUIState()
+        {
+            FeatMgrTraversal.setUIState(this.iSwApp);
+        }
+        public void Training7_FeatMgrTraversal_featureByPositionReverse()
+        {
+            FeatMgrTraversal.featureByPositionReverse(this.iSwApp);
         }
 
 

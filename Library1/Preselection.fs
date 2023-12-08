@@ -1,4 +1,4 @@
-﻿module Preselection
+﻿module Preselection //第7章1节
 
 open System
 open System.Runtime.InteropServices
@@ -19,11 +19,10 @@ open SolidWorksTools.File
 open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 
-let cmdGenerate_Click
-    (swApp: SldWorks)
-    (swModel: ModelDoc2)
-    (factor: float)
-    =
+let generate (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
+    let factor = 5.0
+
     let swSelMgr =
         swModel.SelectionManager
         :?> SelectionMgr
@@ -39,6 +38,7 @@ let cmdGenerate_Click
             swMessageBoxIcon_e.swMbWarning
             swMessageBoxBtn_e.swMbOk
         |> ignore
+
     else
         let feat =
             swSelMgr
@@ -56,8 +56,7 @@ let cmdGenerate_Click
         else
             //修改特征的代码
             let extrudeFeatureData =
-                feat.GetDefinition()
-                :?> ExtrudeFeatureData2
+                feat.GetDefinition() :?> ExtrudeFeatureData2
 
             let depth = extrudeFeatureData.GetDepth(true)
             extrudeFeatureData.SetDepth(true, depth * factor)

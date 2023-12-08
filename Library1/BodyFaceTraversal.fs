@@ -1,4 +1,4 @@
-﻿module BodyFaceTraversal
+﻿module BodyFaceTraversal //第7章3节
 
 open System
 open System.Runtime.InteropServices
@@ -15,40 +15,28 @@ open SolidWorks.Interop.swpublished
 open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
-
-open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 
-
-let main
-
-    (swFace: Face2      )
-    (swModel: ModelDoc2 )
-    (swApp: SldWorks    )
-    =
+let main (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
 
     //Notice the Explicit Type Casting
     let swPart = swModel :?> PartDoc
 
-    let matProps = [|
-        1.0
-        0.0
-        0.0
-        1.0
-        1.0
-        0.3
-        0.3
-        0.0
-        0.0
-    |]
+    let matProps = [| 1.0; 0.0; 0.0; 1.0; 1.0; 0.3; 0.3; 0.0; 0.0; |]
 
     let bodies = 
         swPart
         |> PartDocUtils.getBodies2 swBodyType_e.swSolidBody true
 
     bodies
-    |> Seq.iter(fun bd ->
-        swFace.MaterialPropertyValues <- matProps
-        (swModel.ActiveView:?>ModelView).GraphicsRedraw null
+    |> Seq.iter(fun body ->
+        body
+        |> Body2Utils.getFaceSeq
+        |> Seq.iter(fun swFace ->
+            swFace.MaterialPropertyValues <- matProps
+            let mv = swModel.ActiveView :?> ModelView
+            mv.GraphicsRedraw null
+        )
     )
 
