@@ -20,39 +20,25 @@ open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 
 /// 8.3
-let main
-    //(swApp: SldWorks)
-    (swModel: ModelDoc2)
-    =
+let main(swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
     
-    swModel
-    |> ModelDoc2Utils.setSummaryInfo(swSummInfoField_e.swSumInfoTitle) "API Fundamentals"
-    let text = 
-        swModel
-        |> ModelDoc2Utils.getSummaryInfo(swSummInfoField_e.swSumInfoTitle)
+    swModel.SummaryInfo(int swSummInfoField_e.swSumInfoTitle) <- "API Fundamentals"
+    let tt = swModel.SummaryInfo(int swSummInfoField_e.swSumInfoTitle)
     
-    swModel
-    |> ModelDoc2Utils.setSummaryInfo(swSummInfoField_e.swSumInfoSubject) "Adding custom file summary information"
-    let text = 
-        swModel
-        |> ModelDoc2Utils.getSummaryInfo(swSummInfoField_e.swSumInfoSubject)
+    swModel.SummaryInfo(int swSummInfoField_e.swSumInfoSubject) <- "Adding custom file summary information"
+    let sj = swModel.SummaryInfo(int swSummInfoField_e.swSumInfoSubject)
     
-    swModel
-    |> ModelDoc2Utils.setSummaryInfo swSummInfoField_e.swSumInfoAuthor "SolidWorks Training"
-    let text = 
-        swModel
-        |> ModelDoc2Utils.getSummaryInfo(swSummInfoField_e.swSumInfoAuthor)
+    swModel.SummaryInfo(int swSummInfoField_e.swSumInfoAuthor) <- "SolidWorks Training"
+    let th = swModel.SummaryInfo(int swSummInfoField_e.swSumInfoAuthor)
     
-    swModel
-    |> ModelDoc2Utils.setSummaryInfo(swSummInfoField_e.swSumInfoKeywords) ""
-    let text = 
-        swModel
-        |> ModelDoc2Utils.getSummaryInfo(swSummInfoField_e.swSumInfoKeywords)
+    swModel.SummaryInfo(int swSummInfoField_e.swSumInfoKeywords) <- ""
+    let kw = swModel.SummaryInfo(int swSummInfoField_e.swSumInfoKeywords)
     
-    swModel
-    |> ModelDoc2Utils.setSummaryInfo(swSummInfoField_e.swSumInfoComment) "Use the ModelDoc2::SummaryInfo method to add summary information."
-    let text = 
-        swModel
-        |> ModelDoc2Utils.getSummaryInfo(swSummInfoField_e.swSumInfoComment)
+    swModel.SummaryInfo(int swSummInfoField_e.swSumInfoComment) <- "Use the ModelDoc2::SummaryInfo method to add summary information."
+    let cm = swModel.SummaryInfo(int swSummInfoField_e.swSumInfoComment)
     
-    ()
+    [ tt;sj;th;kw;cm ]
+    |> String.concat "\n"
+    |> swApp.SendMsgToUser
+

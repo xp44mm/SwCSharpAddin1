@@ -27,18 +27,7 @@ let SCALENUM = 1.0
 let SCALEDENOM = 2.0
 let SAVEASPATH = "d:\\"
 
-//let errors: Long
-//let warnings: Long
-//let swApp: SldWorks.SldWorks
-//let swModel: SldWorks.ModelDoc2
-//let Response: int
 let ThirdAngle = true
-//let swDraw: SldWorks.DrawingDoc
-//let ConfigNamesArray: Variant
-//let ConfigName: Variant
-//let i: Long
-//let retval: Boolean
-//let swView: SldWorks.View
 
 let getViewSeq (swDraw:IDrawingDoc) =
     let rec loop (vw:obj) =
@@ -59,6 +48,7 @@ let main(swApp: ISldWorks) =
     let swDraw = 
         swApp.NewDocument(TEMPLATENAME, int swDwgPaperSizes_e.swDwgPaperA1size, 0.0, 0.0)
         :?> IDrawingDoc
+
     let ConfigNamesArray = 
         swModel.GetConfigurationNames()
         :?> obj[]

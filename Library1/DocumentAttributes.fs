@@ -19,15 +19,12 @@ open SolidWorksTools.File
 open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 
-
-let main
-    (swApp: SldWorks)
-    (swModel: ModelDoc2)
-    =
+let main (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> ModelDoc2
 
     let swAttDef = 
-        swApp
-        |> SldWorksUtils.defineAttribute "pubMyDocAttributeDef"
+        swApp.DefineAttribute "pubMyDocAttributeDef"
+        :?> AttributeDef
 
     swAttDef
     |> AttributeDefUtils.addParameter "MyFirstParameter" swParamType_e.swParamTypeDouble 10.0
@@ -39,17 +36,21 @@ let main
     |> ignore
 
     let swAtt = 
-        swAttDef
-        |> AttributeDefUtils.createInstance5 
-            swModel null "MyDocAttribute" 0 swInConfigurationOpts_e.swAllConfiguration
+        swAttDef.CreateInstance5(
+            OwnerDoc = swModel,
+            OwnerObj = null,
+            NameIn = "MyDocAttribute",
+            Options = 0, // Attribute is created visible in the FeatureManager design tree
+            ConfigurationOption = int swInConfigurationOpts_e.swAllConfiguration
+        )
 
     let swParam1 = 
-        swAtt
-        |> AttributeUtils.getParameter "MyFirstParameter"
+        swAtt.GetParameter "MyFirstParameter"
+        :?> Parameter 
 
     let swParam2 = 
-        swAtt
-        |> AttributeUtils.getParameter "MySecondParameter"
+        swAtt.GetParameter "MySecondParameter"
+        :?> Parameter
 
     let text = 
         [

@@ -118,11 +118,11 @@ let addHorizontalDimension2 (x1,y1,z1) (swModel:IModelDoc2) =
 
 let activeView (swModel:IModelDoc2) = swModel.ActiveView :?> ModelView
 
-let getSummaryInfo (field:swSummInfoField_e)(swModel:IModelDoc2) =
-    swModel.SummaryInfo(int field)
+//let getSummaryInfo (field:swSummInfoField_e)(swModel:IModelDoc2) =
+//    swModel.SummaryInfo(int field)
 
-let setSummaryInfo (field:swSummInfoField_e) (text:string) (swModel:IModelDoc2) =
-    swModel.SummaryInfo(int field) <- text
+//let setSummaryInfo (field:swSummInfoField_e) (text:string) (swModel:IModelDoc2) =
+//    swModel.SummaryInfo(int field) <- text
 
 let getConfigurationNames (swModel:IModelDoc2) =
     swModel.GetConfigurationNames()

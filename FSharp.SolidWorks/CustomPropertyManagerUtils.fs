@@ -92,6 +92,7 @@ let add3
     =
     custPrpMgr.Add3(fieldName, int fieldType, fieldValue, int overwriteExisting)
 
+[<Obsolete("inline for demo")>]
 let set2 fieldName fieldValue (custPrpMgr:ICustomPropertyManager) = 
     let SetStatus = custPrpMgr.Set2(fieldName, fieldValue)
     ()
