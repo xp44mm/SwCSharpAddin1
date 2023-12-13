@@ -2,7 +2,6 @@
 
 open SolidWorks.Interop.sldworks
 open SolidWorks.Interop.swconst
-open SolidWorks.Interop.SWRoutingLib
 
 open System
 open System.Diagnostics
@@ -12,22 +11,21 @@ open FSharp.SolidWorks
 type RecursiveTraverseAssembly(swApp: ISldWorks) = 
     let logfile = "d:/RecursiveTraverseAssembly.txt"
 
+    let getPipeInfo (swComp:Component2) =
+        let swModel = 
+            swComp
+            |> Component2Utils.getModelDoc2
+        let config = swModel.ConfigurationManager.ActiveConfiguration
+        let swCustPrpMgr = swModel.Extension.CustomPropertyManager(config.Name)
+        let prpName = "SWPipeLength"
+
+        if CustomPropertyManagerUtils.contains prpName swCustPrpMgr then
+            //属性值带单位
+            let pipeLength = CustomPropertyManagerUtils.resolvedValOut prpName swCustPrpMgr
+            $"pipeLength = {pipeLength}\n"
+        else "其他零件：弯头，三通，大小头"
+
     let traverseComponent (swComp:Component2) =
-        let getPipeInfo (swComp:Component2) =
-            let swModel = 
-                swComp
-                |> Component2Utils.getModelDoc2
-
-                //:?> ModelDoc2
-            let config = swModel.ConfigurationManager.ActiveConfiguration
-            let swCustPrpMgr = swModel.Extension.CustomPropertyManager(config.Name)
-            let prpName = "SWPipeLength"
-
-            if CustomPropertyManagerUtils.contains prpName swCustPrpMgr then
-                //属性值带单位
-                let pipeLength = CustomPropertyManagerUtils.resolvedValOut prpName swCustPrpMgr
-                $"pipeLength = {pipeLength}\n"
-            else "其他零件：弯头，三通，大小头"
 
         ///打印树
         let rec loop (nLevel:int) (swCompNode:Component2Utils.Component2Node) =

@@ -35,7 +35,6 @@ let get6 (fieldName:string) (useCached:bool) (custPrpMgr:ICustomPropertyManager)
     let mutable linkToProperty = true
 
     /// https://help.solidworks.com/2023/english/api/swconst/SOLIDWORKS.Interop.swconst~SOLIDWORKS.Interop.swconst.swCustomInfoGetResult_e.html
-    //问题：Get6是否不区分大小写？
     let reti = 
         custPrpMgr.Get6(fieldName, useCached, 
         &valOut, &resolvedValOut, &wasResolved,&linkToProperty)

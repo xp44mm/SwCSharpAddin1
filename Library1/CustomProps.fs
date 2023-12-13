@@ -111,10 +111,10 @@ let CustomPropertyTraversal (swApp: ISldWorks) =
         )
         |> ignore
 
-    let AddStatus = addNumberProp "MyProp1" "1"
-    let AddStatus = addNumberProp "MyProp2" "2"
-    let AddStatus = addNumberProp "MyProp3" "3"
-    let AddStatus = addNumberProp "MyProp4" "4"
+    let _ = addNumberProp "MyProp1" "1"
+    let _ = addNumberProp "MyProp2" "2"
+    let _ = addNumberProp "MyProp3" "3"
+    let _ = addNumberProp "MyProp4" "4"
 
     let names = 
         CusPropMgr.GetNames() 
@@ -185,28 +185,5 @@ let CustomPropsConfig (swApp: ISldWorks) =
             $"{massprops.[3] * 1000.0 * 1000.0}"
         addTextProp $"Area - {configname}" 
             $"{massprops.[4] * 100.0 * 100.0}"
-
-        //let AddStatus = CusPropMgr.Add3(, 
-        //    int swCustomInfoType_e.swCustomInfoText, $"{density / 1000.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-
-        //let AddStatus = CusPropMgr.Add3("Mass - " + configname, 
-        //    int swCustomInfoType_e.swCustomInfoText, , int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-
-        //let AddStatus = CusPropMgr.Add3("Volume - " + configname, 
-        //    int swCustomInfoType_e.swCustomInfoText, $"{massprops.[3] * 1000.0 * 1000.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-
-        //let AddStatus = CusPropMgr.Add3("Area - " + configname, 
-        //    int swCustomInfoType_e.swCustomInfoText, $"{massprops.[4] * 100.0 * 100.0}", int swCustomPropertyAddOption_e.swCustomPropertyReplaceValue)
-
     )
-    //for configname in retval do
-    //    //swApp.SendMsgToUser2 configname, swMbInformation, swMbOk
-    //    swModel.ShowConfiguration2 configname
-    //    |> ignore
-    //    //let massprops: Variant
-    //    let mutable status = 0
-
-
-    //    ()
-
 

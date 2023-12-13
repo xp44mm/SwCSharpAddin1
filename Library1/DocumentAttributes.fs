@@ -44,6 +44,10 @@ let main (swApp: ISldWorks) =
             ConfigurationOption = int swInConfigurationOpts_e.swAllConfiguration
         )
 
+
+
+
+
     let swParam1 = 
         swAtt.GetParameter "MyFirstParameter"
         :?> Parameter 

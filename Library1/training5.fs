@@ -274,11 +274,10 @@ let AddcomponentsToAssembly
     )
 
 /// cmdAddComponentsAndMate_Click
-let AddComponentsAndMate(swApp: ISldWorks) =
-    try
-
+let AddComponentsAndMate (swApp: ISldWorks) =
     // Guitar Effect Pedal.SLDASM
     let swModel = swApp.ActiveDoc :?> IModelDoc2
+    try
     let AssemblyTitle = swModel.GetTitle()
     let assemblyName = Path.GetFileNameWithoutExtension(AssemblyTitle)
     let swSelMgr = swModel.SelectionManager :?> SelectionMgr

@@ -12,14 +12,14 @@ Imports SolidWorksTools.File
 Imports System.Collections.Generic
 Imports System.Diagnostics
 
-<Guid("c3ff2956-3630-4aed-a1e5-c9eae980c30c")> _
-    <ComVisible(True)> _
-    <SwAddin( _
-        Description:="DotNetNotifications description", _
-        Title:="DotNetNotifications", _
-        LoadAtStartup:=True _
-        )> _
-        Public Class SwAddin
+<Guid("c3ff2956-3630-4aed-a1e5-c9eae980c30c")>
+<ComVisible(True)>
+<SwAddin(
+        Description:="DotNetNotifications description",
+        Title:="DotNetNotifications",
+        LoadAtStartup:=True
+        )>
+Public Class SwAddin
     Implements SolidWorks.Interop.swpublished.SwAddin
 
 #Region "Local Variables"
@@ -115,9 +115,9 @@ Imports System.Diagnostics
 
 #Region "ISwAddin Implementation"
 
-  Function ConnectToSW(ByVal ThisSW As Object, _
-    ByVal Cookie As Integer) As Boolean Implements _
-    SolidWorks.Interop.swpublished.SwAddin.ConnectToSW
+    Function ConnectToSW(ByVal ThisSW As Object,
+      ByVal Cookie As Integer) As Boolean Implements _
+      SolidWorks.Interop.swpublished.SwAddin.ConnectToSW
 
         iSwApp = ThisSW
         addinID = Cookie
@@ -140,9 +140,9 @@ Imports System.Diagnostics
         ConnectToSW = True
     End Function
 
-  Function DisconnectFromSW() As Boolean _
-    Implements _
-    SolidWorks.Interop.swpublished.SwAddin.DisconnectFromSW
+    Function DisconnectFromSW() As Boolean _
+      Implements _
+      SolidWorks.Interop.swpublished.SwAddin.DisconnectFromSW
         RemoveCommandMgr()
         RemovePMP()
         DetachEventHandlers()
@@ -151,8 +151,8 @@ Imports System.Diagnostics
         iCmdMgr = Nothing
         System.Runtime.InteropServices.Marshal.ReleaseComObject(iSwApp)
         iSwApp = Nothing
-    'The addin _must_ call GC.Collect() here
-    'in order to retrieve all managed code pointers 
+        'The addin _must_ call GC.Collect() here
+        'in order to retrieve all managed code pointers 
         GC.Collect()
         GC.WaitForPendingFinalizers()
 
@@ -179,12 +179,12 @@ Imports System.Diagnostics
         Dim ToolTip As String = "VB Addin"
 
 
-        Dim docTypes() As Integer = {swDocumentTypes_e.swDocASSEMBLY, _
-                                       swDocumentTypes_e.swDocDRAWING, _
+        Dim docTypes() As Integer = {swDocumentTypes_e.swDocASSEMBLY,
+                                       swDocumentTypes_e.swDocDRAWING,
                                        swDocumentTypes_e.swDocPART}
 
         thisAssembly = System.Reflection.Assembly.GetAssembly(Me.GetType())
-   
+
         Dim cmdGroupErr As Integer = 0
         Dim ignorePrevious As Boolean = False
 
@@ -203,7 +203,7 @@ Imports System.Diagnostics
         If cmdGroup Is Nothing Or thisAssembly Is Nothing Then
             Throw New NullReferenceException()
         End If
-     
+
 
 
         cmdGroup.LargeIconList = iBmp.CreateFileFromResourceBitmap("DotNetNotifications.ToolbarLarge.bmp", thisAssembly)
@@ -221,7 +221,7 @@ Imports System.Diagnostics
         cmdGroup.Activate()
 
         Dim flyGroup As FlyoutGroup
-        flyGroup = iCmdMgr.CreateFlyoutGroup(flyoutGroupID, "Dynamic Flyout", "Flyout Tooltip", "Flyout Hint", _
+        flyGroup = iCmdMgr.CreateFlyoutGroup(flyoutGroupID, "Dynamic Flyout", "Flyout Tooltip", "Flyout Hint",
               cmdGroup.SmallMainIcon, cmdGroup.LargeMainIcon, cmdGroup.SmallIconList, cmdGroup.LargeIconList, "FlyoutCallback", "FlyoutEnable")
 
         flyGroup.AddCommandItem("FlyoutCommand 1", "test", 0, "FlyoutCommandItem1", "FlyoutEnableCommandItem1")
@@ -279,9 +279,9 @@ Imports System.Diagnostics
 
     Public Sub RemoveCommandMgr()
         Try
-           iBmp.Dispose()
-           iCmdMgr.RemoveCommandGroup(mainCmdGroupID)
-           iCmdMgr.RemoveFlyoutGroup(flyoutGroupID)
+            iBmp.Dispose()
+            iCmdMgr.RemoveCommandGroup(mainCmdGroupID)
+            iCmdMgr.RemoveFlyoutGroup(flyoutGroupID)
         Catch e As Exception
         End Try
     End Sub
@@ -305,13 +305,13 @@ Imports System.Diagnostics
         storeList.Sort()
 
         If Not addinList.Count = storeList.Count Then
-            
+
             Return False
         Else
 
             For i As Integer = 0 To addinList.Count - 1
                 If Not addinList(i) = storeList(i) Then
-                    
+
                     Return False
                 End If
             Next
@@ -344,8 +344,8 @@ Imports System.Diagnostics
             openDocs.Keys.CopyTo(keys, 0)
             For Each key In keys
                 docHandler = openDocs.Item(key)
-        'This also removes the pair from the hash
-        docHandler.DetachEventHandlers()
+                'This also removes the pair from the hash
+                docHandler.DetachEventHandlers()
                 docHandler = Nothing
                 key = Nothing
             Next
@@ -354,16 +354,16 @@ Imports System.Diagnostics
 
     Sub AttachSWEvents()
         Try
-      AddHandler iSwApp.ActiveDocChangeNotify, _
-        AddressOf Me.SldWorks_ActiveDocChangeNotify
-      AddHandler iSwApp.DocumentLoadNotify2, _
-        AddressOf Me.SldWorks_DocumentLoadNotify2
-      AddHandler iSwApp.FileNewNotify2, _
-        AddressOf Me.SldWorks_FileNewNotify2
-      AddHandler iSwApp.ActiveModelDocChangeNotify, _
-        AddressOf Me.SldWorks_ActiveModelDocChangeNotify
-      AddHandler iSwApp.FileOpenPostNotify, _
-        AddressOf Me.SldWorks_FileOpenPostNotify
+            AddHandler iSwApp.ActiveDocChangeNotify,
+              AddressOf Me.SldWorks_ActiveDocChangeNotify
+            AddHandler iSwApp.DocumentLoadNotify2,
+              AddressOf Me.SldWorks_DocumentLoadNotify2
+            AddHandler iSwApp.FileNewNotify2,
+              AddressOf Me.SldWorks_FileNewNotify2
+            AddHandler iSwApp.ActiveModelDocChangeNotify,
+              AddressOf Me.SldWorks_ActiveModelDocChangeNotify
+            AddHandler iSwApp.FileOpenPostNotify,
+              AddressOf Me.SldWorks_FileOpenPostNotify
         Catch e As Exception
             Console.WriteLine(e.Message)
         End Try
@@ -371,16 +371,16 @@ Imports System.Diagnostics
 
     Sub DetachSWEvents()
         Try
-      RemoveHandler iSwApp.ActiveDocChangeNotify, _
-        AddressOf Me.SldWorks_ActiveDocChangeNotify
-      RemoveHandler iSwApp.DocumentLoadNotify2, _
-        AddressOf Me.SldWorks_DocumentLoadNotify2
-      RemoveHandler iSwApp.FileNewNotify2, _
-        AddressOf Me.SldWorks_FileNewNotify2
-      RemoveHandler iSwApp.ActiveModelDocChangeNotify, _
-        AddressOf Me.SldWorks_ActiveModelDocChangeNotify
-      RemoveHandler iSwApp.FileOpenPostNotify, _
-        AddressOf Me.SldWorks_FileOpenPostNotify
+            RemoveHandler iSwApp.ActiveDocChangeNotify,
+              AddressOf Me.SldWorks_ActiveDocChangeNotify
+            RemoveHandler iSwApp.DocumentLoadNotify2,
+              AddressOf Me.SldWorks_DocumentLoadNotify2
+            RemoveHandler iSwApp.FileNewNotify2,
+              AddressOf Me.SldWorks_FileNewNotify2
+            RemoveHandler iSwApp.ActiveModelDocChangeNotify,
+              AddressOf Me.SldWorks_ActiveModelDocChangeNotify
+            RemoveHandler iSwApp.FileOpenPostNotify,
+              AddressOf Me.SldWorks_FileOpenPostNotify
         Catch e As Exception
             Console.WriteLine(e.Message)
         End Try
@@ -402,8 +402,8 @@ Imports System.Diagnostics
         End While
     End Sub
 
-  Function AttachModelDocEventHandler( _
-    ByVal modDoc As ModelDoc2) As Boolean
+    Function AttachModelDocEventHandler(
+      ByVal modDoc As ModelDoc2) As Boolean
 
         If modDoc Is Nothing Then
             Return False
@@ -444,31 +444,31 @@ Imports System.Diagnostics
 
     End Function
 
-  Function SldWorks_FileNewNotify2(ByVal newDoc As Object, _
-    ByVal doctype As Integer, _
-    ByVal templateName As String) As Integer
+    Function SldWorks_FileNewNotify2(ByVal newDoc As Object,
+      ByVal doctype As Integer,
+      ByVal templateName As String) As Integer
 
         AttachEventsToAllDocuments()
 
-    'add this code to send a message specifying what type of
-    'document was opened
-    Select Case doctype
-      Case swDocumentTypes_e.swDocPART
-        iSwApp.SendMsgToUser2( _
-          "A new Part Document has been opened", _
-          swMessageBoxIcon_e.swMbInformation, _
-          swMessageBoxBtn_e.swMbOk)
-      Case swDocumentTypes_e.swDocASSEMBLY
-        iSwApp.SendMsgToUser2( _
-          "A new Assembly Document has been opened", _
-          swMessageBoxIcon_e.swMbInformation, _
-          swMessageBoxBtn_e.swMbOk)
-      Case swDocumentTypes_e.swDocDRAWING
-        iSwApp.SendMsgToUser2( _
-          "A new Drawing Document has been opened", _
-          swMessageBoxIcon_e.swMbInformation, _
-          swMessageBoxBtn_e.swMbOk)
-    End Select
+        'add this code to send a message specifying what type of
+        'document was opened
+        Select Case doctype
+            Case swDocumentTypes_e.swDocPART
+                iSwApp.SendMsgToUser2(
+                  "A new Part Document has been opened",
+                  swMessageBoxIcon_e.swMbInformation,
+                  swMessageBoxBtn_e.swMbOk)
+            Case swDocumentTypes_e.swDocASSEMBLY
+                iSwApp.SendMsgToUser2(
+                  "A new Assembly Document has been opened",
+                  swMessageBoxIcon_e.swMbInformation,
+                  swMessageBoxBtn_e.swMbOk)
+            Case swDocumentTypes_e.swDocDRAWING
+                iSwApp.SendMsgToUser2(
+                  "A new Drawing Document has been opened",
+                  swMessageBoxIcon_e.swMbInformation,
+                  swMessageBoxBtn_e.swMbOk)
+        End Select
     End Function
 
     Function SldWorks_ActiveModelDocChangeNotify() As Integer
@@ -497,16 +497,16 @@ Imports System.Diagnostics
 
             'Extrude the sketch
             featMan = model.FeatureManager
-            featMan.FeatureExtrusion(True, _
-                                      False, False, _
-                                      swEndConditions_e.swEndCondBlind, swEndConditions_e.swEndCondBlind, _
-                                      0.1, 0.0, _
-                                      False, False, _
-                                      False, False, _
-                                      0.0, 0.0, _
-                                      False, False, _
-                                      False, False, _
-                                      True, _
+            featMan.FeatureExtrusion(True,
+                                      False, False,
+                                      swEndConditions_e.swEndCondBlind, swEndConditions_e.swEndCondBlind,
+                                      0.1, 0.0,
+                                      False, False,
+                                      False, False,
+                                      0.0, 0.0,
+                                      False, False,
+                                      False, False,
+                                      True,
                                       False, False)
         Else
             System.Windows.Forms.MessageBox.Show("There is no part template available. Please check your options and make sure there is a part template selected, or select a new part template.")

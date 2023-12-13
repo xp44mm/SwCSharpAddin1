@@ -3,103 +3,103 @@ Imports SolidWorks.Interop.swconst
 Imports SolidWorks.Interop.swpublished
 
 
-    Public Class PMPageHandler
+Public Class PMPageHandler
     Implements PropertyManagerPage2Handler9
 
 
     Dim iSwApp As SldWorks
-        Dim userAddin As SwAddin
+    Dim userAddin As SwAddin
 
     Function Init(ByVal sw As SldWorks, ByVal addin As SwAddin) As Integer
         iSwApp = sw
         userAddin = addin
     End Function
 
-        'Implement these methods from the interface
+    'Implement these methods from the interface
     Sub AfterClose() Implements PropertyManagerPage2Handler9.AfterClose
-            ''This function must contain code, even if it does nothing, to prevent the
-            ''.NET runtime environment from doing garbage collection at the wrong time.
-            Dim IndentSize As Integer
-            IndentSize = System.Diagnostics.Debug.IndentSize
-            System.Diagnostics.Debug.WriteLine(IndentSize)
+        ''This function must contain code, even if it does nothing, to prevent the
+        ''.NET runtime environment from doing garbage collection at the wrong time.
+        Dim IndentSize As Integer
+        IndentSize = System.Diagnostics.Debug.IndentSize
+        System.Diagnostics.Debug.WriteLine(IndentSize)
 
-        End Sub
+    End Sub
 
     Sub OnCheckboxCheck(ByVal id As Integer, ByVal status As Boolean) Implements PropertyManagerPage2Handler9.OnCheckboxCheck
 
-        End Sub
+    End Sub
 
     Sub OnClose(ByVal reason As Integer) Implements PropertyManagerPage2Handler9.OnClose
-            ''This function must contain code, even if it does nothing, to prevent the
-            ''.NET runtime environment from doing garbage collection at the wrong time.
-            Dim IndentSize As Integer
-            IndentSize = System.Diagnostics.Debug.IndentSize
-            System.Diagnostics.Debug.WriteLine(IndentSize)
-        End Sub
+        ''This function must contain code, even if it does nothing, to prevent the
+        ''.NET runtime environment from doing garbage collection at the wrong time.
+        Dim IndentSize As Integer
+        IndentSize = System.Diagnostics.Debug.IndentSize
+        System.Diagnostics.Debug.WriteLine(IndentSize)
+    End Sub
 
     Sub OnComboboxEditChanged(ByVal id As Integer, ByVal text As String) Implements PropertyManagerPage2Handler9.OnComboboxEditChanged
 
-        End Sub
+    End Sub
 
     Function OnActiveXControlCreated(ByVal id As Integer, ByVal status As Boolean) As Integer Implements PropertyManagerPage2Handler9.OnActiveXControlCreated
-            OnActiveXControlCreated = -1
-        End Function
+        OnActiveXControlCreated = -1
+    End Function
 
     Sub OnButtonPress(ByVal id As Integer) Implements PropertyManagerPage2Handler9.OnButtonPress
 
-        End Sub
+    End Sub
 
     Sub OnComboboxSelectionChanged(ByVal id As Integer, ByVal item As Integer) Implements PropertyManagerPage2Handler9.OnComboboxSelectionChanged
 
-        End Sub
+    End Sub
 
     Sub OnGroupCheck(ByVal id As Integer, ByVal status As Boolean) Implements PropertyManagerPage2Handler9.OnGroupCheck
 
-        End Sub
+    End Sub
 
     Sub OnGroupExpand(ByVal id As Integer, ByVal status As Boolean) Implements PropertyManagerPage2Handler9.OnGroupExpand
 
-        End Sub
+    End Sub
 
     Function OnHelp() As Boolean Implements PropertyManagerPage2Handler9.OnHelp
-            OnHelp = True
-        End Function
+        OnHelp = True
+    End Function
 
     Sub OnListboxSelectionChanged(ByVal id As Integer, ByVal item As Integer) Implements PropertyManagerPage2Handler9.OnListboxSelectionChanged
 
-        End Sub
+    End Sub
 
     Function OnNextPage() As Boolean Implements PropertyManagerPage2Handler9.OnNextPage
-            OnNextPage = True
-        End Function
+        OnNextPage = True
+    End Function
 
     Sub OnNumberboxChanged(ByVal id As Integer, ByVal val As Double) Implements PropertyManagerPage2Handler9.OnNumberboxChanged
 
-        End Sub
+    End Sub
 
     Sub OnOptionCheck(ByVal id As Integer) Implements PropertyManagerPage2Handler9.OnOptionCheck
 
-        End Sub
+    End Sub
 
     Function OnPreviousPage() As Boolean Implements PropertyManagerPage2Handler9.OnPreviousPage
-            OnPreviousPage = True
-        End Function
+        OnPreviousPage = True
+    End Function
 
     Sub OnSelectionboxCalloutCreated(ByVal id As Integer) Implements PropertyManagerPage2Handler9.OnSelectionboxCalloutCreated
 
-        End Sub
+    End Sub
 
     Sub OnSelectionboxCalloutDestroyed(ByVal id As Integer) Implements PropertyManagerPage2Handler9.OnSelectionboxCalloutDestroyed
 
-        End Sub
+    End Sub
 
     Sub OnSelectionboxFocusChanged(ByVal Id As Integer) Implements PropertyManagerPage2Handler9.OnSelectionboxFocusChanged
 
-        End Sub
+    End Sub
 
     Sub OnSelectionboxListChanged(ByVal id As Integer, ByVal item As Integer) Implements PropertyManagerPage2Handler9.OnSelectionboxListChanged
 
-        End Sub
+    End Sub
 
     Sub OnTextboxChanged(ByVal id As Integer, ByVal text As String) Implements PropertyManagerPage2Handler9.OnTextboxChanged
 
@@ -172,5 +172,5 @@ Imports SolidWorks.Interop.swpublished
 
     Sub OnNumberBoxTrackingCompleted(ByVal id As Integer, ByVal val As Double) Implements SolidWorks.Interop.swpublished.IPropertyManagerPage2Handler9.OnNumberBoxTrackingCompleted
 
-        End Sub
-    End Class
+    End Sub
+End Class

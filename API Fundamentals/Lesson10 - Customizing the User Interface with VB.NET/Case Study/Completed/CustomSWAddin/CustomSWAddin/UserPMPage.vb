@@ -24,8 +24,8 @@ Public Class UserPMPage
     Dim num1 As PropertyManagerPageNumberbox
     Dim combo1 As PropertyManagerPageCombobox
 
-  'Adding a new number box control to the PropertyManager page
-  Dim newNumberBox As PropertyManagerPageNumberbox
+    'Adding a new number box control to the PropertyManager page
+    Dim newNumberBox As PropertyManagerPageNumberbox
 
     'Control IDs
     Dim group1ID As Integer = 0
@@ -39,8 +39,8 @@ Public Class UserPMPage
     Dim num1ID As Integer = 8
     Dim combo1ID As Integer = 9
 
-  'Add a new control ID for the number box
-  Dim newNumberBoxID As Integer = 10
+    'Add a new control ID for the number box
+    Dim newNumberBoxID As Integer = 10
 #End Region
 
     Sub Init(ByVal sw As SldWorks, ByVal addin As SwAddin)
@@ -59,8 +59,8 @@ Public Class UserPMPage
         handler.Init(iSwApp, userAddin)
         Dim options As Integer
         Dim errors As Integer
-    options = swPropertyManagerPageOptions_e.swPropertyManagerOptions_OkayButton + _
-    swPropertyManagerPageOptions_e.swPropertyManagerOptions_CancelButton
+        options = swPropertyManagerPageOptions_e.swPropertyManagerOptions_OkayButton +
+        swPropertyManagerPageOptions_e.swPropertyManagerOptions_CancelButton
         ppage = iSwApp.CreatePropertyManagerPage("Sample PMP", options, handler, errors)
     End Sub
 
@@ -70,38 +70,38 @@ Public Class UserPMPage
         Dim controlType As Integer
 
         'Add Groups
-    options = swAddGroupBoxOptions_e.swGroupBoxOptions_Expanded + _
-                swAddGroupBoxOptions_e.swGroupBoxOptions_Visible
+        options = swAddGroupBoxOptions_e.swGroupBoxOptions_Expanded +
+                    swAddGroupBoxOptions_e.swGroupBoxOptions_Visible
         group1 = ppage.AddGroupBox(group1ID, "Sample Group I", options)
 
-    options = swAddGroupBoxOptions_e.swGroupBoxOptions_Checkbox + _
-                swAddGroupBoxOptions_e.swGroupBoxOptions_Visible
+        options = swAddGroupBoxOptions_e.swGroupBoxOptions_Checkbox +
+                    swAddGroupBoxOptions_e.swGroupBoxOptions_Visible
         group2 = ppage.AddGroupBox(group2ID, "Sample Group II", options)
 
         'Add Controls to Group1 
         'Checkbox1
         controlType = swPropertyManagerPageControlType_e.swControlType_Checkbox
         leftAlign = swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge
-    options = swAddControlOptions_e.swControlOptions_Enabled + _
-                swAddControlOptions_e.swControlOptions_Visible
-    checkbox1 = group1.AddControl(checkbox1ID, controlType, "Sample Checkbox", _
-                                  leftAlign, options, "True or False Checkbox")
+        options = swAddControlOptions_e.swControlOptions_Enabled +
+                    swAddControlOptions_e.swControlOptions_Visible
+        checkbox1 = group1.AddControl(checkbox1ID, controlType, "Sample Checkbox",
+                                      leftAlign, options, "True or False Checkbox")
 
         'Option1
         controlType = swPropertyManagerPageControlType_e.swControlType_Option
         leftAlign = swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge
-    options = swAddControlOptions_e.swControlOptions_Enabled + _
-                swAddControlOptions_e.swControlOptions_Visible
-    option1 = group1.AddControl(option1ID, controlType, "Sample Option1", _
-                                leftAlign, options, "Radio Buttons")
+        options = swAddControlOptions_e.swControlOptions_Enabled +
+                    swAddControlOptions_e.swControlOptions_Visible
+        option1 = group1.AddControl(option1ID, controlType, "Sample Option1",
+                                    leftAlign, options, "Radio Buttons")
 
         'Option2
         controlType = swPropertyManagerPageControlType_e.swControlType_Option
         leftAlign = swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge
-    options = swAddControlOptions_e.swControlOptions_Enabled + _
-                swAddControlOptions_e.swControlOptions_Visible
-    option2 = group1.AddControl(option2ID, controlType, "Sample Option2", _
-                                leftAlign, options, "Radio Buttons")
+        options = swAddControlOptions_e.swControlOptions_Enabled +
+                    swAddControlOptions_e.swControlOptions_Visible
+        option2 = group1.AddControl(option2ID, controlType, "Sample Option2",
+                                    leftAlign, options, "Radio Buttons")
         If Not option2 Is Nothing Then
             option2.Checked = True
         End If
@@ -109,28 +109,28 @@ Public Class UserPMPage
         'Option3
         controlType = swPropertyManagerPageControlType_e.swControlType_Option
         leftAlign = swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge
-    options = swAddControlOptions_e.swControlOptions_Enabled + _
-                swAddControlOptions_e.swControlOptions_Visible
-    option3 = group1.AddControl(option3ID, controlType, "Sample Option3", _
-                                leftAlign, options, "Radio Buttons")
+        options = swAddControlOptions_e.swControlOptions_Enabled +
+                    swAddControlOptions_e.swControlOptions_Visible
+        option3 = group1.AddControl(option3ID, controlType, "Sample Option3",
+                                    leftAlign, options, "Radio Buttons")
 
-    'New Number Box
-    controlType = swPropertyManagerPageControlType_e.swControlType_Numberbox
-    leftAlign = swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge
-    options = swAddControlOptions_e.swControlOptions_Enabled + _
-              swAddControlOptions_e.swControlOptions_Visible
-    'Create the new number box control on group 1
-    newNumberBox = group1.AddControl(newNumberBoxID, controlType, "New Number Box", _
-                               leftAlign, options, "Number Box with Picture label")
+        'New Number Box
+        controlType = swPropertyManagerPageControlType_e.swControlType_Numberbox
+        leftAlign = swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge
+        options = swAddControlOptions_e.swControlOptions_Enabled +
+                  swAddControlOptions_e.swControlOptions_Visible
+        'Create the new number box control on group 1
+        newNumberBox = group1.AddControl(newNumberBoxID, controlType, "New Number Box",
+                                   leftAlign, options, "Number Box with Picture label")
 
-    'Set the Range
-    newNumberBox.SetRange(swNumberboxUnitType_e.swNumberBox_UnitlessInteger, _
-                          0, 100, 10, True)
-    'Set the default value
-    newNumberBox.Value = 10
-    'Add a picture to the control
-    newNumberBox.SetStandardPictureLabel( _
-                swControlBitmapLabelType_e.swBitmapLabel_LinearDistance)
+        'Set the Range
+        newNumberBox.SetRange(swNumberboxUnitType_e.swNumberBox_UnitlessInteger,
+                              0, 100, 10, True)
+        'Set the default value
+        newNumberBox.Value = 10
+        'Add a picture to the control
+        newNumberBox.SetStandardPictureLabel(
+                    swControlBitmapLabelType_e.swBitmapLabel_LinearDistance)
 
         'List1
         controlType = swPropertyManagerPageControlType_e.swControlType_Listbox

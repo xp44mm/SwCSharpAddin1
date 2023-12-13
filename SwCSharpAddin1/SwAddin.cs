@@ -375,6 +375,12 @@ namespace SwCSharpAddin1
                 callbackFunction: nameof(this.Training8_DocumentAttributes)
                 );
 
+            //ÃüÁî
+            cmds.add(
+                hintOrTip: "µÚ8ÕÂCNCDrilling",
+                callbackFunction: nameof(this.Training8_CNCDrilling)
+                );
+
             // ÃüÁî×é
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
@@ -594,6 +600,10 @@ namespace SwCSharpAddin1
             DocumentAttributes.main(this.iSwApp);
         }
 
+        public void Training8_CNCDrilling()
+        {
+            Training8.CNCDrilling.main(this.iSwApp);
+        }
 
         public bool Always() { return true; }
     }

@@ -23,14 +23,14 @@
 		<Compile Include="CustomProps.fs" />
 		<Compile Include="CustomFileSummary.fs" />
 		<Compile Include="DocumentAttributes.fs" />
-		<Compile Include="CNCDrilling.fs" />
+		<Compile Include="Training8_CNCDrilling.fs" />
 		<Compile Include="ModelDocUtils.fs" />
 		<Compile Include="SldWorksUtils.fs" />
 		<Compile Include="批量修改零件材质.fs" />
 		<Compile Include="RecursiveTraverseAssembly.fs" />
-		<Compile Include="CommandManager.fs" />
 		<Compile Include="SWRoutingLibUtils.fs" />
-		<Compile Include="Class1.fs" />
+		<Compile Include="WatchAssemblyTraversal1.fs" />
+		<Compile Include="WatchAssemblyTraversal.fs" />
 	</ItemGroup>
 
 	<ItemGroup>
