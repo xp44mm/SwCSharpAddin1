@@ -381,6 +381,12 @@ namespace SwCSharpAddin1
                 callbackFunction: nameof(this.Training8_CNCDrilling)
                 );
 
+            //命令
+            cmds.add(
+                hintOrTip: "附录D装配体遍历",
+                callbackFunction: nameof(this.AppendexD_WatchAssemblyTraversal)
+                );
+
             // 命令组
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
@@ -604,6 +610,13 @@ namespace SwCSharpAddin1
         {
             Training8.CNCDrilling.main(this.iSwApp);
         }
+
+        public void AppendexD_WatchAssemblyTraversal()
+        {
+            WatchAssemblyTraversal.main(this.iSwApp);
+        }
+
+
 
         public bool Always() { return true; }
     }

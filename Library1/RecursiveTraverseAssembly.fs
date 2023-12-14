@@ -26,41 +26,39 @@ type RecursiveTraverseAssembly(swApp: ISldWorks) =
         else "其他零件：弯头，三通，大小头"
 
     let traverseComponent (swComp:Component2) =
-
-        ///打印树
-        let rec loop (nLevel:int) (swCompNode:Component2Utils.Component2Node) =
+        let rec loop (nLevel:int) (swCompNode:Component2Node) =
             let pad = String.replicate nLevel "    "
 
             [
                 match swCompNode with
-                | Component2Utils.Component2Node(swComp,[||]) ->
+                | Component2Node(swComp,[||]) ->
                     $"{pad}+{getPipeInfo swComp}\n"
-                | Component2Utils.Component2Node(swComp,children) ->
+                | Component2Node(swComp,children) ->
                     $"{pad}+{Component2Utils.renderComponent2 swComp}\n"
                     for child in children do
                         yield! loop (nLevel + 1) child
             ]
 
         swComp
-        |> Component2Utils.traverseComponent2Node
+        |> Component2Node.from
         |> loop 0
         |> String.concat "\n"
 
     let TraverseFeatureFeatures(swFeat:Feature) =
-        let rec loop (nLevel:int) (swFeatNode:FeatureUtils.FeatureNode) =
+        let rec loop (nLevel:int) (swFeatNode:FeatureNode) =
             let pad = String.replicate nLevel "    "
             [
                 match swFeatNode with
-                | FeatureUtils.FeatureNode(x,[||]) ->
+                | FeatureNode(x,[||]) ->
                     $"{pad}+{x}\n"
-                | FeatureUtils.FeatureNode(x,children) ->
+                | FeatureNode(x,children) ->
                     $"{pad}+{x}\n"
                     for child in children do
                         yield! loop (nLevel + 1) child
             ]
 
         swFeat
-        |> FeatureUtils.traverseFeatureNodes
+        |> FeatureNode.from
         |> Seq.collect(loop 0)
         |> String.concat "\n"
 

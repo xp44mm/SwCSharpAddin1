@@ -2,7 +2,6 @@
 
 open SolidWorks.Interop.sldworks
 open SolidWorks.Interop.swconst
-open SolidWorks.Interop.SWRoutingLib
 
 open System
 open System.Diagnostics
@@ -27,13 +26,5 @@ let renderComponent2 (swComp:Component2) =
 let getChildren (swComp:Component2) =
     swComp.GetChildren()
     :?> obj[]
-    |> Array.map(fun obj -> obj :?> Component2)
+    |> Array.map(fun o -> o :?> Component2)
 
-type Component2Node = Component2Node of Component2 * Component2Node []
-
-let rec traverseComponent2Node (swComp:Component2) =
-    let children =
-        swComp
-        |> getChildren
-        |> Array.map traverseComponent2Node
-    Component2Node(swComp, children)

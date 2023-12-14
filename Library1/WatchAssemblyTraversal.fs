@@ -8,45 +8,10 @@ open System.Diagnostics
 open System.IO
 open FSharp.SolidWorks
 
-//'recursively traversing the feature's features
-let TraverseFeatureFeatures (nLevel:int) (swFeat:Feature) =
-    let rec loop (nLevel:int) (swFeatNode:FeatureUtils.FeatureNode) =
-        let sPadStr = String.replicate (nLevel*2) " "
-        [
-            match swFeatNode with
-            | FeatureUtils.FeatureNode(swFeat,children) ->
-                $"{sPadStr}{swFeat.Name} [{swFeat.GetTypeName2()}]\n"
-                if Array.isEmpty children then
-                    ()
-                else
-                    for child in children do
-                        yield! loop (nLevel + 1) child
-        ]
-
-    swFeat
-    |> FeatureUtils.traverseFeatureNodes
-    |> Seq.collect(loop nLevel)
-    |> String.concat "\n"
-
-//'this recursively traverses all of the components in an
-//'assembly and prints their name to the immediate window
-let TraverseComponent (nLevel:int) (swComp:Component2) =
-    let rec loop (nLevel:int) (swCompNode:Component2Utils.Component2Node) =
-        let sPadStr = String.replicate (nLevel*2) " "
-
-        [
-            match swCompNode with
-            | Component2Utils.Component2Node(swChildComp,children) ->
-                yield $"{sPadStr}+{swChildComp.Name2} <{swChildComp.ReferencedConfiguration}>\n"
-                yield TraverseComponentFeatures nLevel swChildComp
-                for child in children do
-                    yield! loop (nLevel+1) child
-        ]
-
-    swComp
-    |> Component2Utils.traverseComponent2Node
-    |> loop nLevel
-    |> String.concat "\n"
+//'This code demonstrates how to traverse an assembly and create a list of
+//'All of its components. You could use this code to create a bill of materials.
+//'Also in this code we traverse all of the features in each component and
+//'print them underneath the component in the list.
 
 //'Macro Entry point
 let main (swApp: ISldWorks) =
@@ -67,46 +32,58 @@ let main (swApp: ISldWorks) =
     |> String.concat "\n"
     |> swApp.SendMsgToUser
 
+//'this code recursively traverses all of the
+//'features in a model
 let TraverseModelFeatures (nLevel:int) (swModel :ModelDoc2) =
-    //'this code recursively traverses all of the
-    //'features in a model
     let swFeat = swModel.FirstFeature() :?> Feature
     TraverseFeatureFeatures nLevel swFeat
 
+//'this recursively traverses all of the components in an
+//'assembly and prints their name to the immediate window
+let TraverseComponent (nLevel:int) (swRootComp:Component2) =
+    let rec loop (nLevel:int) (swCompNode:Component2Node) =
+        let sPadStr = String.replicate (nLevel*2) " "
+
+        [
+            match swCompNode with
+            | Component2Node(swChildComp,children) ->
+                yield $"{sPadStr}+{swChildComp.Name2} <{swChildComp.ReferencedConfiguration}>"
+                yield TraverseComponentFeatures nLevel swChildComp
+                for child in children do
+                    yield! loop (nLevel+1) child
+        ]
+    //根组件要手动展开
+    //根组件的引用的模型文件为空，文件就是模型自己。
+    swRootComp.GetChildren()
+    :?> obj[]
+    |> Seq.collect(fun o -> 
+        o :?> Component2
+        |> Component2Node.from
+        |> loop nLevel
+    )
+    |> String.concat "\n"
+
+//'this recursively traverses all of the components features
 let TraverseComponentFeatures (nLevel:int) (swComp:Component2) =
-    //'this recursively traverses all of the components features
     let swFeat = swComp.FirstFeature()
     TraverseFeatureFeatures nLevel swFeat
 
-////
-//let TraverseFeatureFeatures (nLevel:int) (swFeat:Feature) =
-//    //'recursively traversing the feature's features
-//    let sPadStr = String.replicate nLevel "  "
-//    let outl = $"{sPadStr}{swFeat.Name} [{swFeat.GetTypeName2()}]"
-//    let swSubFeat = swFeat.GetFirstSubFeature() :?> Feature
-//    let outl = $"{sPadStr}  {swSubFeat.Name} [{swSubFeat.GetTypeName2()}]"
+//'recursively traversing the feature's features
+let TraverseFeatureFeatures (nLevel:int) (swFeat:Feature) =
+    let rec loop (nLevel:int) (swFeatNode:FeatureNode) =
+        let sPadStr = String.replicate (nLevel*2) " "
+        [
+            match swFeatNode with
+            | FeatureNode(swFeat,children) ->
+                $"{sPadStr}{swFeat.Name} [{swFeat.GetTypeName2()}]"
+                if Array.isEmpty children then
+                    ()
+                else
+                    for child in children do
+                        yield! loop (nLevel + 1) child
+        ]
 
-//    let swSubSubFeat = swSubFeat.GetFirstSubFeature() :?> Feature
-//    let outl = $"{sPadStr}    {swSubSubFeat.Name} [{swSubSubFeat.GetTypeName2()}]"
-
-//    let swSubSubSubFeat = swSubFeat.GetFirstSubFeature() :?> Feature
-//    let swSubSubSubFeat = swSubSubSubFeat.GetNextSubFeature() :?> Feature
-//    let swSubSubFeat = swSubSubFeat.GetNextSubFeature() :?> Feature
-//    let swSubFeat = swSubFeat.GetNextSubFeature() :?> Feature
-//    let swFeat = swFeat.GetNextFeature() :?> Feature
-//    ()
-
-//let TraverseComponent (nLevel:int) (swComp:Component2) =
-//    let sPadStr = String.replicate nLevel "  "
-  
-//    let vChildComp = 
-//        swComp.GetChildren() :?> obj[]
-//        |> Array.map(fun obj -> obj :?> Component2)
-
-//    let swChildComp = vChildComp.[0]
-//    let outl = $"{sPadStr}+{swChildComp.Name2} <{swChildComp.ReferencedConfiguration}>"
-//    [
-//        TraverseComponentFeatures nLevel swChildComp
-//        TraverseComponent (nLevel+1) swChildComp
-//    ]
-//    |> String.concat "\n"
+    swFeat
+    |> FeatureNode.from
+    |> Seq.collect(loop nLevel)
+    |> String.concat "\n"

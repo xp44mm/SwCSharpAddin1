@@ -20,7 +20,7 @@ let getFeatureSeq (featObj: obj) =
         seq {
             match o with
             | null -> ()
-            | :? IFeature as f ->
+            | :? Feature as f ->
                 yield f
                 yield! loop (f.GetNextFeature())
             | _ -> failwith $"{o.GetType()}"
@@ -32,7 +32,7 @@ let getSubFeatureSeq (parent: IFeature) =
         seq {
             match featObj with
             | null -> ()
-            | :? IFeature as f ->
+            | :? Feature as f ->
                 yield f
                 yield! loop (f.GetNextSubFeature())
             | _ -> failwith $"{featObj.GetType()}"
@@ -40,20 +40,6 @@ let getSubFeatureSeq (parent: IFeature) =
     parent.GetFirstSubFeature()
     |> loop
 
-type FeatureNode = FeatureNode of IFeature * FeatureNode []
-
-let traverseFeatureNodes (swFeat: IFeature) =
-    let rec loop (swParentFeat: IFeature) =
-        swParentFeat
-        |> getSubFeatureSeq
-        |> Seq.map(fun swParentFeat -> 
-            FeatureNode(swParentFeat,loop swParentFeat))
-        |> Seq.toArray
-
-    swFeat
-    |> getFeatureSeq
-    |> Seq.map(fun swFeat -> FeatureNode(swFeat, loop swFeat))
-    |> Seq.toArray
 
 let setSuppression2 (suppressionState: swFeatureSuppressionAction_e) (config_opt: swInConfigurationOpts_e) (config_names: string[]) (swFeat: IFeature) =
     swFeat.SetSuppression2(

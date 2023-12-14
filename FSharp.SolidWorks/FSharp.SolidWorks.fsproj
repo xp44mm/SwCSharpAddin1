@@ -55,9 +55,11 @@
 		<Compile Include="SelectionMgrUtils.fs" />
 		<Compile Include="FeatureManagerUtils.fs" />
 		<Compile Include="FeatureUtils.fs" />
+		<Compile Include="FeatureNode.fs" />
 		<Compile Include="MathUtilityUtils.fs" />
 		<Compile Include="MathPointUtils.fs" />
 		<Compile Include="Component2Utils.fs" />
+		<Compile Include="Component2Node.fs" />
 		<Compile Include="UserPreference.fs" />
 		<Compile Include="ConfigurationUtils.fs" />
 		<Compile Include="AddComponent5Params.fs" />

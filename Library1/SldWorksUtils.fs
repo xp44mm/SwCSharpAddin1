@@ -48,16 +48,13 @@ let testPipeBom (swApp: ISldWorks) =
     )
 
 /// 打开一个线路零件
+//从一个管道装配体打开线路零件的模型，并读取管道长度
 let readSWPipeLength (swApp: ISldWorks) =
-    let swModel = 
-        swApp.ActiveDoc
-        :?> ModelDoc2
-
+    let swModel = swApp.ActiveDoc :?> ModelDoc2
     let config = swModel.ConfigurationManager.ActiveConfiguration
     let swCustPrpMgr = swModel.Extension.CustomPropertyManager(config.Name)
     CustomPropsConfig1.PrintProperties swCustPrpMgr false ""
 
-//从一个管道装配体打开线路零件的模型，并读取管道长度
 
 ///单个文件
 let detectCutLists (swApp: ISldWorks) =
@@ -114,21 +111,21 @@ let testCutLists (swApp: ISldWorks) =
         |> Seq.toList
 
     for fl in files do
-    let swModel =
-        swApp 
-        |> SldWorksUtils.openDoc6 fl swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
-    let part = swModel :?> PartDoc
-    if part.IsWeldment() then
-        let mat,db = PartDocUtils.getMaterialPropertyName2 "" part
-        if mat <> "" && db <> "" then
-            ModelDocUtils.printCutLists logfile swModel
-        else
-            let partfile = Path.GetFileNameWithoutExtension(fl)
-            File.AppendAllText(logfile, $"{partfile}\t{mat}\t{db}\t\t\n")
+        let swModel =
+            swApp 
+            |> SldWorksUtils.openDoc6 fl swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+        let part = swModel :?> PartDoc
+        if part.IsWeldment() then
+            let mat,db = PartDocUtils.getMaterialPropertyName2 "" part
+            if mat <> "" && db <> "" then
+                ModelDocUtils.printCutLists logfile swModel
+            else
+                let partfile = Path.GetFileNameWithoutExtension(fl)
+                File.AppendAllText(logfile, $"{partfile}\t{mat}\t{db}\t\t\n")
 
-    //' Close Document
-    swModel.GetPathName()
-    |> swApp.CloseDoc
+        //' Close Document
+        swModel.GetPathName()
+        |> swApp.CloseDoc
 
 let setPartWeldment (swApp: ISldWorks) =
     let swModel = swApp.ActiveDoc :?> ModelDoc2

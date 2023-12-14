@@ -8,7 +8,6 @@
 
 	<ItemGroup>
 		<Compile Include="Consts.fs" />
-		<Compile Include="CustomPropsConfig1.fs" />
 		<Compile Include="training1.fs" />
 		<Compile Include="training2.fs" />
 		<Compile Include="training2_existingDocs.fs" />
@@ -25,12 +24,12 @@
 		<Compile Include="DocumentAttributes.fs" />
 		<Compile Include="Training8_CNCDrilling.fs" />
 		<Compile Include="ModelDocUtils.fs" />
+		<Compile Include="CustomPropsConfig1.fs" />
 		<Compile Include="SldWorksUtils.fs" />
 		<Compile Include="批量修改零件材质.fs" />
 		<Compile Include="RecursiveTraverseAssembly.fs" />
-		<Compile Include="SWRoutingLibUtils.fs" />
-		<Compile Include="WatchAssemblyTraversal1.fs" />
 		<Compile Include="WatchAssemblyTraversal.fs" />
+		<Compile Include="SWRoutingLibUtils.fs" />
 	</ItemGroup>
 
 	<ItemGroup>
