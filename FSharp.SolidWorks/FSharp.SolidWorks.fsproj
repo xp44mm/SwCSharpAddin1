@@ -54,6 +54,7 @@
 		<Compile Include="SketchManagerUtils.fs" />
 		<Compile Include="SelectionMgrUtils.fs" />
 		<Compile Include="FeatureManagerUtils.fs" />
+		<Compile Include="FeatureExtrusion3.fs" />
 		<Compile Include="FeatureUtils.fs" />
 		<Compile Include="FeatureNode.fs" />
 		<Compile Include="MathUtilityUtils.fs" />

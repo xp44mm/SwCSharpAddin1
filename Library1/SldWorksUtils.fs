@@ -79,11 +79,8 @@ let detectCutLists (swApp: ISldWorks) =
             cpm.GetNames() :?> string[]
             |> Array.filter(props.Contains)
             |> Array.map(fun pnm ->
-                //if  pnm then
-                match CustomPropertyManagerUtils.tryResolvedValOut pnm cpm with
-                | Some resval -> $"{pnm},{resval}"
-                | _ -> $"{pnm}: no resval"
-                //else $"{pnm}: no matter"
+                match CustomPropertyManagerUtils.GetUpdatedProperty pnm cpm with
+                | value, resval -> $"{pnm},{value},{resval}"
                 )
             |> String.concat "\n"
         )

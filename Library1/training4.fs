@@ -24,23 +24,13 @@ let newPart (swApp: ISldWorks) =
     let swModel =
         swApp
         |> SldWorksUtils.newPartDoc
-
+        :?> ModelDoc2
     let docPref = DocUserPreference(swModel)
-
-    //swModel :?> IModelDoc2
-    //|> ModelDoc2Utils.setUserPreferenceInteger
-    //    swUserPreferenceIntegerValue_e.swUnitsLinear
-    //    swUserPreferenceOption_e.swDetailingNoOptionSpecified
-    //    (int swLengthUnit_e.swMM)
-
 
     docPref.swUnitsLinear swUserPreferenceOption_e.swDetailingNoOptionSpecified <- (int swLengthUnit_e.swMM)
     //Turn off dimension dialogs
-    let p = SysUserPreference(swApp)
+    let p = SwUserPreference(swApp)
     p.swInputDimValOnCreate <- false
-    //swApp
-    //|> SldWorksUtils.setUserPreferenceToggle
-    //    swUserPreferenceToggle_e.swInputDimValOnCreate false
 
     swModel
 

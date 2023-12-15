@@ -17,21 +17,22 @@ let PrintProperties (custPrpMgr:CustomPropertyManager) (useCached:bool) (indent:
 
     let vPrpNames = 
         custPrpMgr.GetNames()
-        :?> string[]
+        :?> obj[]
+        |> Array.map(fun o -> o :?> string)
 
     match vPrpNames with
     | [||] -> 
         writefile $"{indent}-No Properties-"
     | _ ->
         for prpName in vPrpNames do
-            let retval =  CustomPropertyManagerUtils.get6 prpName useCached custPrpMgr
+            let value,resvalue =  CustomPropertyManagerUtils.GetUpdatedProperty prpName custPrpMgr
             writefile $"{indent}Property: {prpName}"
-            writefile $"{indent}Value/Text Expression: {retval.valOut}"
-            writefile $"{indent}Evaluated Value: {retval.resolvedValOut}"
-            writefile $"{indent}Was Resolved: {retval.wasResolved}" 
-            writefile $"{indent}Is Linked: {retval.linkToProperty}" 
-            writefile $"{indent}Status: {retval.customInfoGetResult}"
-            writefile $""
+            writefile $"{indent}Value/Text Expression: {value}"
+            writefile $"{indent}Evaluated Value: {resvalue}"
+            //writefile $"{indent}Was Resolved: {retval.wasResolved}" 
+            //writefile $"{indent}Is Linked: {retval.linkToProperty}" 
+            //writefile $"{indent}Status: {retval.customInfoGetResult}"
+            //writefile $""
             
 let PrintPropertiesAtConfigurationSpecific (model:ModelDoc2) (cached:bool) (confName) =
     let swCustPrpMgr = model.Extension.CustomPropertyManager(confName)

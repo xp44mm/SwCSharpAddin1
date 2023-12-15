@@ -7,34 +7,14 @@ open System
 open System.Diagnostics
 open System.IO
 
-//let addComponent5
-//    compName
-//    (configOpt:swAddComponentConfigOptions_e)
-//    (newConfigName:string)
-//    (useConfigForPartReferences:bool)
-//    (existingConfigName:string)
-//    (x:float,y:float,z:float)
-//    (swAssy: IAssemblyDoc)
-//    =
-//    swAssy.AddComponent5(
-//        CompName                   = compName,
-//        ConfigOption               = int configOpt, 
-//        NewConfigName              = newConfigName, 
-//        UseConfigForPartReferences = useConfigForPartReferences, 
-//        ExistingConfigName         = existingConfigName, 
-//        X                          = x, 
-//        Y                          = y, 
-//        Z                          = z)
-
-
 let editPart2
     (silent: bool)
     (allowReadOnly: bool)
     (swAssy: IAssemblyDoc) =
     let mutable information = 0
     try
-        swAssy.EditPart2(silent, allowReadOnly, &information)
-        |> enum<swEditPartCommandStatus_e>
+    swAssy.EditPart2(silent, allowReadOnly, &information)
+    |> enum<swEditPartCommandStatus_e>
     with _ -> failwith $"{enum<swEditPartCommandStatus_e>information}"
 
 //let addMate5
@@ -73,4 +53,24 @@ let editPart2
 //            int widthMateOption,
 //            &errorStatus)
 //    with _ -> failwith $"{enum<swAddMateError_e>errorStatus}"
+
+
+//let addComponent5
+//    compName
+//    (configOpt:swAddComponentConfigOptions_e)
+//    (newConfigName:string)
+//    (useConfigForPartReferences:bool)
+//    (existingConfigName:string)
+//    (x:float,y:float,z:float)
+//    (swAssy: IAssemblyDoc)
+//    =
+//    swAssy.AddComponent5(
+//        CompName                   = compName,
+//        ConfigOption               = int configOpt, 
+//        NewConfigName              = newConfigName, 
+//        UseConfigForPartReferences = useConfigForPartReferences, 
+//        ExistingConfigName         = existingConfigName, 
+//        X                          = x, 
+//        Y                          = y, 
+//        Z                          = z)
 

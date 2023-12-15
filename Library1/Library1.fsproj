@@ -30,6 +30,7 @@
 		<Compile Include="RecursiveTraverseAssembly.fs" />
 		<Compile Include="WatchAssemblyTraversal.fs" />
 		<Compile Include="SWRoutingLibUtils.fs" />
+		<Compile Include="Salon.fs" />
 	</ItemGroup>
 
 	<ItemGroup>

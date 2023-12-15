@@ -15,7 +15,7 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 open FSharp.SolidWorks
-open FSharp.SolidWorks.FeatureManagerUtils
+//open FSharp.SolidWorks.FeatureManagerUtils
 
 /// 画一个圆柱体
 let main(swApp: ISldWorks) =
@@ -55,13 +55,13 @@ let exec (swApp: ISldWorks) =
         flip = false
         dir = false
         direction1 = {
-            EndCond = EndCond.Blind 0.01
+            EndCond = FeatureManagerUtils.EndCond.Blind 0.01
             Drafting = None }
         direction2 = {
-            EndCond = EndCond.Blind 0.0
+            EndCond = FeatureManagerUtils.EndCond.Blind 0.0
             Drafting = None }
         merge = true
         useFeatScope = true
         useAutoSelect = true
-        startCond = StartCondition.SketchPlane
+        startCond = FeatureManagerUtils.StartCondition.SketchPlane
     }

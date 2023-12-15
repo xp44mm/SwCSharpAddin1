@@ -58,7 +58,7 @@ let detectCutListItemFields (custPrpMgr: ICustomPropertyManager) =
     let prpNames = CustomPropertyManagerUtils.getCustomPropertyNames custPrpMgr
     prpNames
     |> Seq.map(fun name -> 
-        name, custPrpMgr |> CustomPropertyManagerUtils.get6 name false
+        name, custPrpMgr |> CustomPropertyManagerUtils.GetUpdatedProperty name
     )
 
 let detectCutListItemFields2 (custPrpMgr: CustomPropertyManager) =
@@ -66,9 +66,9 @@ let detectCutListItemFields2 (custPrpMgr: CustomPropertyManager) =
     prpNames
     |> Seq.map(fun name -> 
         let x =
-            CustomPropertyManagerUtils.tryResolvedValOut name custPrpMgr
+            CustomPropertyManagerUtils.GetUpdatedProperty name custPrpMgr
         x
-        |> Option.map(fun v -> name, v)
+        //|> Option.map(fun v -> name, v)
     )
     /// 长度，说明，材料，数量等属性的值列表
 let GetCutListItemFields (custPrpMgr: CustomPropertyManager) =
@@ -92,27 +92,4 @@ let setWeldmentUserPreference (swModel: ModelDoc2) =
 
     docPref.swDisableDerivedConfigurations opt <- false
 
-
-
-
-    //let toggle (v:bool) (x:swUserPreferenceToggle_e) =
-    //    swModel
-    //    |> ModelDoc2Utils.setUserPreferenceToggle
-    //        x swUserPreferenceOption_e.swDetailingNoOptionSpecified v
-    //    |> ignore
-
-    //swUserPreferenceToggle_e.swWeldmentEnableAutomaticCutList
-    //|> toggle true
-
-    //swUserPreferenceToggle_e.swWeldmentEnableAutomaticUpdate
-    //|> toggle true
-
-    //swUserPreferenceToggle_e.swWeldmentRenameCutlistDescriptionPropertyValue
-    //|> toggle true
-
-    //swUserPreferenceToggle_e.swWeldmentCollectIdenticalBodies
-    //|> toggle true
-
-    //swUserPreferenceToggle_e.swDisableDerivedConfigurations
-    //|> toggle false
 

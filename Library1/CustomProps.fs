@@ -19,27 +19,6 @@ open SolidWorksTools.File
 open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 
-let GetUpToDateProperty (fieldName:string) (cusPropMgr:ICustomPropertyManager) =
-        let mutable valOut = ""
-        let mutable resolvedValOut = ""
-        let mutable wasResolved = false
-        let mutable linkToProperty = false
-        let i =
-            cusPropMgr.Get6(
-                FieldName = fieldName,
-                UseCached = false,
-                ValOut = &valOut,
-                ResolvedValOut = &resolvedValOut,
-                WasResolved = &wasResolved,
-                LinkToProperty = &linkToProperty
-            )
-            |> enum<swCustomInfoGetResult_e>
-        if not wasResolved || i <> swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue then
-            //swApp.SendMsgToUser "CusPropMgr.Get6"
-            failwith "CusPropMgr.Get6"
-        else
-            valOut,resolvedValOut
-
 let main (swApp: ISldWorks) =
     let swModel = swApp.ActiveDoc :?> IModelDoc2
 
@@ -89,7 +68,7 @@ let main (swApp: ISldWorks) =
     // Retrieve the new value // 与第一次retrieve代码相同
     let Value,ResValue = 
         CusPropMgr
-        |> GetUpToDateProperty "MyTest"
+        |> CustomPropertyManagerUtils.GetUpdatedProperty "MyTest"
     
     swApp
     |> SldWorksUtils.sendMsgToUser2

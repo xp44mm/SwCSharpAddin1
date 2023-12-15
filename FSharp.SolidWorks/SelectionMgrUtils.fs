@@ -29,13 +29,12 @@ type Mark =
         | WithoutMark -> 0
         | OtherMark m -> m
 
-
 let getSelectedObjectCount2 (mark:Mark) (swSelMgr: SelectionMgr) =
     mark.value
     |> swSelMgr.GetSelectedObjectCount2
 
+//https://help.solidworks.com/2023/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.iselectionmgr~getselectedobjecttype3.html
 let getSelectedObjectType3 index (mark:Mark) (swSelMgr: SelectionMgr) =
-    //https://help.solidworks.com/2023/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.iselectionmgr~getselectedobjecttype3.html
     swSelMgr.GetSelectedObjectType3(index, mark.value)
     |> enum<swSelectType_e>
 

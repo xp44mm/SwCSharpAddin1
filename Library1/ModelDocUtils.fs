@@ -30,7 +30,10 @@ let printCutLists logfile (swModel:ModelDoc2) =
         let outp = 
             [
                 partfile
-                yield! CutList.GetCutListItemFields(swCutListPrpMgr)
+                yield! 
+                    swCutListPrpMgr
+                    |> CutList.GetCutListItemFields
+                    |> Seq.map snd
             ]
             |> String.concat "\t"
         File.AppendAllText(logfile,$"{outp}\n")

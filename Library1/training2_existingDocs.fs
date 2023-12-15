@@ -62,10 +62,12 @@ let ToolbarAndCustomProperty (swApp: ISldWorks) =
         |> ModelDoc2Utils.setToolbarVisibility tb false
     )
 
-    swModel.Extension.CustomPropertyManager("")
-    |> CustomPropertyManagerUtils.add3
-        "MyInfo" swCustomInfoType_e.swCustomInfoText "MyData" 
-        swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd
+    swModel.Extension.CustomPropertyManager("").Add3(
+        FieldName = "MyInfo",
+        FieldType = int swCustomInfoType_e.swCustomInfoText,
+        FieldValue = "MyData",
+        OverwriteExisting = int swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd
+    )
     |> ignore
 
 //注意：源零件不能只有焊件

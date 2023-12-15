@@ -18,7 +18,7 @@ open FSharp.SolidWorks
 
 open Consts
 
-let FILEDIR() = Path.Combine(TRAININGDIR, @"Lesson02 - Object Model Basics\Case Study")
+let FILEDIR = Path.Combine(TRAININGDIR, @"Lesson02 - Object Model Basics\Case Study")
 
 let connectToSolidWorks (swApp: ISldWorks) =
     swApp.SendMsgToUser $"RevisionNumber:{swApp.RevisionNumber}"
@@ -44,23 +44,21 @@ let sampleNote (text) (swModel: ModelDoc2) =
 let NewModel_Part (swApp: ISldWorks) =
     let swModel =
         let tmpl = Path.Combine(TEMPLATEDIR, "Part_MM.prtdot")
-        swApp
-        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
+        swApp.NewDocument(tmpl, 0, 0.0, 0.0)
+        :?> ModelDoc2
 
     swModel.InsertFamilyTableNew()
-
     swApp.SendMsgToUser "InsertFamilyTableNew"
 
     let text = "Sample Note"
     sampleNote text swModel
     swApp.SendMsgToUser text
-    ()
 
 let NewModel_ASM (swApp: ISldWorks) =
     let swModel =
         let tmpl = Path.Combine(TEMPLATEDIR, "Assembly_MM.asmdot")
-        swApp
-        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
+        swApp.NewDocument(tmpl, 0, 0.0, 0.0)
+        :?> ModelDoc2
 
     swModel.InsertFamilyTableNew()
 
@@ -74,12 +72,12 @@ let NewModel_ASM (swApp: ISldWorks) =
 let NewModel_DRW (swApp: ISldWorks) =
     let swModel =
         let tmpl = Path.Combine(TEMPLATEDIR, "B_Size_ANSI_MM.drwdot")
-        swApp
-        |> SldWorksUtils.newDocument tmpl swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
+        swApp.NewDocument(tmpl, int swDwgPaperSizes_e.swDwgPaperAsize, 0.0, 0.0)
+        :?> ModelDoc2
 
     let drawName = swModel.GetTitle()
     let partDoc =
-        let filename = Path.Combine(FILEDIR() ,"BlockwithDesignTable.SLDPRT")
+        let filename = Path.Combine(FILEDIR, "BlockwithDesignTable.SLDPRT")
         swApp
         |> SldWorksUtils.openDoc6 filename swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
 
@@ -121,7 +119,7 @@ let NewPartDoc (swApp: ISldWorks) =
     |> SketchManagerUtils.createCornerRectangle (0.0, 0.0, 0.0) (0.1, 0.1, 0.0) 
     |> ignore
 
-    swModel.FeatureManager.FeatureExtrusion3( 
+    swModel.FeatureManager.FeatureExtrusion3(
         Sd                = true, 
         Flip              = false,
         Dir               = false, 
@@ -133,8 +131,8 @@ let NewPartDoc (swApp: ISldWorks) =
         Dchk2             = false, 
         Ddir1             = false, 
         Ddir2             = false,
-        Dang1             = 0.01745329251994, 
-        Dang2             = 0.01745329251994, 
+        Dang1             = 0.01745329251994,
+        Dang2             = 0.01745329251994,
         OffsetReverse1    = false, 
         OffsetReverse2    = false,
         TranslateSurface1 = false, 
@@ -151,7 +149,7 @@ let NewPartDoc (swApp: ISldWorks) =
 
 let NewAssemblyDoc (swApp: ISldWorks) =
     let partDoc =
-        let prt = Path.Combine(FILEDIR(), "Sample.SLDPRT")        
+        let prt = Path.Combine(FILEDIR, "Sample.SLDPRT")        
         swApp
         |> SldWorksUtils.openDoc6 prt swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
             
@@ -161,11 +159,6 @@ let NewAssemblyDoc (swApp: ISldWorks) =
         |> SldWorksUtils.newDocument temp swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
         :?> IAssemblyDoc
 
-    //swAssy
-    //|> AssemblyDocUtils.addComponent5 
-    //    (partDoc.GetTitle())
-    //    swAddComponentConfigOptions_e.swAddComponentConfigOptions_CurrentSelectedConfig
-    //    "" false "" (0.0, 0.0, 0.0)
     {
         CompName = partDoc.GetTitle()
         ConfigOption = AddComponentConfigOptions.CurrentSelectedConfig

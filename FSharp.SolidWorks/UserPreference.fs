@@ -17,7 +17,7 @@ open SolidWorksTools
 open SolidWorksTools.File
 
 /// 枚举值(名称如swInputDimValOnCreate)，数据类型(bool/int/float/string)，域(sys(app)/doc)，自动生成代码
-type SysUserPreference(swApp: ISldWorks) =
+type SwUserPreference(swApp: ISldWorks) =
 
     member this.swInputDimValOnCreate
         with get () =
@@ -67,7 +67,6 @@ type SysUserPreference(swApp: ISldWorks) =
             swApp.SetUserPreferenceStringValue(int swUserPreferenceStringValue_e.swDefaultTemplateAssembly, v)
             |> ignore
 
-
     member this.swEdgesHiddenEdgeDisplay
         with get () =
             swApp.GetUserPreferenceIntegerValue(int swUserPreferenceIntegerValue_e.swEdgesHiddenEdgeDisplay)
@@ -83,7 +82,6 @@ type SysUserPreference(swApp: ISldWorks) =
             |> ignore
 
 type DocUserPreference (swModel:IModelDoc2) =
-
     member t.swDetailingDualDimensions
         with get (e:swUserPreferenceOption_e) = 
                 swModel.Extension.GetUserPreferenceToggle(
@@ -174,7 +172,6 @@ type DocUserPreference (swModel:IModelDoc2) =
                     int e,
                     value)
             |> ignore
-
 
     member t.swMaterialPropertyDensity
         with get (e:swUserPreferenceOption_e) = 

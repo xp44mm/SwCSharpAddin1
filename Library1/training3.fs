@@ -19,23 +19,13 @@ open FSharp.SolidWorks
 
 
 let systemOptions(swApp: ISldWorks) =
-    let sysPref = SysUserPreference(swApp)
+    let sysPref = SwUserPreference(swApp)
 
-    //swApp
-    //|> SldWorksUtils.setUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate true
     sysPref.swInputDimValOnCreate <- true
 
-    //swApp
-    //|> SldWorksUtils.getUserPreferenceToggle swUserPreferenceToggle_e.swInputDimValOnCreate
     sysPref.swInputDimValOnCreate
     |> sprintf "%b"
     |> swApp.SendMsgToUser
-
-    //swApp
-    //|> SldWorksUtils.setUserPreferenceDoubleValue swUserPreferenceDoubleValue_e.swDrawingDetailViewScale 1.5
-
-    //swApp
-    //|> SldWorksUtils.getUserPreferenceDoubleValue swUserPreferenceDoubleValue_e.swDrawingDetailViewScale
 
     sysPref.swDrawingDetailViewScale <- 1.5
 
@@ -45,12 +35,6 @@ let systemOptions(swApp: ISldWorks) =
 
     let viewportColor = Color.FromArgb(128, 255, 128).ToArgb()
 
-    //swApp
-    //|> SldWorksUtils.setUserPreferenceIntegerValue swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground viewportColor
-    //|> ignore
-
-    //swApp
-    //|> SldWorksUtils.getUserPreferenceIntegerValue swUserPreferenceIntegerValue_e.swSystemColorsViewportBackground
     sysPref.swSystemColorsViewportBackground <- viewportColor
 
     sysPref.swSystemColorsViewportBackground
@@ -59,13 +43,6 @@ let systemOptions(swApp: ISldWorks) =
 
     let value = @"C:\Temp"
 
-    //swApp
-    //|> SldWorksUtils.setUserPreferenceStringValue swUserPreferenceStringValue_e.swBackupDirectory value
-    //|> ignore
-
-    //swApp
-    //|> SldWorksUtils.getUserPreferenceStringValue swUserPreferenceStringValue_e.swBackupDirectory
-
     sysPref.swBackupDirectory <- value
 
     sysPref.swBackupDirectory
@@ -73,11 +50,6 @@ let systemOptions(swApp: ISldWorks) =
 
     sysPref.swEdgesHiddenEdgeDisplay <- int swEdgesHiddenEdgeDisplay_e.swEdgesHiddenEdgeDisplayDashed
 
-    //swApp
-    //|> SldWorksUtils.setUserPreferenceIntegerValue
-    //    swUserPreferenceIntegerValue_e.swEdgesHiddenEdgeDisplay
-    //    (int swEdgesHiddenEdgeDisplay_e.swEdgesHiddenEdgeDisplayDashed)
-    //|> ignore
 
     // View Rotation - Mouse Speed
     //
@@ -103,10 +75,6 @@ let systemOptions(swApp: ISldWorks) =
     // 2.5
     // 3.0 = Slow
     sysPref.swViewAnimationSpeed <- 2.0
-    //swApp
-    //|> SldWorksUtils.setUserPreferenceDoubleValue
-    //    swUserPreferenceDoubleValue_e.swViewAnimationSpeed 2.0
-    //|> ignore
 
     sysPref.swViewAnimationSpeed <- 2.0
 
@@ -121,18 +89,8 @@ let documentProperties (swApp: ISldWorks) =
     let docPref = DocUserPreference(swModel)
 
     docPref.swDetailingDualDimensions(swUserPreferenceOption_e.swDetailingDimension) <- true
-    docPref.swDetailingDualDimensions(swUserPreferenceOption_e.swDetailingDimension)
-    //swModel
-    //|> ModelDoc2Utils.setUserPreferenceToggle
-    //    swUserPreferenceToggle_e.swDetailingDualDimensions
-    //    swUserPreferenceOption_e.swDetailingDimension
-    //    true
-    //|> ignore
 
-    //swModel
-    //|> ModelDoc2Utils.getUserPreferenceToggle
-    //    swUserPreferenceToggle_e.swDetailingDualDimensions
-    //    swUserPreferenceOption_e.swDetailingDimension
+    docPref.swDetailingDualDimensions(swUserPreferenceOption_e.swDetailingDimension)
     |> sprintf "%b"
     |> swApp.SendMsgToUser
 

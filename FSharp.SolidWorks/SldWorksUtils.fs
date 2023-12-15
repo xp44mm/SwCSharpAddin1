@@ -9,7 +9,6 @@ open System.Reflection
 open System.Text.RegularExpressions
 open System.IO
 
-
 open SolidWorks.Interop.sldworks
 open SolidWorks.Interop.swpublished
 open SolidWorks.Interop.swconst
@@ -49,11 +48,6 @@ let openDoc6
 let documentVisible (visible:bool) (documentType:swDocumentTypes_e) (swApp: ISldWorks) =
     swApp.DocumentVisible(visible, int documentType)
 
-//swDwgPaperSizes_e
-let newDocument (template) (paperSize:swDwgPaperSizes_e) (w,h) (swApp: ISldWorks) =
-    swApp.NewDocument(template, int paperSize, w, h)
-    :?> ModelDoc2
-
 let activateDoc3 name preferences (options:swRebuildOnActivation_e) (swApp: ISldWorks) =
     let mutable errors = 0
     let res = 
@@ -84,20 +78,26 @@ let getMathUtility (swApp: ISldWorks) =
     swApp.GetMathUtility()
     :?> MathUtility
 
-//用默认模板新建一个零件文件
+//swDwgPaperSizes_e
+let newDocument (template) (paperSize:swDwgPaperSizes_e) (w,h) (swApp: ISldWorks) =
+    swApp.NewDocument(template, int paperSize, w, h)
+    :?> ModelDoc2
+
+//用默认零件模板新建一个零件文件
 let newPartDoc (swApp: ISldWorks) =
-    let p = SysUserPreference(swApp)
-    let dir = p.swDefaultTemplatePart
+    swApp.NewDocument(
+        TemplateName = SwUserPreference(swApp).swDefaultTemplatePart, 
+        PaperSize = 0,
+        Width = 0.0, 
+        Height = 0.0)
 
-    swApp
-    |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
-
-//用默认模板新建一个装配体文件
+//用默认装配体模板新建一个装配体文件
 let newAssemblyDoc (swApp: ISldWorks) =
-    let p = SysUserPreference(swApp)
-    let dir = p.swDefaultTemplateAssembly
-    swApp
-    |> newDocument dir swDwgPaperSizes_e.swDwgPaperAsize (0.0, 0.0)
+    swApp.NewDocument(
+        TemplateName = SwUserPreference(swApp).swDefaultTemplateAssembly, 
+        PaperSize = 0,
+        Width = 0.0, 
+        Height = 0.0)
 
 let sendMsgToUser2
     (message:string)

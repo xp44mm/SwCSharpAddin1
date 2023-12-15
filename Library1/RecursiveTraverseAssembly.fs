@@ -11,6 +11,7 @@ open FSharp.SolidWorks
 type RecursiveTraverseAssembly(swApp: ISldWorks) = 
     let logfile = "d:/RecursiveTraverseAssembly.txt"
 
+    ///获取管道长度，用于材料清单
     let getPipeInfo (swComp:Component2) =
         let swModel = 
             swComp
@@ -21,7 +22,7 @@ type RecursiveTraverseAssembly(swApp: ISldWorks) =
 
         if CustomPropertyManagerUtils.contains prpName swCustPrpMgr then
             //属性值带单位
-            let pipeLength = CustomPropertyManagerUtils.resolvedValOut prpName swCustPrpMgr
+            let _,pipeLength = CustomPropertyManagerUtils.GetUpdatedProperty prpName swCustPrpMgr
             $"pipeLength = {pipeLength}\n"
         else "其他零件：弯头，三通，大小头"
 
