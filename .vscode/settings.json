@@ -1,3 +1,4 @@
 {
-    "dotnet.defaultSolution": "SwCSharpAddin1.sln"
+    "dotnet.defaultSolution": "SwCSharpAddin1.sln",
+    "dotnet.preferCSharpExtension": true
 }

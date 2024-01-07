@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net481</TargetFramework>
-
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<WarnOn>3390;$(WarnOn)</WarnOn>
 	</PropertyGroup>
@@ -72,13 +71,14 @@
 		<Compile Include="CutList.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
 		<Compile Include="CommandItemCollection.fs" />
+		<Compile Include="MathUtilityExtend.fs" />
 	</ItemGroup>
 
 
 
 
 	<ItemGroup>
-	  <PackageReference Include="FSharp.Idioms" Version="1.4.9" />
+	  <PackageReference Include="FSharp.Idioms" Version="1.4.11" />
 	</ItemGroup>
 
 

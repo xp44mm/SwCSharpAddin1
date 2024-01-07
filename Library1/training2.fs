@@ -16,7 +16,7 @@ open SolidWorksTools
 open SolidWorksTools.File
 open FSharp.SolidWorks
 
-open Consts
+open Dir
 
 let FILEDIR = Path.Combine(TRAININGDIR, @"Lesson02 - Object Model Basics\Case Study")
 

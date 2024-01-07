@@ -132,27 +132,27 @@ type AddMate5Params =
             match this.MateType with
             | MateDISTANCE (flip, distance, distanceAbsUpperLimit, distanceAbsLowerLimit) ->
                 flip, distance, distanceAbsUpperLimit, distanceAbsLowerLimit
-            | _ -> Literal.zero<_>
+            | _ -> Literal.defaultof<_>
 
         let gearRatioNumerator, gearRatioDenominator =
             match this.MateType with
             | MateGEAR (gearRatioNumerator, gearRatioDenominator) -> gearRatioNumerator, gearRatioDenominator
-            | _ -> Literal.zero<_>
+            | _ -> Literal.defaultof<_>
 
         let angle, angleAbsUpperLimit, angleAbsLowerLimit =
             match this.MateType with
             | MateANGLE (angle, angleAbsUpperLimit, angleAbsLowerLimit) -> angle, angleAbsUpperLimit, angleAbsLowerLimit
-            | _ -> Literal.zero<_>
+            | _ -> Literal.defaultof<_>
 
         let lockRotation =
             match this.MateType with
             | MateCONCENTRIC lockRotation -> lockRotation
-            | _ -> Literal.zero<_>
+            | _ -> Literal.defaultof<_>
 
         let widthMateOption =
             match this.MateType with
             | MateWIDTH ( widthMateOption ) -> widthMateOption
-            | _ -> Literal.zero<_>
+            | _ -> Literal.defaultof<_>
 
         mateTypeFromEnum,
         this.MateAlign,

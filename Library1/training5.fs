@@ -19,7 +19,7 @@ open SolidWorksTools.File
 open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 open FSharp.Idioms
-open Consts
+open Dir
 
 let LESSONDIR =
     Path.Combine(TRAININGDIR, "Lesson05 - Assembly Automation")
@@ -87,6 +87,7 @@ let OpenComponentModelToAddToAssembly (strCompModelname: string) (assemblyTitle:
             assemblyTitle
             false
             swRebuildOnActivation_e.swDontRebuildActiveDoc
+
     let swAssy = swModel :?> IAssemblyDoc
     swAssy
 

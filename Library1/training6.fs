@@ -19,7 +19,7 @@ open SolidWorksTools.File
 open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 open FSharp.Idioms
-open Consts
+open Dir
 
 
 let TEMPLATENAME = Path.Combine(TEMPLATEDIR, "Drawing_ANSI.drwdot")
@@ -126,8 +126,8 @@ let main(swApp: ISldWorks) =
 
             (swDraw :?> IModelDoc2).Extension.SaveAs(
                 Name = $"{Path.Combine(SAVEASPATH ,configName)}.{filenameextension}",
-                Version = int swSaveAsVersion_e.swSaveAsCurrentVersion, 
-                Options = int swSaveAsOptions_e.swSaveAsOptions_Silent, 
+                Version = int swSaveAsVersion_e.swSaveAsCurrentVersion,
+                Options = int swSaveAsOptions_e.swSaveAsOptions_Silent,
                 ExportData = null, 
                 Errors = &errors, 
                 Warnings = &warnings
@@ -148,11 +148,3 @@ let main(swApp: ISldWorks) =
         ()
     
     )
-      
-    //For i = 0 To UBound(ConfigNamesArray)
-    //ConfigName = ConfigNamesArray(i)
-
-
-
-    //Next i
-

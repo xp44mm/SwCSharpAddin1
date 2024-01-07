@@ -321,11 +321,11 @@ namespace SwCSharpAddin1
             //    callbackFunction: nameof(this.Training7_BodyFaceTraversal)
             //    );
 
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第7章4节1~2",
-            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_msg)
-            //    );
+            //命令
+            cmds.add(
+                hintOrTip: "第7章4节1~2",
+                callbackFunction: nameof(this.Training7_FeatMgrTraversal_msg)
+                );
 
             ////命令
             //cmds.add(
@@ -392,7 +392,40 @@ namespace SwCSharpAddin1
                 hintOrTip: "箱子",
                 callbackFunction: nameof(this.Salon_tank)
                 );
+            //命令
+            cmds.add(
+                hintOrTip: "提取箱子数据",
+                callbackFunction: nameof(this.Salon_tankinfo)
+                );
+            //命令
+            cmds.add(
+                hintOrTip: "批量生成箱子",
+                callbackFunction: nameof(this.Asia_generate)
+                );
 
+            //命令
+            cmds.add(
+                hintOrTip: "批量创建参考平面",
+                callbackFunction: nameof(this.Asia_createPlanes)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "插入圆柱参考配合",
+                callbackFunction: nameof(this.圆柱配合参考)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "库特征",
+                callbackFunction: nameof(this.库特征)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "特征的脸面",
+                callbackFunction: nameof(this.FacesWithFeature_main)
+                );
             // 命令组
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
@@ -567,10 +600,10 @@ namespace SwCSharpAddin1
         //    BodyFaceTraversal.main(this.iSwApp);
         //}
 
-        //public void Training7_FeatMgrTraversal_msg()
-        //{
-        //    FeatMgrTraversal.msg(this.iSwApp);
-        //}
+        public void Training7_FeatMgrTraversal_msg()
+        {
+            FeatMgrTraversal.msg(this.iSwApp);
+        }
 
         //public void Training7_FeatMgrTraversal_suppress()
         //{
@@ -626,7 +659,34 @@ namespace SwCSharpAddin1
         {
             Salon.tank(this.iSwApp);
         }
+        public void Salon_tankinfo()
+        {
+            Salon.tankinfo(this.iSwApp);
+        }
+        public void Asia_generate()
+        {
+            Asia.generate(this.iSwApp);
+        }
 
+        public void Asia_createPlanes()
+        {
+            Asia.createPlanes(this.iSwApp);
+        }
+
+        public void 圆柱配合参考()
+        {
+            Asia.preselect(this.iSwApp);
+        }
+
+        public void 库特征()
+        {
+            Asia.getLibraryFeatureData(this.iSwApp);
+        }
+
+        public void FacesWithFeature_main()
+        {
+            FacesWithFeature.main(this.iSwApp);
+        }
 
         public bool Always() { return true; }
     }

@@ -39,8 +39,8 @@ let getSelectedObjectType3 index (mark:Mark) (swSelMgr: SelectionMgr) =
     |> enum<swSelectType_e>
 
 let getSelectedObject6
-    (index: int  )
-    (mark: Mark   )
+    (index: int)
+    (mark: Mark)
     (swSelMgr: ISelectionMgr)
     = 
     swSelMgr.GetSelectedObject6(index, mark.value)

@@ -101,6 +101,7 @@ type ExtrusionParams =
     useAutoSelect: bool
     startCond: StartCondition
     }
+
     member w.create(mgr: IFeatureManager) =
         let t1,d1,offsetReverse1,translateSurface1,Dchk1,Ddir1,Dang1 =
             w.direction1.toTuple()

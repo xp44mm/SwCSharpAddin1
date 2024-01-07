@@ -98,7 +98,7 @@ let CustomPropertyTraversal (swApp: ISldWorks) =
     let names = 
         CusPropMgr.GetNames() 
         :?> obj[]
-        |> Array.map (fun x -> x:?>string)
+        |> Array.map (fun x -> x :?> string)
     
     names
     |> String.concat "\n"

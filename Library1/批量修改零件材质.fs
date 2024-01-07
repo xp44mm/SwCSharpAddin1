@@ -9,7 +9,7 @@ open SolidWorksTools.File
 open System.IO
 open FSharp.SolidWorks
 
-type 批量修改零件材质(swApp: ISldWorks) = 
+type 批量修改零件材质(swApp: ISldWorks) =
     let currentDir = "D:/崔胜利/凯帝隆/湖北武穴锂宝/solidworks/"
     let matDB = "C:/ProgramData/SolidWorks/SOLIDWORKS 2022/自定义材料/凯帝隆.sldmat"
     let logfile = "d:/partmat.txt"
@@ -17,12 +17,12 @@ type 批量修改零件材质(swApp: ISldWorks) =
     let ChangeMaterialOfPart (filename: string) (matname: string) =
         let path = Path.Combine( currentDir, filename + ".SLDPRT")
 
-        let swModel = 
+        let swModel =
             swApp
             |> SldWorksUtils.openDoc6 path swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
-                
+
         // 修改所有配置的材质
-        let vConfNameArr = 
+        let vConfNameArr =
             swModel
             |> ModelDoc2Utils.getConfigurationNames
 
@@ -36,7 +36,7 @@ type 批量修改零件材质(swApp: ISldWorks) =
 
         // 打印所有配置的材质
         for configName:string in vConfNameArr do
-            let sMatName = 
+            let sMatName =
                 swPart
                 |> PartDocUtils.getMaterialPropertyName2 configName
                 |> fst
@@ -47,7 +47,7 @@ type 批量修改零件材质(swApp: ISldWorks) =
         // Close Document
         swModel.GetPathName()
         |> swApp.CloseDoc
-    
+
     member this.execute() =
         let filenames = [
             "p0701ab-v0701&m0202a&m0202b&m0205"

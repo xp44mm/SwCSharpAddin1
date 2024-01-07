@@ -62,14 +62,14 @@ type AddComponent5Params =
 
         let NewConfigName = 
             match this.ConfigOption with
-            | CurrentSelectedConfig -> Literal.zero<_>
+            | CurrentSelectedConfig -> Literal.defaultof<_>
             | NewConfigWithAllReferenceModels newConfigName 
             | NewConfigWithAsmStructure newConfigName -> newConfigName
 
         let UseConfigForPartReferences,ExistingConfigName = 
             match this.MaybeUseConfigForPartReferences with
             | Some existingConfigName -> true,existingConfigName
-            | None -> Literal.zero<_>
+            | None -> Literal.defaultof<_>
         let X, Y, Z = this.CompCenter
         CompName, ConfigOption, NewConfigName, UseConfigForPartReferences, ExistingConfigName, X, Y, Z
 

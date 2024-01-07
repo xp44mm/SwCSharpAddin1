@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net481</TargetFramework>
-
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<WarnOn>3390;$(WarnOn)</WarnOn>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Include="Consts.fs" />
+		<Compile Include="Dir.fs" />
 		<Compile Include="training1.fs" />
 		<Compile Include="training2.fs" />
 		<Compile Include="training2_existingDocs.fs" />
@@ -29,12 +28,18 @@
 		<Compile Include="批量修改零件材质.fs" />
 		<Compile Include="RecursiveTraverseAssembly.fs" />
 		<Compile Include="WatchAssemblyTraversal.fs" />
+		<Compile Include="LibraryFeatureData.fs" />
 		<Compile Include="SWRoutingLibUtils.fs" />
 		<Compile Include="Salon.fs" />
+		<Compile Include="Tanks.fs" />
+		<Compile Include="FileName.fs" />
+		<Compile Include="Asia.fs" />
+		<Compile Include="FacesWithFeature.fs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="FSharp.Idioms" Version="1.4.9" />
+	  <PackageReference Include="FSharp.Idioms" Version="1.4.11" />
+	  <PackageReference Include="UnquotedJson" Version="1.0.15" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -67,6 +72,7 @@
 			<EmbedInteropTypes>False</EmbedInteropTypes>
 			<Private>False</Private>
 		</Reference>
+		<Reference Include="System.Windows.Forms" />
 	</ItemGroup>
 
 	<ItemGroup>
