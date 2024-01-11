@@ -321,11 +321,11 @@ namespace SwCSharpAddin1
             //    callbackFunction: nameof(this.Training7_BodyFaceTraversal)
             //    );
 
-            //命令
-            cmds.add(
-                hintOrTip: "第7章4节1~2",
-                callbackFunction: nameof(this.Training7_FeatMgrTraversal_msg)
-                );
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第7章4节1~2",
+            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_msg)
+            //    );
 
             ////命令
             //cmds.add(
@@ -409,11 +409,11 @@ namespace SwCSharpAddin1
                 callbackFunction: nameof(this.Asia_createPlanes)
                 );
 
-            //命令
-            cmds.add(
-                hintOrTip: "插入圆柱参考配合",
-                callbackFunction: nameof(this.圆柱配合参考)
-                );
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "插入圆柱参考配合",
+            //    callbackFunction: nameof(this.圆柱配合参考)
+            //    );
 
             //命令
             cmds.add(
@@ -423,8 +423,14 @@ namespace SwCSharpAddin1
 
             //命令
             cmds.add(
+                hintOrTip: "箱罐信息",
+                callbackFunction: nameof(this.箱罐信息)
+                );
+
+            //命令
+            cmds.add(
                 hintOrTip: "特征的脸面",
-                callbackFunction: nameof(this.FacesWithFeature_main)
+                callbackFunction: nameof(this.插入所有管嘴的配合参考)
                 );
             // 命令组
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
@@ -600,10 +606,10 @@ namespace SwCSharpAddin1
         //    BodyFaceTraversal.main(this.iSwApp);
         //}
 
-        public void Training7_FeatMgrTraversal_msg()
-        {
-            FeatMgrTraversal.msg(this.iSwApp);
-        }
+        //public void Training7_FeatMgrTraversal_msg()
+        //{
+        //    FeatMgrTraversal.msg(this.iSwApp);
+        //}
 
         //public void Training7_FeatMgrTraversal_suppress()
         //{
@@ -673,20 +679,27 @@ namespace SwCSharpAddin1
             Asia.createPlanes(this.iSwApp);
         }
 
-        public void 圆柱配合参考()
-        {
-            Asia.preselect(this.iSwApp);
-        }
+        //public void 圆柱配合参考()
+        //{
+        //    Asia.preselect(this.iSwApp);
+        //}
 
         public void 库特征()
         {
             Asia.getLibraryFeatureData(this.iSwApp);
         }
 
-        public void FacesWithFeature_main()
+        public void 插入所有管嘴的配合参考()
         {
             FacesWithFeature.main(this.iSwApp);
         }
+
+        public void 箱罐信息()
+        {
+            FacesWithFeature.tankInfo(this.iSwApp);
+        }
+
+
 
         public bool Always() { return true; }
     }

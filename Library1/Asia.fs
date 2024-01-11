@@ -63,12 +63,10 @@ let activateDoc name (swApp: ISldWorks) =
             UseUserPreferences = false,
             Option             = int swRebuildOnActivation_e.swDontRebuildActiveDoc,
             Errors             = &errors)
-        //:?> ModelDoc2
     if errors = 0 then
         res
     else
         failwith $"{enum<swActivateDocError_e>errors}"
-
 
 //https://help.solidworks.com/2023/english/api/sldworksapi/SolidWorks.Interop.sldworks~SolidWorks.Interop.sldworks.IModelDocExtension~SaveAs3.html
 let saveAs (filename:string) (swModel:IModelDoc2) =
@@ -147,7 +145,7 @@ let loadData() =
             | VerticalTank tank -> failwith "")
 
     a,b
-
+/// 批量生成箱子零件
 let generate (swApp: ISldWorks) =
     let rec loop1 src (tanks: TankP list) =
         match tanks with
@@ -164,7 +162,6 @@ let generate (swApp: ISldWorks) =
             |> ignore
             save swModel
             loop1 swModel tail
-
 
     let tanks1,tanks2 = loadData()
     let temp1 = openDoc tank1 swApp
@@ -201,7 +198,7 @@ let generate (swApp: ISldWorks) =
     swModel.GetPathName()
     |> swApp.CloseDoc
 
-//tsv read
+/// 从tsv文件读取参考平面数据
 let loadPlanes() =
     let text =
         if Clipboard.ContainsText(TextDataFormat.UnicodeText) then
@@ -223,6 +220,7 @@ let loadPlanes() =
         )
     | _ -> failwith "schema mismatch"
 
+/// tsv read：批量绘制参考平面
 let tsvPlanes () =
     let text =
         if Clipboard.ContainsText(TextDataFormat.UnicodeText) then
@@ -290,57 +288,7 @@ let createPlanes (swApp: ISldWorks) =
         createPlane plane dist
     )
 
-///批量创建参考平面并用改用名称距离
-let preselect (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc :?> IModelDoc2
-    let swSelMgr =
-        swModel.SelectionManager
-        :?> SelectionMgr
-    match swSelMgr.GetSelectedObject6(1, SelectionMgrUtils.Mark.All.value) with
-    | :? Face2 as swSelFace  ->
-        let swLoop =
-            swSelFace
-            |> Face2Utils.getLoopSeq
-            |> Seq.exactlyOne
-
-        let swEdge =
-            swLoop.GetEdges()
-            :?> obj[]
-            |> Array.exactlyOne
-            :?> Edge
-
-        let swCurve =
-            swEdge.GetCurve() :?> Curve
-
-        let cylinderFace =
-            swEdge.GetTwoAdjacentFaces2()
-            :?> obj[]
-            |> Array.map(fun swFace -> swFace :?> Face2)
-            |> Array.find(fun swFace ->
-                let surface = swFace.GetSurface() :?> Surface
-                surface.IsCylinder()
-            )
-        //swApp.SendMsgToUser $"curve is circle: {cylinderFace}"
-
-        swModel.FeatureManager.InsertMateReference2(
-            BstrMateReferenceName = "圆柱配合",
-            PrimaryReferenceEntity = (swSelFace :?> Entity),
-            PrimaryReferenceType = int swMateReferenceType_e.swMateReferenceType_Coincident,
-            PrimaryReferenceAlignment = int swMateReferenceAlignment_e.swMateReferenceAlignment_Any,
-            PrimaryReferenceAlignAxes = false,
-            SecondaryReferenceEntity = (cylinderFace:?> Entity),
-            SecondaryReferenceType = int swMateReferenceType_e.swMateReferenceType_Concentric,
-            SecondaryReferenceAlignment = int swMateReferenceAlignment_e.swMateReferenceAlignment_Any,
-            SecondaryReferenceAlignAxes = false,
-            TertiaryReferenceEntity = null,
-            TertiaryReferenceType = int swMateReferenceType_e.swMateReferenceType_default,
-            TertiaryReferenceAlignment = int swMateReferenceAlignment_e.swMateReferenceAlignment_Any
-        )
-        |> ignore
-    | _ -> swApp.SendMsgToUser "no face2"
-
 let getLibraryFeatureData (swApp: ISldWorks) =
-    //' Get the math utility
     let swMathUtility = swApp.GetMathUtility() :?> MathUtility
 
     let swModel = swApp.ActiveDoc :?> ModelDoc2
@@ -438,6 +386,7 @@ let getLibraryFeatureData (swApp: ISldWorks) =
         | "平面上150mm管柱" | "法兰管口平面版" ->
             sb.Append($"replacement Plane: {stringify maybeNormal.Value}\n") |> ignore
             sb.Append($"Point: {stringify pt}\n") |> ignore
+
         | _ -> failwith libraryName
 
     )
@@ -446,31 +395,3 @@ let getLibraryFeatureData (swApp: ISldWorks) =
     File.WriteAllText(path,s)
     swApp.SendMsgToUser path
 
-let PrintSketchSegmentInfo (skSeg : SketchSegment) =
-    match enum<swSketchSegments_e>(skSeg.GetType()) with
-    | swSketchSegments_e.swSketchARC ->
-        let swSkArc = skSeg :?> SketchArc
-        stringify swSkArc
-        
-    | swSketchSegments_e.swSketchELLIPSE ->
-        let swSkEllipse = skSeg :?> SketchEllipse
-        stringify swSkEllipse
-        
-    | swSketchSegments_e.swSketchLINE ->
-        let swSkLine = skSeg :?> SketchLine
-        stringify swSkLine
-            
-    | swSketchSegments_e.swSketchPARABOLA ->
-        let swSkParabola = skSeg :?> SketchParabola
-        stringify swSkParabola
-        
-    | swSketchSegments_e.swSketchSPLINE ->
-        let swSkSpline = skSeg :?> SketchSpline
-        stringify swSkSpline
-        
-    | swSketchSegments_e.swSketchTEXT ->
-        let swSkText = skSeg :?> SketchText
-        stringify swSkText
-
-    | _ ->
-        raise(ArgumentOutOfRangeException("Unsupported sketch segment"))

@@ -32,14 +32,15 @@
 		<Compile Include="SWRoutingLibUtils.fs" />
 		<Compile Include="Salon.fs" />
 		<Compile Include="Tanks.fs" />
+		<Compile Include="Nozzles.fs" />
 		<Compile Include="FileName.fs" />
 		<Compile Include="Asia.fs" />
 		<Compile Include="FacesWithFeature.fs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="FSharp.Idioms" Version="1.4.11" />
-	  <PackageReference Include="UnquotedJson" Version="1.0.15" />
+	  <PackageReference Include="FSharp.Idioms" Version="1.4.12" />
+	  <PackageReference Include="UnquotedJson" Version="1.0.16" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -76,6 +77,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Update="FSharp.Core" Version="8.0.100" />
+		<PackageReference Update="FSharp.Core" Version="8.0.101" />
 	</ItemGroup>
 </Project>

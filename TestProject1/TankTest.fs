@@ -5,7 +5,8 @@ open Xunit.Abstractions
 open FSharp.xUnit
 
 open System.IO
-open System.Text
+open System.Text.RegularExpressions
+
 
 open FSharp.Idioms
 open FSharp.Idioms.Jsons
@@ -48,12 +49,24 @@ type TankTest(output : ITestOutputHelper) =
             x
             |> List.map(fun t -> t.toJson())
             |> Json.Array
-        let z = Json.stringify y
+        let z = Json.print y
         output.WriteLine(z)
         File.WriteAllText(path,z)
 
+    //[<Fact>]
+    //member this.``03 - loadData test``() =
+    //    let tanks1,tanks2 = Asia.loadData()
+    //    output.WriteLine(stringify tanks1)
+    //    output.WriteLine(stringify tanks2)
+
     [<Fact>]
-    member this.``03 - loadData test``() =
-        let tanks1,tanks2 = Asia.loadData()
-        output.WriteLine(stringify tanks1)        
-        output.WriteLine(stringify tanks2)
+    member this.``04 - DN PN test``() =
+        let x = "DN 100 PN 10"
+        let rgx = Regex(@"^DN (\d+) PN (\d+(\.\d+)?)$")
+        let gs = rgx.Match(x).Groups
+        let dn = gs.[1].Value
+        let pn = gs.[2].Value
+
+        Should.equal dn "100"
+        Should.equal pn "10"
+

@@ -39,8 +39,8 @@ type PlaneTest(output : ITestOutputHelper) =
             |> String.concat "\n"
         File.WriteAllText(path, text)
 
-    [<Fact>]
-    member this.``02 - read from Tanks json file test``() =
-        let arr = Asia.tsvPlanes()
-        output.WriteLine(stringify arr)
+    //[<Fact>]
+    //member this.``02 - read from Tanks json file test``() =
+    //    let arr = Asia.tsvPlanes()
+    //    output.WriteLine(stringify arr)
 

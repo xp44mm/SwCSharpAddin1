@@ -37,7 +37,6 @@ type TankY =
     member this.toJson() =
         Json.Object [
             nameof this.bitcode, Json.String this.bitcode
-            //"style", Json.String "立式圆底罐"
             nameof this.直径, Json.Number (this.直径)
             nameof this.高度, Json.Number (this.高度)
             nameof this.弦高, Json.Number (this.弦高)
@@ -81,41 +80,3 @@ type PlaneData =
 
     static member from (json:Json) = Json.write<PlaneData> json
 
-type NozzleData = 
-    | WallNozzle of
-        方向角:float *
-        倾斜角:float *
-        标高:float
-
-    | RoofNozzle of
-        X:float *
-        Y:float
-
-    member this.toJson() = 
-        match this with
-        | WallNozzle (dir,ln,el) ->
-            Json.Object [
-                //"名称",Json.String nm;
-                "方向角",Json.Number dir
-                "倾斜角",Json.Number ln
-                "标高",Json.Number el
-            ]
-        | RoofNozzle (x,y) ->
-            Json.Object [
-                "X",Json.Number x
-                "Y",Json.Number y
-            ]
-
-    //static member from (json:Json) = 
-    //    match json with
-    //    | Json.Object _ ->
-    //        if json.ContainsKey "方向角" then
-    //            json.["方向角"]
-
-type Nozzle = 
-    {
-        名称:string
-        PN:float
-        DN:float
-        nozzle:NozzleData
-    }
