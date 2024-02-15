@@ -70,3 +70,9 @@ type TankTest(output : ITestOutputHelper) =
         Should.equal dn "100"
         Should.equal pn "10"
 
+    [<Fact>]
+    member this.``05 - Path GetDirectoryName test``() =
+        let x = @"D:\Application Data\GitHub\xp44mm\SwCSharpAddin1\CommandData\tanks.js"
+        let y = Path.GetDirectoryName(x)
+        output.WriteLine(y)
+        Should.equal y @"D:\Application Data\GitHub\xp44mm\SwCSharpAddin1\CommandData"

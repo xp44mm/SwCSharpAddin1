@@ -23,6 +23,7 @@ open FSharp.SolidWorks.FeatureExtrusion3
 let WorkPath = @"D:\崔胜利\凯帝隆\湖北武穴锂宝\solidworks2\"
 let pipeLength = 120.0
 
+//获取箱罐的属性
 let tankinfo (swApp: ISldWorks) =
     let swModel = swApp.ActiveDoc :?> IModelDoc2
     let CusPropMgr = swModel.Extension.CustomPropertyManager("")
@@ -45,6 +46,7 @@ let tankinfo (swApp: ISldWorks) =
 
     swApp.SendMsgToUser $"{filename}\n{props}"
 
+//从头绘制一个箱罐
 let tank (swApp: ISldWorks) =
     let filename = "V0101A"
     let dia = 4200.0
@@ -211,7 +213,7 @@ let tank (swApp: ISldWorks) =
     swModel.Extension.SelectByID2($"{lineName}@Sketch2", "EXTSKETCHSEGMENT", 0.0, 0.0, 0.0, true, 0, null, 0)
     |> ignore
 
-    //todo:solidworks get sketch point' s name use for SelectByID2
+    //todo:solidworks get sketch point's name use for SelectByID2
     swModel.Extension.SelectByID2($"Point{pid}@Sketch2", "EXTSKETCHPOINT", 0.0, 0.0, 0.0, true, 1, null, 0)
     |> ignore
 
@@ -244,13 +246,10 @@ let tank (swApp: ISldWorks) =
         SelectOption = int swSelectOption_e.swSelectOptionDefault)
     |> ignore
     
-    //swModel.BlankRefGeom()
-
     try
 
     swModel.SketchManager.InsertSketch true
     swModel.ClearSelection2 true
-    //swApp.SendMsgToUser $"{dw/2000.0}"
     
     swModel.SketchManager.CreateCenterLine (0.0, 0.0, 0.0, 0.054,0.0,0.0)
     |> ignore
@@ -258,27 +257,8 @@ let tank (swApp: ISldWorks) =
     swModel.SketchManager.CreateCircle(0.0, 0.0, 0.0, 0.054, 0.0, 0.0)
     |> ignore
 
-
-    //{
-    //    sd = true
-    //    flip = false
-    //    dir = false
-    //    direction1 = {
-    //        EndCond = EndCond.Blind (l/1000.0)
-    //        Drafting = None }
-    //    direction2 = {
-    //        EndCond = EndCond.Blind 0.0
-    //        Drafting = None }
-    //    merge = false
-    //    useFeatScope = false
-    //    useAutoSelect = false
-    //    startCond = StartCondition.SketchPlane
-    //}.create swModel.FeatureManager
-    //|> ignore
-
     with ex -> swApp.SendMsgToUser ex.Message
 
-    //swApp.CloseDoc filex
 
     ()
 

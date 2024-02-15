@@ -10,15 +10,18 @@ open System.IO
 
 type AddComponentConfigOptions =
     | CurrentSelectedConfig
-    | NewConfigWithAllReferenceModels of NewConfigName:string
-    | NewConfigWithAsmStructure of NewConfigName:string
+    | NewConfigWithAllReferenceModels of newConfigName: string
+    | NewConfigWithAsmStructure of newConfigName: string
+    //| UseConfigForPartReferences of existingConfigName: string
 
+// executor
 type AddComponent5Params =
     {
         CompName:string
+        //todo:ConfigOption+MaybeUseConfigForPartReferences?
         ConfigOption: AddComponentConfigOptions
         MaybeUseConfigForPartReferences: string option // ExistingConfigName
-        CompCenter:float*float*float
+        CompCenter: float*float*float
     }
 
     static member ofArgs(
@@ -73,7 +76,7 @@ type AddComponent5Params =
         let X, Y, Z = this.CompCenter
         CompName, ConfigOption, NewConfigName, UseConfigForPartReferences, ExistingConfigName, X, Y, Z
 
-    member this.exec(swAssy: IAssemblyDoc) =
+    member this.AddComponent5(swAssy: IAssemblyDoc) =
         let CompName, ConfigOption, NewConfigName, UseConfigForPartReferences, ExistingConfigName, X, Y, Z =
             this.toArgs()
 

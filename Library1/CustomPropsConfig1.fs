@@ -15,13 +15,13 @@ let PrintProperties (custPrpMgr:CustomPropertyManager) (useCached:bool) (indent:
 
     let writefile s = File.AppendAllText(logfile,s+"\n")
 
-    let vPrpNames = 
+    let vPrpNames =
         custPrpMgr.GetNames()
         :?> obj[]
         |> Array.map(fun o -> o :?> string)
 
     match vPrpNames with
-    | [||] -> 
+    | [||] ->
         writefile $"{indent}-No Properties-"
     | _ ->
         for prpName in vPrpNames do
@@ -29,21 +29,21 @@ let PrintProperties (custPrpMgr:CustomPropertyManager) (useCached:bool) (indent:
             writefile $"{indent}Property: {prpName}"
             writefile $"{indent}Value/Text Expression: {value}"
             writefile $"{indent}Evaluated Value: {resvalue}"
-            //writefile $"{indent}Was Resolved: {retval.wasResolved}" 
-            //writefile $"{indent}Is Linked: {retval.linkToProperty}" 
+            //writefile $"{indent}Was Resolved: {retval.wasResolved}"
+            //writefile $"{indent}Is Linked: {retval.linkToProperty}"
             //writefile $"{indent}Status: {retval.customInfoGetResult}"
             //writefile $""
-            
+
 let PrintPropertiesAtConfigurationSpecific (model:ModelDoc2) (cached:bool) (confName) =
     let swCustPrpMgr = model.Extension.CustomPropertyManager(confName)
     PrintProperties swCustPrpMgr cached "        "
 
 let PrintConfigurationSpecificProperties(model:ModelDoc2) (cached:bool) =
-    let vNames = 
+    let vNames =
         model.GetConfigurationNames()
-        :?> string[]              
-    
+        :?> string[]
+
     for confName in vNames do
         let swCustPrpMgr = model.Extension.CustomPropertyManager(confName)
         PrintProperties swCustPrpMgr cached "        "
-        
+

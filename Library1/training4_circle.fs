@@ -1,4 +1,4 @@
-﻿module training4_circle
+﻿module training4_circle // PartAutomation1
 
 open System
 open System.Runtime.InteropServices

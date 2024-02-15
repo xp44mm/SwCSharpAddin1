@@ -95,6 +95,7 @@ let MirrorPart (swApp: ISldWorks) =
     let swModel =
         swApp
         |> SldWorksUtils.activateDoc3 partname false swRebuildOnActivation_e.swRebuildActiveDoc
+        :?> ModelDoc2
 
     let _ = 
         swModel

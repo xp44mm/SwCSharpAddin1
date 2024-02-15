@@ -33,16 +33,19 @@ let openDoc6
         Errors        = &errors,
         Warnings      = &warnings 
         )
-    if modelDoc <> null && errors = 0 && warnings = 0 then
+
+    let eWarnings = enum<swFileLoadWarning_e> warnings
+    if modelDoc <> null && errors = 0 && (warnings = 0 || eWarnings = swFileLoadWarning_e.swFileLoadWarning_AlreadyOpen) then
         modelDoc
     else
         [
             if errors > 0 then 
-                sprintf "openDoc6 util: %A" (enum<swFileLoadError_e> errors)
+                sprintf "%A" (enum<swFileLoadError_e> errors)
             if warnings > 0 then 
-                sprintf "openDoc6 util: %A" (enum<swFileLoadWarning_e> warnings)
+                sprintf "%A" eWarnings
         ]
-        |> String.concat " and "
+        |> String.concat " & "
+        |> (+) "openDoc6 util:\n"
         |> failwith
 
 let documentVisible (visible:bool) (documentType:swDocumentTypes_e) (swApp: ISldWorks) =
@@ -56,7 +59,7 @@ let activateDoc3 name preferences (options:swRebuildOnActivation_e) (swApp: ISld
             UseUserPreferences = preferences,
             Option             = int options, 
             Errors             = &errors)
-        :?> ModelDoc2
+        //:?> ModelDoc2
     if errors = 0 then
         res
     else

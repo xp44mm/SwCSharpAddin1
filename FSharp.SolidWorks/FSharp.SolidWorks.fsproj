@@ -39,6 +39,7 @@
 
 	<ItemGroup>
 		<Compile Include="EnumUtils.fs" />
+		<Compile Include="CustomInfoType.fs" />
 		<Compile Include="CustomPropertyManagerUtils.fs" />
 		<Compile Include="ParameterUtils.fs" />
 		<Compile Include="AttributeUtils.fs" />
@@ -67,6 +68,8 @@
 		<Compile Include="AssemblyDocUtils.fs" />
 		<Compile Include="PartDocUtils.fs" />
 		<Compile Include="ModelDoc2Utils.fs" />
+		<Compile Include="ModelSpecific.fs" />
+		<Compile Include="GeneralComponentClosure.fs" />
 		<Compile Include="SldWorksUtils.fs" />
 		<Compile Include="CutList.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
@@ -78,14 +81,14 @@
 
 
 	<ItemGroup>
-	  <PackageReference Include="FSharp.Idioms" Version="1.4.12" />
+	  <PackageReference Include="FSharp.Idioms" Version="1.4.13" />
 	</ItemGroup>
 
 
 
 
 	<ItemGroup>
-	  <PackageReference Update="FSharp.Core" Version="8.0.101" />
+	  <PackageReference Update="FSharp.Core" Version="8.0.200" />
 	</ItemGroup>
 
 

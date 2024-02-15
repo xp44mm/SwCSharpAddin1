@@ -10,12 +10,12 @@ open System.Diagnostics
 open System.IO
 
 type MateType =
-| MateANGLE of angle : float * angleAbsUpperLimit : float * angleAbsLowerLimit : float
+| MateANGLE of angle: float * angleAbsUpperLimit: float * angleAbsLowerLimit: float
 | MateCAMFOLLOWER
 | MateCOINCIDENT
-| MateCONCENTRIC of lockRotation:bool
+| MateCONCENTRIC of lockRotation: bool
 | MateCOORDINATE
-| MateDISTANCE of flip: bool * distance: float * distanceAbsUpperLimit : float * distanceAbsLowerLimit : float
+| MateDISTANCE of flip: bool * distance: float * distanceAbsUpperLimit: float * distanceAbsLowerLimit: float
 | MateGEAR of gearRatioNumerator: float * gearRatioDenominator: float
 | MateHINGE
 | MateLINEARCOUPLER
@@ -35,14 +35,13 @@ type MateType =
 | MateTANGENT
 | MateUNIVERSALJOINT
 | MateUNKNOWN
-| MateWIDTH of widthMateOption : swMateWidthOptions_e
+| MateWIDTH of widthMateOption: swMateWidthOptions_e
 
 type AddMate5Params =
     {
         MateType      : MateType //swMateType_e
         MateAlign         : swMateAlign_e
         ForPositioningOnly    : bool
-        //LockRotation          : bool // todo: 放到同心配合MateCONCENTRIC中去？
     }
 
     static member ofArgs(
@@ -95,7 +94,6 @@ type AddMate5Params =
             MateType = mateType
             MateAlign = enum<swMateAlign_e> alignFromEnum
             ForPositioningOnly = forPositioningOnly
-            //LockRotation = lockRotation
         }
 
     member this.toArgs() =
@@ -169,7 +167,7 @@ type AddMate5Params =
         lockRotation,
         widthMateOption
 
-    member this.exec(swAssy: IAssemblyDoc) =
+    member this.AddMate5(swAssy: IAssemblyDoc) =
         let mateTypeFromEnum,
             alignFromEnum,
             flip,

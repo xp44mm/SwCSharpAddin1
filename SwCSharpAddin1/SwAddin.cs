@@ -381,11 +381,11 @@ namespace SwCSharpAddin1
             //    callbackFunction: nameof(this.Training8_CNCDrilling)
             //    );
 
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "附录D装配体遍历",
-            //    callbackFunction: nameof(this.AppendexD_WatchAssemblyTraversal)
-            //    );
+            //命令
+            cmds.add(
+                hintOrTip: "附录D装配体遍历",
+                callbackFunction: nameof(this.AppendexD_WatchAssemblyTraversal)
+                );
 
             //命令
             cmds.add(
@@ -429,9 +429,60 @@ namespace SwCSharpAddin1
 
             //命令
             cmds.add(
-                hintOrTip: "特征的脸面",
-                callbackFunction: nameof(this.插入所有管嘴的配合参考)
+                hintOrTip: "生成管嘴的配合参考",
+                callbackFunction: nameof(this.generateNozzleMateRefs)
                 );
+
+            //命令
+            cmds.add(
+                hintOrTip: "坐标系",
+                callbackFunction: nameof(this.获取坐标系)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "收集所有坐标系并生成配合参考",
+                callbackFunction: nameof(this.收集所有坐标系并生成配合参考)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "在所有配置隐藏选中的特征",
+                callbackFunction: nameof(this.blankSelectedFeatures)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "unblank selectecd features",
+                callbackFunction: nameof(this.显示特征)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "读取文件的自定义属性",
+                callbackFunction: nameof(this.readCustomProps)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "写文件的自定义属性",
+                callbackFunction: nameof(this.writeCustomProps)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "添加组件并坐标系配合",
+                callbackFunction: nameof(this.addManyCompToCoordSys)
+                );
+
+            //命令
+            cmds.add(
+                hintOrTip: "管道材料明细表",
+                callbackFunction: nameof(this.pipeBom)
+                );
+
+
+
             // 命令组
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
@@ -441,7 +492,6 @@ namespace SwCSharpAddin1
                     ignorePreviousVersion: cmds.getUserIDs().SetEquals(CommandManagerUtils.getIDsFromRegistry(cmdGroupID, this.iCmdMgr)),
                     cmdMgr: this.iCmdMgr
                 );
-
             var callingAssy = Assembly.GetAssembly(this.GetType());
             this.iBmp = new BitmapHandler();
 
@@ -463,15 +513,11 @@ namespace SwCSharpAddin1
             this.iCmdMgr.RemoveCommandGroup(cmdGroupID);
         }
 
+
         //public void Training1()
         //{
         //    training1.exec(this.iSwApp);
         //    //iSwApp.SendMsgToUser("这是占位的命令");
-        //    //SldWorksUtils.testPipeBom(iSwApp);
-        //    //var clss = new Library1.RecursiveTraverseAssembly(iSwApp);
-        //    //clss.Main();
-        //    //SWRoutingLibUtils.ExportPipeData(iSwApp);
-        //    //SldWorksUtils.readSWPipeLength(iSwApp);
 
         //    //trainingcylinder.main(iSwApp);
 
@@ -490,6 +536,17 @@ namespace SwCSharpAddin1
         //    //SldWorksUtils.setPartWeldment(iSwApp);
 
         //}
+
+        public void pipeBom()
+        {
+            //SWRoutingLibUtils.ExportPipeData(iSwApp);
+
+            //var clss = new Library1.RecursiveTraverseAssembly(iSwApp);
+            //clss.Main();
+
+            PipeComponents.PipeUtils.main(this.iSwApp);
+        }
+
 
         //public void Training2_3()
         //{
@@ -656,10 +713,10 @@ namespace SwCSharpAddin1
         //    Training8.CNCDrilling.main(this.iSwApp);
         //}
 
-        //public void AppendexD_WatchAssemblyTraversal()
-        //{
-        //    WatchAssemblyTraversal.main(this.iSwApp);
-        //}
+        public void AppendexD_WatchAssemblyTraversal()
+        {
+            WatchAssemblyTraversal.main(this.iSwApp);
+        }
 
         public void Salon_tank()
         {
@@ -689,9 +746,9 @@ namespace SwCSharpAddin1
             Asia.getLibraryFeatureData(this.iSwApp);
         }
 
-        public void 插入所有管嘴的配合参考()
+        public void generateNozzleMateRefs()
         {
-            FacesWithFeature.main(this.iSwApp);
+            FacesWithFeature.generateNozzleMateRefs(this.iSwApp);
         }
 
         public void 箱罐信息()
@@ -699,7 +756,40 @@ namespace SwCSharpAddin1
             FacesWithFeature.tankInfo(this.iSwApp);
         }
 
+        public void 获取坐标系()
+        {
+            CoordinateSystem.getAllOfCoordinateSystems(this.iSwApp);
+        }
 
+        public void 收集所有坐标系并生成配合参考()
+        {
+            CoordinateSystem.collectCoordSysMateRefs(this.iSwApp);
+        }
+
+        public void blankSelectedFeatures()
+        {
+            BlankRefGeom.blankSelectedFeatures(this.iSwApp);
+        }
+
+        public void 显示特征()
+        {
+            BlankRefGeom.unblankSelectedFeatures(this.iSwApp);
+        }
+
+        public void readCustomProps()
+        {
+            CustomPropsApp.readCustomProps(this.iSwApp);
+        }
+
+        public void writeCustomProps()
+        {
+            CustomPropsApp.writeCustomProps(this.iSwApp);
+        }
+
+        public void addManyCompToCoordSys()
+        {
+            CoordinateSystem.addManyCompToCoordSys(this.iSwApp);
+        }
 
         public bool Always() { return true; }
     }

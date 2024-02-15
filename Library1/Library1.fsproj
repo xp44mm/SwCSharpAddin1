@@ -23,11 +23,10 @@
 		<Compile Include="DocumentAttributes.fs" />
 		<Compile Include="Training8_CNCDrilling.fs" />
 		<Compile Include="ModelDocUtils.fs" />
+		<Compile Include="WatchAssemblyTraversal.fs" />
 		<Compile Include="CustomPropsConfig1.fs" />
 		<Compile Include="SldWorksUtils.fs" />
 		<Compile Include="批量修改零件材质.fs" />
-		<Compile Include="RecursiveTraverseAssembly.fs" />
-		<Compile Include="WatchAssemblyTraversal.fs" />
 		<Compile Include="LibraryFeatureData.fs" />
 		<Compile Include="SWRoutingLibUtils.fs" />
 		<Compile Include="Salon.fs" />
@@ -36,11 +35,18 @@
 		<Compile Include="FileName.fs" />
 		<Compile Include="Asia.fs" />
 		<Compile Include="FacesWithFeature.fs" />
+		<Compile Include="Bitcodes.fs" />
+		<Compile Include="CoordinateSystem.fs" />
+		<Compile Include="BlankRefGeom.fs" />
+		<Compile Include="CustomPropsApp.fs" />
+		<Compile Include="RecursiveTraverseAssembly.fs" />
+		<Compile Include="PipeComponents.fs" />
+		<Compile Include="PipeUtils.fs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="FSharp.Idioms" Version="1.4.12" />
-	  <PackageReference Include="UnquotedJson" Version="1.0.16" />
+	  <PackageReference Include="FSharp.Idioms" Version="1.4.13" />
+	  <PackageReference Include="UnquotedJson" Version="1.0.17" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -77,6 +83,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Update="FSharp.Core" Version="8.0.101" />
+		<PackageReference Update="FSharp.Core" Version="8.0.200" />
 	</ItemGroup>
 </Project>

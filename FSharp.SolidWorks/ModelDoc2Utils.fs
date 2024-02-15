@@ -89,3 +89,16 @@ let activeView (swModel:IModelDoc2) = swModel.ActiveView :?> ModelView
 let getConfigurationNames (swModel:IModelDoc2) =
     swModel.GetConfigurationNames()
     :?> string[]
+
+let readPropsAll (config: string) (swModel:IModelDoc2) =
+    let mgr = swModel.Extension.CustomPropertyManager("")
+
+    //this.ModelDoc2.ShowConfiguration2 config
+    //|> ignore
+
+    let mgrc = swModel.Extension.CustomPropertyManager(config)
+
+    [
+        yield! CustomPropertyManagerUtils.getAllTypesValues mgr
+        yield! CustomPropertyManagerUtils.getAllTypesValues mgrc
+    ]

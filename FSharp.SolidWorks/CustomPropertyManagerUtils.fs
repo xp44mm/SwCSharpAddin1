@@ -32,14 +32,17 @@ let GetUpdatedProperty (fieldName:string) (cusPropMgr:ICustomPropertyManager) =
             )
             |> enum<swCustomInfoGetResult_e>
         if not wasResolved || i <> swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue then
-            failwith "CustomPropertyManagerUtils.GetResolvedProperty"
+            failwithf "%A" i
         else
             value,resolvedValue
 
 let getNames (custPrpMgr: ICustomPropertyManager) =
-    custPrpMgr.GetNames() 
-    :?> obj[]
-    |> Array.map(fun o -> o :?> string)
+    match custPrpMgr.GetNames() with
+    | null -> [||]
+    | :? array<obj> as arr ->
+        arr
+        |> Array.map(fun o -> o :?> string)
+    | x -> failwithf "%A,%A" x (x.GetType())
 
 /// 获取不区分大小写的自定义属性名称集合
 let getCustomPropertyNames (custPrpMgr: ICustomPropertyManager) =
@@ -53,6 +56,22 @@ let getCustomPropertyNames (custPrpMgr: ICustomPropertyManager) =
 let contains (prpName: string) (custPrpMgr: ICustomPropertyManager) =
     let prpNames = getCustomPropertyNames custPrpMgr
     prpNames.Contains prpName
+
+let getAllTypesValues (cusPropMgr:CustomPropertyManager) =
+    cusPropMgr
+    |> getNames 
+    |> Array.map(fun name ->
+        let typ =
+            cusPropMgr.GetType2(name) 
+            |> enum<swCustomInfoType_e>
+            |> CustomInfoType.getCore
+
+        let value =
+            cusPropMgr 
+            |> GetUpdatedProperty name 
+            |> snd
+        name,typ,value
+    )
 
 //拾取第一个成功读取到非空值的属性，从fieldNames序列中。
 let pickResolvedValOut (fieldNames: seq<string>) (custPrpMgr: ICustomPropertyManager) =
@@ -89,42 +108,5 @@ let count (custPrpMgr: ICustomPropertyManager) =
     custPrpMgr.Count
 
 
-
-//[<Obsolete("GetResolvedProperty")>]
-//let get6 (fieldName:string) (useCached:bool) (custPrpMgr:ICustomPropertyManager) =
-//    let mutable valOut = ""
-//    let mutable resolvedValOut = ""
-//    let mutable wasResolved = true
-//    let mutable linkToProperty = true
-
-//    let reti = 
-//        custPrpMgr.Get6(fieldName, useCached, 
-//        &valOut, &resolvedValOut, &wasResolved,&linkToProperty)
-
-//    {|
-//       valOut = valOut // Value/Text Expression
-//       resolvedValOut = resolvedValOut // Evaluated Value
-//       wasResolved = wasResolved //Was Resolved: True
-//       linkToProperty = linkToProperty
-//       customInfoGetResult = enum<swCustomInfoGetResult_e> reti // swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue
-//    |}
-
-//[<Obsolete("GetResolvedProperty")>]
-//let tryResolvedValOut (fieldName:string) (custPrpMgr:ICustomPropertyManager) =
-//    let rcd = get6 fieldName false custPrpMgr
-//    match rcd.customInfoGetResult with
-//    | swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue -> Some rcd.resolvedValOut
-//    | swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent
-//    | swCustomInfoGetResult_e.swCustomInfoGetResult_CachedValue
-//    | _ -> None
-
-//[<Obsolete("GetResolvedProperty")>]
-//let resolvedValOut (fieldName: string) (custPrpMgr: ICustomPropertyManager) =
-//    let rcd = get6 fieldName false custPrpMgr
-//    match rcd.customInfoGetResult with
-//    | swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue -> rcd.resolvedValOut
-//    | swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent
-//    | swCustomInfoGetResult_e.swCustomInfoGetResult_CachedValue
-//    | _ -> failwith $"{rcd}"
 
 

@@ -31,31 +31,6 @@ let testGetFeatures (swApp: ISldWorks) =
         File.AppendAllText(logfile,$"{nm}:{tp}\n")
     )
 
-
-let testPipeBom (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc :?> ModelDoc2
-
-    let logfile = "d:/pipeBom.txt"
-
-    if File.Exists(logfile) then File.Delete logfile
-
-    swModel.FirstFeature()
-    |> FeatureUtils.getFeatureSeq
-    |> Seq.iter(fun swFeat ->
-        let nm = swFeat.Name
-        let tp = swFeat.GetTypeName2()
-        File.AppendAllText(logfile,$"{nm}:{tp}\n")
-    )
-
-/// 打开一个线路零件
-//从一个管道装配体打开线路零件的模型，并读取管道长度
-let readSWPipeLength (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc :?> ModelDoc2
-    let config = swModel.ConfigurationManager.ActiveConfiguration
-    let swCustPrpMgr = swModel.Extension.CustomPropertyManager(config.Name)
-    CustomPropsConfig1.PrintProperties swCustPrpMgr false ""
-
-
 ///单个文件
 let detectCutLists (swApp: ISldWorks) =
     let swModel = swApp.ActiveDoc :?> ModelDoc2

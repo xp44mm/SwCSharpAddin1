@@ -12,7 +12,7 @@ type RecursiveTraverseAssembly(swApp: ISldWorks) =
     let logfile = "d:/RecursiveTraverseAssembly.txt"
 
     ///获取管道长度，用于材料清单
-    let getPipeInfo (swComp:Component2) =
+    let getPipeInfo (swComp: Component2) =
         let swModel = 
             swComp
             |> Component2Utils.getModelDoc2
@@ -21,27 +21,30 @@ type RecursiveTraverseAssembly(swApp: ISldWorks) =
         let prpName = "SWPipeLength"
 
         if CustomPropertyManagerUtils.contains prpName swCustPrpMgr then
+            
             //属性值带单位
             let _,pipeLength = CustomPropertyManagerUtils.GetUpdatedProperty prpName swCustPrpMgr
             $"pipeLength = {pipeLength}\n"
         else "其他零件：弯头，三通，大小头"
 
     let traverseComponent (swComp:Component2) =
-        let rec loop (nLevel:int) (swCompNode:Component2Node) =
+        let rec loop (nLevel:int) (node:ComponentNode) =
             let pad = String.replicate nLevel "    "
+            let comp = node.Component2
 
             [
-                match swCompNode with
-                | Component2Node(swComp,[||]) ->
-                    $"{pad}+{getPipeInfo swComp}\n"
-                | Component2Node(swComp,children) ->
-                    $"{pad}+{Component2Utils.renderComponent2 swComp}\n"
+                match node.specific with
+                | SpecificPart part ->
+                    $"{pad}+{getPipeInfo node.Component2}\n"
+                | SpecificAssembly(assy,children) ->
+                    $"{pad}+{Component2Utils.renderComponent2 node.Component2}\n"
+                    
                     for child in children do
-                        yield! loop (nLevel + 1) child
+                        yield! loop (nLevel+1) child
             ]
 
         swComp
-        |> Component2Node.from
+        |> ComponentNode.from
         |> loop 0
         |> String.concat "\n"
 
@@ -55,31 +58,31 @@ type RecursiveTraverseAssembly(swApp: ISldWorks) =
                 | FeatureNode(x,children) ->
                     $"{pad}+{x}\n"
                     for child in children do
-                        yield! loop (nLevel + 1) child
+                        yield! loop (nLevel+1) child
             ]
 
         swFeat
         |> FeatureNode.from
-        |> Seq.collect(loop 0)
+        |> Seq.collect (loop 0)
         |> String.concat "\n"
 
-    let TraverseComponentFeatures (swComp:Component2) (nLevel:int) =
+    let TraverseComponentFeatures (swComp:Component2) =
         let swFeat = swComp.FirstFeature()
         TraverseFeatureFeatures swFeat
 
-    let TraverseModelFeatures (swModel:ModelDoc2) (nLevel:int) =
+    let TraverseModelFeatures (swModel:ModelDoc2) =
         let swFeat = swModel.FirstFeature() :?> Feature
         TraverseFeatureFeatures swFeat
 
     member _.Main() =
-        if File.Exists(logfile) then File.Delete logfile
+        if File.Exists(logfile) then 
+            File.Delete logfile
 
         let swModel = 
             swApp
             |> SldWorksUtils.activeDoc 
 
-        let swConfMgr = swModel.ConfigurationManager
-        let swConf = swConfMgr.ActiveConfiguration
+        let swConf = swModel.ConfigurationManager.ActiveConfiguration
         let swRootComp = 
             swConf
             |> ConfigurationUtils.getRootComponent

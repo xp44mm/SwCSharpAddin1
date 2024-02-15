@@ -26,85 +26,16 @@ open UnquotedJson
 open Tanks
 open Nozzles
 
-let preselect (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc :?> IModelDoc2
-    let swSelMgr =
-        swModel.SelectionManager
-        :?> SelectionMgr
-    match swSelMgr.GetSelectedObject6(1, SelectionMgrUtils.Mark.All.value) with
-    | :? Face2 as swSelFace  ->
-        let swLoop =
-            swSelFace
-            |> Face2Utils.getLoopSeq
-            |> Seq.exactlyOne
-
-        let swEdge =
-            swLoop.GetEdges()
-            :?> obj[]
-            |> Array.exactlyOne
-            :?> Edge
-
-        let swCurve =
-            swEdge.GetCurve() :?> Curve
-
-        let cylinderFace =
-            swEdge.GetTwoAdjacentFaces2()
-            :?> obj[]
-            |> Array.map(fun swFace -> swFace :?> Face2)
-            |> Array.find(fun swFace ->
-                let surface = swFace.GetSurface() :?> Surface
-                surface.IsCylinder()
-            )
-        swModel.FeatureManager.InsertMateReference2(
-            BstrMateReferenceName = "圆柱配合",
-            PrimaryReferenceEntity = (swSelFace :?> Entity),
-            PrimaryReferenceType = int swMateReferenceType_e.swMateReferenceType_Coincident,
-            PrimaryReferenceAlignment = int swMateReferenceAlignment_e.swMateReferenceAlignment_Any,
-            PrimaryReferenceAlignAxes = false,
-            SecondaryReferenceEntity = (cylinderFace:?> Entity),
-            SecondaryReferenceType = int swMateReferenceType_e.swMateReferenceType_Concentric,
-            SecondaryReferenceAlignment = int swMateReferenceAlignment_e.swMateReferenceAlignment_Any,
-            SecondaryReferenceAlignAxes = false,
-            TertiaryReferenceEntity = null,
-            TertiaryReferenceType = int swMateReferenceType_e.swMateReferenceType_default,
-            TertiaryReferenceAlignment = int swMateReferenceAlignment_e.swMateReferenceAlignment_Any
-        )
-        |> ignore
-    | _ -> swApp.SendMsgToUser "no face2"
-
-
-///
-let cylinderMate (name:string) (circlePlane:Face2) (swModel:ModelDoc2)  =
-    let swLoop =
-        circlePlane
-        |> Face2Utils.getLoopSeq
-        |> Seq.exactlyOne
-
-    let swEdge =
-        swLoop.GetEdges()
-        :?> obj[]
-        |> Array.exactlyOne
-        :?> Edge
-
-    let swCurve =
-        swEdge.GetCurve() :?> Curve
-
-    let cylinderFace =
-        swEdge.GetTwoAdjacentFaces2()
-        :?> obj[]
-        |> Array.map(fun swFace -> swFace :?> Face2)
-        |> Array.find(fun swFace ->
-            let surface = swFace.GetSurface() :?> Surface
-            surface.IsCylinder()
-        )
-
+let createCylinderMateRef (name:string) (circlePlane:Face2) (cylinderFace:Face2) (swModel:IModelDoc2) =
+    let planeEntity = circlePlane :?> Entity
+    let cylinderEntity = cylinderFace :?> Entity
     swModel.FeatureManager.InsertMateReference2(
-        BstrMateReferenceName = $"MR-{name}",
-        PrimaryReferenceEntity = (circlePlane :?> Entity),
+        BstrMateReferenceName = name,
+        PrimaryReferenceEntity = planeEntity,
         PrimaryReferenceType = int swMateReferenceType_e.swMateReferenceType_Coincident,
-        PrimaryReferenceAlignment = int swMateReferenceAlignment_e.swMateReferenceAlignment_Any,
+        PrimaryReferenceAlignment = int swMateReferenceAlignment_e.swMateReferenceAlignment_AntiAligned,
         PrimaryReferenceAlignAxes = false,
-        SecondaryReferenceEntity = (cylinderFace:?> Entity),
+        SecondaryReferenceEntity = cylinderEntity,
         SecondaryReferenceType = int swMateReferenceType_e.swMateReferenceType_Concentric,
         SecondaryReferenceAlignment = int swMateReferenceAlignment_e.swMateReferenceAlignment_Any,
         SecondaryReferenceAlignAxes = false,
@@ -114,27 +45,86 @@ let cylinderMate (name:string) (circlePlane:Face2) (swModel:ModelDoc2)  =
     )
     |> ignore
 
+/// 从圆截面获取邻近的圆柱面
+let getCylinderFaceFromCake (cakeFace:Face2) =
+    let swLoop =
+        cakeFace
+        |> Face2Utils.getLoopSeq
+        |> Seq.exactlyOne
+
+    let swEdge =
+        swLoop.GetEdges()
+        :?> obj[]
+        |> Array.exactlyOne
+        :?> Edge
+
+    swEdge.GetTwoAdjacentFaces2()
+    :?> obj[]
+    |> Array.map(fun swFace -> swFace :?> Face2)
+    |> Array.find(fun swFace ->
+        let surface = swFace.GetSurface() :?> Surface
+        surface.IsCylinder()
+    )
+
+/// 从环行截面获取里面较小的圆柱面
+let getCylinderFaceFromCollar (collarPlane:Face2) =
+    // 此处有两个圆，一个小圆，一个大圆，选择小圆
+    let swEdge =
+        collarPlane
+        |> Face2Utils.getLoopSeq
+        |> Seq.collect(fun swLoop ->
+            swLoop.GetEdges()
+            :?> obj[]
+        )
+        |> Seq.map(fun obj ->
+            let swEdge = obj :?> Edge
+            let swCurve = swEdge.GetCurve() :?> Curve
+            // center.x, center.y, center.z, axis.x, axis.y, axis.z, radius
+            let arr = swCurve.CircleParams :?> float[]
+            let r = arr.[6]
+            swEdge,r
+        )
+        |> Seq.minBy snd
+        |> fst
+
+    swEdge.GetTwoAdjacentFaces2()
+    :?> obj[]
+    |> Array.map(fun obj -> obj :?> Face2)
+    |> Array.find(fun swFace ->
+        let surface = swFace.GetSurface() :?> Surface
+        surface.IsCylinder()
+    )
+
+let insertCylinderMateRef (swApp: ISldWorks) =
+    let swModel = swApp.ActiveDoc :?> IModelDoc2
+    let swSelMgr =
+        swModel.SelectionManager
+        :?> SelectionMgr
+    match swSelMgr.GetSelectedObject6(1, SelectionMgrUtils.Mark.All.value) with
+    | :? Face2 as swSelFace  ->
+        let cylinderFace = getCylinderFaceFromCake swSelFace
+        createCylinderMateRef "" swSelFace cylinderFace swModel
+    | _ -> swApp.SendMsgToUser "no face2"
+
 let mateLibraryFeature (swFeat:Feature) (swModel:ModelDoc2) =
     let LibraryFeatureData = 
         swFeat.GetDefinition() :?> LibraryFeatureData
     LibraryFeatureData.AccessSelections(swModel, null)
     |> ignore
 
-    let libraryName = Path.GetFileNameWithoutExtension(LibraryFeatureData.LibraryPart)
     //'Release the selections that define the library feature
     LibraryFeatureData.ReleaseSelectionAccess()
 
-    match libraryName with
-    | "法兰管口点线版" | "法兰管口平面版" ->
+    match Path.GetFileNameWithoutExtension(LibraryFeatureData.LibraryPart) with
+    | "Axis Nozzle A" | "Plane Nozzle A" ->
         let pipeFeat =
             swFeat
             |> FeatureUtils.getSubFeatureSeq
             |> Seq.find(fun subFeat ->
-                let s = "pipe"
-                subFeat.Name.[0..s.Length-1] = s
+                subFeat.Name.StartsWith "Pipe"
             )
 
-        let circlePlane = 
+        let collarPlane = 
             pipeFeat.GetFaces()
             :?> obj[]
             |> Array.map(fun x -> x :?> Face2)
@@ -142,10 +132,13 @@ let mateLibraryFeature (swFeat:Feature) (swModel:ModelDoc2) =
                 let surface = swFace.GetSurface() :?> Surface
                 surface.IsPlane()
             )
-        cylinderMate swFeat.Name circlePlane swModel
+        let cylinderFace = getCylinderFaceFromCollar collarPlane
+        createCylinderMateRef swFeat.Name collarPlane cylinderFace swModel
+
     | _ -> ()
 
-let main (swApp: ISldWorks) =
+/// 配合参考法兰口
+let generateNozzleMateRefs (swApp: ISldWorks) =
     let swModel = swApp.ActiveDoc :?> ModelDoc2
 
     swModel.FirstFeature()
@@ -155,6 +148,7 @@ let main (swApp: ISldWorks) =
         mateLibraryFeature swFeat swModel
     )
 
+/// 从nozzle a configuration 提取dn,pn
 let extractDnPn (x) =
     let rgx = Regex(@"^DN (\d+) PN (\d+(\.\d+)?)$")
     let gs = rgx.Match(x).Groups
@@ -196,11 +190,12 @@ let getSketchEntitiesFromLibraryFeature (libraryFeatureData: LibraryFeatureData)
 
     //' Get the references
     let vRefs,vRefType,vRefName = libraryFeatureData.GetReferences3(int swLibFeatureData_e.swLibFeatureData_PartRespect)
+    let vRefs = vRefs :?> obj[]
     let skPt, maybeSeg =
         vRefType
         :?> int[]
-        |> Array.map(enum<swSelectType_e>)
-        |> Array.zip <| (vRefs :?> obj[])
+        |> Array.map (enum<swSelectType_e>)
+        |> Array.zip <| vRefs
         |> Array.toList
         |> loop None None
     skPt, maybeSeg

@@ -1,30 +1,8 @@
 ﻿module FileName
 
-open System
-open System.Runtime.InteropServices
-open System.Collections
-open System.Collections.Generic
-open System.Drawing
-open System.Diagnostics
-open System.Reflection
-open System.Text.RegularExpressions
-open System.IO
 
 open SolidWorks.Interop.sldworks
-open SolidWorks.Interop.swpublished
-open SolidWorks.Interop.swconst
-open SolidWorksTools
-open SolidWorksTools.File
 
-open FSharp.Idioms.Literal
-open FSharp.SolidWorks
-open FSharp.SolidWorks.FeatureExtrusion3
-open FSharp.Idioms
-open FSharp.Idioms.Jsons
-open FSharp.Idioms.Literal
-open Tanks
-open UnquotedJson
-open System.Text
 
 // Get reference plane feature by name as feature
 //let swFeature = swPart.FeatureByName(refPlane)
@@ -33,7 +11,8 @@ open System.Text
 // Cast down
 //let swRefPlane = swFeature.GetSpecificFeature2
 
-let xx (strRefPlaneName:string)(swRefPlane:RefPlane) (swModel : IModelDoc2) (swApp: ISldWorks) =
+//plane的原点和法线
+let plane的原点和法线 (strRefPlaneName:string)(swRefPlane:RefPlane) (swModel: IModelDoc2) (swApp: ISldWorks) =
     //' Get the math utility
     let swMathUtility = swApp.GetMathUtility() :?> MathUtility
 
@@ -90,10 +69,10 @@ let xx (strRefPlaneName:string)(swRefPlane:RefPlane) (swModel : IModelDoc2) (swA
     // Create a line from the reference plane origin in the direction
     // of the reference plan normal
     swModel.CreateLine2(
-        vPointData.[(0)], vPointData.[(1)], vPointData.[(2)], 
-        vPointData.[(0)] + dScaleFactor * vVectorData.[(0)], 
-        vPointData.[(1)] + dScaleFactor * vVectorData.[(1)], 
-        vPointData.[(2)] + dScaleFactor * vVectorData.[(2)]
+        vPointData.[0], vPointData.[1], vPointData.[2], 
+        vPointData.[0] + dScaleFactor * vVectorData.[0], 
+        vPointData.[1] + dScaleFactor * vVectorData.[1], 
+        vPointData.[2] + dScaleFactor * vVectorData.[2]
         )
         |> ignore
     // Close the sketch

@@ -18,12 +18,13 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 
-open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 open FSharp.SolidWorks.FeatureExtrusion3
+
 open FSharp.Idioms
 open FSharp.Idioms.Jsons
 open FSharp.Idioms.Literal
+
 open Tanks
 open UnquotedJson
 open System.Text
@@ -145,6 +146,8 @@ let loadData() =
             | VerticalTank tank -> failwith "")
 
     a,b
+
+/// 当前文档另存为许多其他文件，并修改一些属性
 /// 批量生成箱子零件
 let generate (swApp: ISldWorks) =
     let rec loop1 src (tanks: TankP list) =
@@ -184,9 +187,9 @@ let generate (swApp: ISldWorks) =
             |> ignore
             CusPropMgr.Set2(FieldName = "高度", FieldValue = sprintf "%f" tank.高度)
             |> ignore
-            CusPropMgr.Set2(FieldName = "弦高", FieldValue = sprintf "%f" tank.弦高)
+            CusPropMgr.Set2(FieldName = "ChordHeight", FieldValue = sprintf "%f" tank.ChordHeight)
             |> ignore
-            CusPropMgr.Set2(FieldName = "底高", FieldValue = sprintf "%f" tank.底高)
+            CusPropMgr.Set2(FieldName = "BottomHeight", FieldValue = sprintf "%f" tank.BottomHeight)
             |> ignore
             save swModel
             loop2 swModel tail

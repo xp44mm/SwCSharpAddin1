@@ -1,4 +1,4 @@
-﻿module training5
+﻿module training5 // Assembly Automation
 
 open System
 open System.Runtime.InteropServices
@@ -116,8 +116,9 @@ let EstablishCircularCurveAndEdgeCollections (swSelFace: Face2) =
     let circles =
         swEdges
         |> Seq.map(fun swEdge ->
-                swEdge.GetCurve() :?> Curve
-                |> Pair.ofApp swEdge
+            
+            swEdge.GetCurve() :?> Curve
+            |> Pair.ofApp swEdge
         )
         |> Seq.filter(fun (swEdge,swCurve) -> swCurve.IsCircle())
         |> Seq.filter(fun (swEdge,swCurve) ->
@@ -200,12 +201,15 @@ let AddcomponentsToAssembly
     (pointCollection: MathPoint[])
     =
     //Add a coincident mate between the bottom face of the new component and the target face of the target component.....
+    let selectMgr =
+        swModel.SelectionManager :?> SelectionMgr
 
     safeCylindricalFaceCollection
     |> Array.zip pointCollection
     |> Array.iter(fun(pnt: MathPoint,safeCylindricalFace: Entity) ->
+        // Get the coordinates of the transformed math points in the mathpoint collection.
         let pointData =
-            pnt.ArrayData :?> float[] // Get the coordinates of the transformed math points in the mathpoint collection.
+            pnt.ArrayData :?> float[]
 
         // Add the control knob at that location.
         let swComponent: Component2 =
@@ -214,15 +218,13 @@ let AddcomponentsToAssembly
                 ConfigOption = CurrentSelectedConfig
                 MaybeUseConfigForPartReferences = None
                 CompCenter = pointData.[0], pointData.[1], pointData.[2]
-            }.exec swAssy
+            }.AddComponent5 swAssy
 
-        let strCompName = swComponent.Name2 // Get the name and instance of the newly added component for selection
-        let selectMgr =
-            swModel.SelectionManager :?> SelectionMgr
-
+        // Get the name and instance of the newly added component for selection
+        let strCompName = swComponent.Name2
         let SelData = selectMgr.CreateSelectData()
 
-        SelData.Mark <- 1 //Mark用于设置用途
+        SelData.Mark <- 1 // Mark用于设置用途
         swModel.ClearSelection2 true
 
         swSafeSelFace.Select4(true, SelData)
@@ -243,8 +245,7 @@ let AddcomponentsToAssembly
             MateType = MateCOINCIDENT
             MateAlign = swMateAlign_e.swMateAlignCLOSEST
             ForPositioningOnly = false
-            //LockRotation = false
-        }.exec swAssy
+        }.AddMate5 swAssy
         |> ignore
 
         swModel.ClearSelection2(true)
@@ -268,7 +269,7 @@ let AddcomponentsToAssembly
             MateAlign = swMateAlign_e.swMateAlignCLOSEST
             ForPositioningOnly = false
             //LockRotation = false
-        }.exec swAssy
+        }.AddMate5 swAssy
         |> ignore
 
         swModel.ClearSelection2(true)
@@ -314,6 +315,7 @@ let AddComponentsAndMate (swApp: ISldWorks) =
         strCompFullPath
         safeCylindricalFaceCollection
         pointCollection
+
     swApp.SendMsgToUser "success"
     with ex ->
         swApp.SendMsgToUser $"{ex.Message}"

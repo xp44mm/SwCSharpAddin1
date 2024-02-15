@@ -1,4 +1,4 @@
-﻿module training6
+﻿module training6 // DrawingAutomation
 
 open System
 open System.Runtime.InteropServices

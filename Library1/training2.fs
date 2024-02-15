@@ -164,7 +164,7 @@ let NewAssemblyDoc (swApp: ISldWorks) =
         ConfigOption = AddComponentConfigOptions.CurrentSelectedConfig
         MaybeUseConfigForPartReferences = None
         CompCenter = 0.0, 0.0, 0.0
-    }.exec swAssy
+    }.AddComponent5 swAssy
     |> ignore
 
 let NewDrawingDoc (swApp: ISldWorks) =

@@ -84,25 +84,13 @@ let getData =fun (swFeature:Feature) (swModel:ModelDoc2)->
     //' Get the feature dimensions
     let vSizDimVal,vSizDimName = LibraryFeatureData.GetDimensions(1)
     sb.Append $"Size dimensions :{vSizDimName},{vSizDimVal}\n" |> ignore
-    //If Not IsEmpty(vSizDimName) Then
-    //    For i = LBound(vSizDimName) To UBound(vSizDimName)
-    //        Debug.Print "  " & vSizDimName(i), vSizDimVal(i)
-    //    Next i
-    //End If
-    //' Get the number of references
+    // Get the number of references
     let ReferencesCount = LibraryFeatureData.GetReferencesCount()
     sb.Append $"GetReferencesCount = {ReferencesCount}\n" |> ignore
-    //' Get the references
+    // Get the references
     let vRefs,vRefType,vRefName = LibraryFeatureData.GetReferences3(int swLibFeatureData_e.swLibFeatureData_PartRespect)
     sb.Append $"Reference types and names: {vRefs},{vRefType},{vRefName}\n" |> ignore
 
-    //If Not IsEmpty(vRefType) Then
-    //    Debug.Print "Reference types and names: "
-    //    For i = LBound(vRefType) To UBound(vRefType)
-    //        Debug.Print "  " & vRefType(i) & ", " & vRefName(i)
-    //        vRefs(i).Select False
-    //    Next i
-    //End If
 
-    //'Release the selections that define the library feature
+    // Release the selections that define the library feature
     LibraryFeatureData.ReleaseSelectionAccess()
