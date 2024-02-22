@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="flange.tsv" />
+    <None Include="screw fastener.tsv" />
+    <None Include="washer.tsv" />
+    <Compile Include="Flange.fs" />
+    <Compile Include="ScrewFastener.fs" />
+    <Compile Include="Washer.fs" />
+    <Compile Include="FlangePair.fs" />
+    <Compile Include="Wafer.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="8.0.200" />
+    <PackageReference Include="FSharp.Idioms" Version="1.4.13" />
+  </ItemGroup>
+
+
+</Project>

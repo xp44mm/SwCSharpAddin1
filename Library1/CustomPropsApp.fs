@@ -23,75 +23,14 @@ open FSharp.SolidWorks
 open FSharp.Idioms
 open FSharp.Idioms.Literal
 
-//// Retrieve the value of a custom property
-//let retrieve (fieldName:string) (cusPropMgr: CustomPropertyManager) =
-//    let mutable valOut = ""
-//    let mutable resolvedValOut = ""
-//    let mutable wasResolved = false
-//    let mutable linkToProperty = false
-//    let i =
-//        cusPropMgr.Get6(
-//            FieldName = fieldName,
-//            UseCached = false,
-//            ValOut = &valOut,
-//            ResolvedValOut = &resolvedValOut,
-//            WasResolved = &wasResolved,
-//            LinkToProperty = &linkToProperty
-//        )
-//        |> enum<swCustomInfoGetResult_e>
-
-//    if not wasResolved || i <> swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue then
-//        //swApp.SendMsgToUser "CusPropMgr.Get6"
-//        failwithf "%A" i
-//    else
-//        valOut,resolvedValOut
-
-
-//let readProps (config:string) (swModel: ModelDoc2) =
-
-
 /// 读取活动文件的所有自定义属性
 let readCustomProps (swApp: ISldWorks) =
     let swModel = swApp.ActiveDoc :?> IModelDoc2
-
     let cusPropMgr = swModel.Extension.CustomPropertyManager("")
-
-    //// Retrieve the value of a custom property
-    //let retrieve (fieldName:string) =
-    //    let mutable valOut = ""
-    //    let mutable resolvedValOut = ""
-    //    let mutable wasResolved = false
-    //    let mutable linkToProperty = false
-    //    let i =
-    //        cusPropMgr.Get6(
-    //            FieldName = fieldName,
-    //            UseCached = false,
-    //            ValOut = &valOut,
-    //            ResolvedValOut = &resolvedValOut,
-    //            WasResolved = &wasResolved,
-    //            LinkToProperty = &linkToProperty
-    //        )
-    //        |> enum<swCustomInfoGetResult_e>
-    //    if not wasResolved || i <> swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue then
-    //        swApp.SendMsgToUser "CusPropMgr.Get6"
-    //        failwith "CusPropMgr.Get6"
-    //    else
-    //        valOut,resolvedValOut
-
     let cells =
-        cusPropMgr.GetNames()
-        :?> obj[]
-        |> Array.map (fun x -> x :?> string)
-        |> Array.map(fun name ->
-            let value =
-                cusPropMgr 
-                |> CustomPropertyManagerUtils.GetUpdatedProperty name 
-                |> snd
-
-            let typ =
-                cusPropMgr.GetType2(name) 
-                |> enum<swCustomInfoType_e>
-                |> CustomInfoType.getCore
+        cusPropMgr
+        |> CustomPropertyManagerUtils.getAllTypesValues
+        |> Array.map(fun (name,typ,value) ->
             [| name;typ;value |]
         )
     let path = Path.Combine(Dir.CommandData,"customProps.tsv")

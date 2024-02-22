@@ -1,6 +1,5 @@
 ﻿module CoordinateSystem
 
-
 open FSharp.Idioms
 open FSharp.Idioms.Jsons
 open FSharp.Idioms.Literal
@@ -112,7 +111,6 @@ let OpenComponentModelToAddToAssembly (fileName: string, configName:string) (ass
             swDocumentTypes_e.swDocPART
             swOpenDocOptions_e.swOpenDocOptions_Silent
             configName
-    //|> ignore
 
     // Shows the named configuration by switching to that configuration and making it the active configuration.
     compModel.ShowConfiguration2 configName
@@ -186,7 +184,7 @@ let addManyCompToCoordSys (swApp: ISldWorks) =
     let assyPath = swModel.GetPathName()
     let assyTitle = swModel.GetTitle()
     let assyName = Path.GetFileNameWithoutExtension(assyTitle) // = "罐区装配体"
-    //必须先保存装配体
+    //必须先保存装配体,才能获取有效路径
     let assyDir = Path.GetDirectoryName(assyPath)
 
     let swConfMgr = swModel.ConfigurationManager

@@ -39,8 +39,6 @@
 		<Compile Include="CoordinateSystem.fs" />
 		<Compile Include="BlankRefGeom.fs" />
 		<Compile Include="CustomPropsApp.fs" />
-		<Compile Include="RecursiveTraverseAssembly.fs" />
-		<Compile Include="PipeComponents.fs" />
 		<Compile Include="PipeUtils.fs" />
 	</ItemGroup>
 

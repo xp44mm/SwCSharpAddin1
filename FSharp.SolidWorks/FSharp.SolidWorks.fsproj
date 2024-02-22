@@ -60,7 +60,6 @@
 		<Compile Include="MathUtilityUtils.fs" />
 		<Compile Include="MathPointUtils.fs" />
 		<Compile Include="Component2Utils.fs" />
-		<Compile Include="Component2Node.fs" />
 		<Compile Include="UserPreference.fs" />
 		<Compile Include="ConfigurationUtils.fs" />
 		<Compile Include="AddComponent5Params.fs" />
@@ -69,7 +68,9 @@
 		<Compile Include="PartDocUtils.fs" />
 		<Compile Include="ModelDoc2Utils.fs" />
 		<Compile Include="ModelSpecific.fs" />
-		<Compile Include="GeneralComponentClosure.fs" />
+		<Compile Include="ComponentData.fs" />
+		<Compile Include="RouteComp.fs" />
+		<Compile Include="RouteComponentSpecies.fs" />
 		<Compile Include="SldWorksUtils.fs" />
 		<Compile Include="CutList.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
@@ -82,6 +83,13 @@
 
 	<ItemGroup>
 	  <PackageReference Include="FSharp.Idioms" Version="1.4.13" />
+	</ItemGroup>
+
+
+
+
+	<ItemGroup>
+	  <ProjectReference Include="..\FlangeAssemblyBOM\FlangeAssemblyBOM.fsproj" />
 	</ItemGroup>
 
 

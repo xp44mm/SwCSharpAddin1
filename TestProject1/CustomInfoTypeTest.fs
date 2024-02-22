@@ -48,3 +48,4 @@ type CustomInfoTypeTest(output: ITestOutputHelper) =
         let y = CustomInfoType.parseCore x
         let e = swCustomInfoType_e.swCustomInfoDate
         Should.equal e y
+

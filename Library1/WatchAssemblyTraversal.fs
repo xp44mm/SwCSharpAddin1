@@ -24,6 +24,7 @@ let main (swApp: ISldWorks) =
     let swConf = swConfigMgr.ActiveConfiguration
     // Get it's root component
     let swRootComp = swConf.GetRootComponent3(true)
+
     let outp =
         [
             swModel.GetPathName()
@@ -32,7 +33,7 @@ let main (swApp: ISldWorks) =
             //TraverseModelFeatures 1 swModel
 
             // Now traverse all of the components and sub assemblies
-            TraverseComponent 1 swRootComp
+            TraverseComponent 0 swRootComp swModel
         ]
         |> String.concat "\n"
     //|> swApp.SendMsgToUser
@@ -48,30 +49,25 @@ let TraverseModelFeatures (nLevel:int) (swModel :ModelDoc2) =
 
 // this recursively traverses all of the components in an
 // assembly and prints their name to the immediate window
-let TraverseComponent (nLevel:int) (swRootComp:Component2) =
-    let rec loop (nLevel:int) (swCompNode:ComponentNode) =
+let TraverseComponent (nLevel:int) (swRootComp:Component2) (swRootModel:ModelDoc2) =
+    let rec loop (nLevel:int) (data:ComponentData) =
         let sPadStr = String.replicate (nLevel*2) " "
-        let comp = swCompNode.Component2
-        //let modeldoc = swCompNode.modelDoc
         [
-            match swCompNode.specific with
-            | SpecificPart part ->
-                yield $"{sPadStr}+{Component2Utils.renderComponent2 comp}"         
-            | SpecificAssembly(assemDoc,children) ->
-                yield $"{sPadStr}+{Component2Utils.renderComponent2 comp}"
-                //yield TraverseComponentFeatures nLevel swChildComp
-                for child in children do
+            match data.SpecificModelDoc with
+            | ModelSpecific.ModelPart part ->
+                yield $"{sPadStr}+{Component2Utils.renderComponent2 data.Component2}"
+            | ModelSpecific.ModelAssembly assy ->
+                yield $"{sPadStr}+{Component2Utils.renderComponent2 data.Component2}"
+                for child in data.getChildren() do
                     yield! loop (nLevel+1) child
+            | _ -> failwith ""
         ]
+
     //根组件要手动展开
     //根组件的引用的模型文件为空，文件就是模型自己。
-    swRootComp.GetChildren()
-    :?> obj[]
-    |> Seq.collect(fun o ->
-        o :?> Component2
-        |> ComponentNode.from
-        |> loop nLevel
-    )
+    let rootData = ComponentData.from swRootComp swRootModel -1
+
+    loop nLevel rootData
     |> String.concat "\n"
 
 // this recursively traverses all of the components features

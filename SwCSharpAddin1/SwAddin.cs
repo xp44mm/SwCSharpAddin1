@@ -537,7 +537,7 @@ namespace SwCSharpAddin1
 
         //}
 
-        public void pipeBom()
+        public void PipeUtils_main()
         {
             //SWRoutingLibUtils.ExportPipeData(iSwApp);
 
@@ -547,6 +547,15 @@ namespace SwCSharpAddin1
             PipeComponents.PipeUtils.main(this.iSwApp);
         }
 
+        public void pipeBom()
+        {
+            //SWRoutingLibUtils.ExportPipeData(iSwApp);
+
+            //var clss = new Library1.RecursiveTraverseAssembly(iSwApp);
+            //clss.Main();
+
+            PipeComponents.PipeUtils.pipebom(this.iSwApp);
+        }
 
         //public void Training2_3()
         //{
