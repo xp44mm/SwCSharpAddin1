@@ -21,7 +21,7 @@ type Flange =
     }
 
     static member fromTsv() =
-        let path = Path.Combine(__SOURCE_DIRECTORY__,"flange.tsv")
+        let path = Path.Combine(Dir.databasePath,"flange.tsv")
         let tbl = Tsv.parseTsv path
         let headRow = Tsv.getFieldTitles tbl
 

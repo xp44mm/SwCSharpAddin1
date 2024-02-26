@@ -2,30 +2,41 @@
 
 open SolidWorks.Interop.sldworks
 open SolidWorks.Interop.swconst
+open System
 open System.IO
+
 open FSharp.Idioms.Literal
+open FSharp.Idioms.Jsons
 
 type ComponentData =
     {
         Component2: Component2
         ModelDoc2: ModelDoc2
-        Props:Map<string,string*string> // <name,type*value>
+        Props:Map<string,Json> // <name,type*value>
         SpecificModelDoc: ModelSpecific
         RouteAssemblyDistance: int // 管道装配体不能嵌套，-1代表没有route，0代表本组件,1代表父组件是route，2代表祖父组件。
 
     }
 
-    static member from (component2: Component2) (modelDoc2: ModelDoc2) parentRouteDistance =
+    static member from(parentRouteDistance:int, comp: Component2, model: ModelDoc2) =
         let props =
-            ModelDoc2Utils.readPropsAll component2.ReferencedConfiguration modelDoc2
-            |> List.map(fun (name,tp,v) -> name,(tp,v))
+            ModelDoc2Utils.readPropsAll comp.ReferencedConfiguration model
+            |> List.map(fun (name,tp,v) -> 
+                let j =
+                    match tp with
+                    | "Text" -> Json.String v
+                    | "Number" -> Json.Number (Double.Parse v)
+                    | "YesOrNo" -> if v = "Yes" then Json.True else Json.False
+                    | _ -> failwith $"{name},{tp},{v}"
+                name, j
+                )
             |> Map.ofList
-        let spc = ModelSpecific.from modelDoc2
+        let spc = ModelSpecific.from model
         let routeDist =
             match spc with
             | ModelDrawing _ -> failwith ""
             | ModelPart prt ->
-                if parentRouteDistance < 0 then 
+                if parentRouteDistance < 0 then
                     -1 
                 else 
                     parentRouteDistance + 1
@@ -36,13 +47,17 @@ type ComponentData =
                     -1 
                 else parentRouteDistance + 1
         {
-            Component2 = component2
-            ModelDoc2 = modelDoc2
+            Component2 = comp
+            ModelDoc2 = model
             Props = props
             SpecificModelDoc = spc
             RouteAssemblyDistance = routeDist
         }
 
+    static member fromModel(root: ModelDoc2) =
+        // Get it's root component
+        let swRootComp = root.ConfigurationManager.ActiveConfiguration.GetRootComponent3(true)
+        ComponentData.from(-1, swRootComp, root)
     member this.getChildren() =
         this.Component2.GetChildren()
         :?> obj[]
@@ -52,7 +67,7 @@ type ComponentData =
             child,childModel
             )
         |> Array.map(fun (comp,model) ->
-            ComponentData.from comp model this.RouteAssemblyDistance
+            ComponentData.from(this.RouteAssemblyDistance, comp, model) 
         )
 
     member this.toLine() =

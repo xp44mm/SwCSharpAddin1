@@ -1,42 +1,51 @@
-+PumpDelivery-50x65Mather(){} Assembly -1 []
+﻿PumpDelivery-50x65Mather(){} Assembly -1 []
   Flange {DN= 50.0}
-  +Pipe_2^PumpDelivery-50x65Mather(Default){} Route 0 ["OuterDiameter",("Text","")]
-    Pipe {DN= 65.0;Length= 54.43}
-    Pipe {DN= 65.0;Length= 108.61}
-    Tee {DN= 65.0}
-    Pipe {DN= 65.0;Length= 462.55}
-    +wafer check valve flanges A(DN 65){} Assembly 1 ["Component Type",("Text","AssemblyFittings");"Nominal Pipe Size",("Text","65");"RouteOnDrop",("YesOrNo","Yes")]
-      Flange {DN= 65.0}
-      Flange {DN= 65.0}
-      +wafer check valve(DN 65){} Part 2 ["Nominal Pipe Size",("Text","65")]
+  Pipe_2^PumpDelivery-50x65Mather(Default){} Route 0 ["OuterDiameter",("Text","")]
+    BallValveFlanges{DN= 50.0}
+      BallValve 50.0
+      Flange {DN= 50.0}
+      Flange {DN= 50.0}
+      Bolt(16.0,70.0,8)
+      Nut(16.0,8)
+      Gasket(50.0,2)
+    Flange {DN= 50.0}
     Pipe {DN= 65.0;Length= 173.35}
-    Pipe {DN= 65.0;Length= 292.93}
-    +expansion flanges A(DN 65){} Assembly 1 ["Nominal Pipe Size",("Text","65")]
-      +expansion(DN 65){} Part 2 ["Nominal Pipe Size",("Text","65")]
+    Pipe {DN= 65.0;Length= 188.99}
+    Pipe {DN= 65.0;Length= 108.61}
+    Reducer {DN1= 65.0;DN2= 50.0}
+    expansion flanges A(DN 65){} Assembly 1 ["Nominal Pipe Size",("Text","65")]
       Flange {DN= 65.0}
       Flange {DN= 65.0}
-    Pipe {DN= 50.0;Length= 148.6}
-    Pipe {DN= 65.0;Length= 135.79}
-    +Flanges {DN= 65.0}
+      Expansion 65.0
+    WaferCheckValveFlanges{DN= 65.0}
+      Flange {DN= 65.0}
+      WaferCheckValve 65.0
+      Flange {DN= 65.0}
+      DoubleScrewBolt(16.0,120.0,8)
+      Nut(16.0,8)
+      Gasket(65.0,2)
+    BallValveFlanges{DN= 65.0}
+      Flange {DN= 65.0}
+      BallValve 65.0
+      Flange {DN= 65.0}
+      Bolt(16.0,70.0,8)
+      Nut(16.0,8)
+      Gasket(65.0,2)
+    EccentricReducer {DN1= 65.0;DN2= 50.0}
+    Elbow {DN= 50.0;Angle= 90.0}
+    Flanges{DN= 65.0}
       Flange {DN= 65.0}
       Flange {DN= 65.0}
       Bolt(16.0,70.0,4)
       Nut(16.0,4)
       Gasket(65.0,1)
-    EccentricReducer {DN1= 65.0;DN2= 50.0}
-    Elbow {DN= 50.0;Angle= 90.0}
-    Flange {DN= 50.0}
-    Reducer {DN1= 65.0;DN2= 50.0}
-    +ball valve flanges A(DN 65){} Assembly 1 ["Component Type",("Text","AssemblyFittings");"Nominal Pipe Size",("Text","65");"RouteOnDrop",("YesOrNo","Yes")]
-      Valve {Name= "ball valve";DN= 65.0}
-      Flange {DN= 65.0}
-      Flange {DN= 65.0}
+    Tee {DN= 65.0}
     Pipe {DN= 50.0;Length= 85.75}
-    +ball valve flanges A(DN 50){} Assembly 1 ["Component Type",("Text","AssemblyFittings");"Nominal Pipe Size",("Text","50");"RouteOnDrop",("YesOrNo","Yes")]
-      Flange {DN= 50.0}
-      Flange {DN= 50.0}
-      Valve {Name= "ball valve";DN= 50.0}
-    Pipe {DN= 65.0;Length= 188.99}
+    Pipe {DN= 65.0;Length= 54.43}
+    Pipe {DN= 50.0;Length= 148.6}
     Pipe {DN= 50.0;Length= 218.53}
-    Pipe {DN= 50.0;Length= 77.18}
     Pipe {DN= 65.0;Length= 412.43}
+    Pipe {DN= 50.0;Length= 77.18}
+    Pipe {DN= 65.0;Length= 292.93}
+    Pipe {DN= 65.0;Length= 462.55}
+    Pipe {DN= 65.0;Length= 135.79}

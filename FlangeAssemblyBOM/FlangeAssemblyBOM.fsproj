@@ -6,12 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="flange.tsv" />
-    <None Include="screw fastener.tsv" />
-    <None Include="washer.tsv" />
+    <None Include="database\flange.tsv" />
+    <None Include="database\screw fastener.tsv" />
+    <None Include="database\washer.tsv" />
+    <None Include="database\wafer butterfly.tsv" />
+    <None Include="database\wafer check.tsv" />
+    <Compile Include="Dir.fs" />
     <Compile Include="Flange.fs" />
     <Compile Include="ScrewFastener.fs" />
     <Compile Include="Washer.fs" />
+    <Compile Include="WaferButterflyValve.fs" />
+    <Compile Include="WaferCheckValve.fs" />
     <Compile Include="FlangePair.fs" />
     <Compile Include="Wafer.fs" />
   </ItemGroup>

@@ -1,4 +1,6 @@
-﻿namespace rec FSharp.SolidWorks
+﻿namespace FSharp.SolidWorks
+
+open FSharp.SolidWorks.RouteCompFields
 
 open SolidWorks.Interop.sldworks
 open SolidWorks.Interop.swconst
@@ -9,109 +11,123 @@ open System.IO
 open System.Text.RegularExpressions
 
 open FSharp.Idioms.Literal
+open FSharp.Reflection
+open FSharp.Idioms
+open FSharp.Idioms.Jsons
 
 type RouteComp =
-    | Pipe of PipeRow
-    | Elbow of ElbowRow
-    | Reducer of ReducerRow
-    | EccentricReducer of ReducerRow
-    | Tee of TeeRow
-    | ReducingTee of ReducingTeeRow
-    | Flange of FlangeRow
-    | Valve of ValveRow
-    | FittingOther
-    | AssemblyFittings
-    | GeneralComponent of ComponentData
-    | Flanges of ComponentData * FlangeRow
+    // 装配体
+    | ComponentEasyAssembly of ComponentEasy * children: RouteComp list
+    | ComponentEasyPart of ComponentEasy
 
-    | Gasket of dn:float * count:int
-    | Nut of m: float * count:int
-    | Washer of m: float * count:int
-    | Bolt of m:float * l:float * count:int
-    | DoubleScrewBolt of m:float * l:float * count:int
-    
-    //| Cross
-    //| ReducingCross
+    //一般管件
+    | Pipe  of dn:float * pn:float * material:string * length:float
+    | Elbow of dn:float * pn:float * material:string * angle:float
 
-    //| Clip
-    //| Hanger
-    //| Support
+    | Reducer          of dn1:float * dn2:float * pn:float * material:string
+    | EccentricReducer of dn1:float * dn2:float * pn:float * material:string
+    | ReducingTee      of dn1:float * dn2:float * pn:float * material:string
 
-    //| Adapter
-    //| CableTray
-    //| Conduit
-    //| ConduitAdapter
-    //| ConduitElbow
-    //| DuctingTrunking
-    //| EndConnector
-    //| Equipment
-    //| FlexCableConnector
-    //| HybridComponents
-    //| Nipple
-    //| OLet
-    //| RibbonCable
-    //| Splice
-    //| TeeAdapter
-    //| Tube
-    //| Union
-    //| Unknown
+    | Tee    of dn:float * pn:float * material:string
+    | Flange of dn:float * pn:float * material:string
 
-    member this.toLine() =
-        match this with
-        | Pipe _ 
-        | Elbow _ 
-        | Reducer _ 
-        | EccentricReducer _
-        | Tee _ 
-        | ReducingTee _ 
-        | Flange _ 
-        | Valve _ 
-        | Bolt _
-        | Nut _
-        | Gasket _
-            -> stringify this
-        | Flanges(data,row) -> 
-            "Flanges" + stringify row
-        | GeneralComponent data -> data.toLine()
-        | _ -> failwith ""
+    // 配件fittings
+    | BallValve           of dn:float * pn:float * material:string
+    | Expansion           of dn:float * pn:float * material:string
+    | Flowmeter           of dn:float * pn:float * material:string
+    | MagneticFilter      of dn:float * pn:float * material:string
+    | WaferButterflyValve of dn:float * pn:float * material:string
+    | WaferCheckValve     of dn:float * pn:float * material:string
 
-type PipeRow =
-    {
-        DN:float
-        Length:float
-    }
+    // 装配体配件AssemblyFittings
+    | BallValveFlanges           of dn:float * pn:float * children:RouteComp list
+    | BallValveSolo              of dn:float * pn:float * children:RouteComp list
+    | ExpansionFlanges           of dn:float * pn:float * children:RouteComp list
+    | ExpansionSolo              of dn:float * pn:float * children:RouteComp list
+    | Flanges                    of dn:float * pn:float * children:RouteComp list
+    | FlowmeterFlanges           of dn:float * pn:float * children:RouteComp list
+    | MagneticFilterFlanges      of dn:float * pn:float * children:RouteComp list
+    | WaferButterflyValveFlanges of dn:float * pn:float * children:RouteComp list
+    | WaferButterflyValveSolo    of dn:float * pn:float * children:RouteComp list
+    | WaferCheckValveFlanges     of dn:float * pn:float * children:RouteComp list
 
-type ElbowRow =
-    {
-        DN:float
-        Angle:float
-    }
+    // 附件accessories
+    | Gasket of dn:float * pn:float * material:string * count:int
+    | Nut of m: float * material:string * count:int
+    | Washer of m: float * material:string * count:int
+    | Bolt of m:float * l:float * material:string * count:int
+    | DoubleScrewBolt of m:float * l:float * material:string * count:int
 
-type ReducerRow =
-    {
-        DN1:float
-        DN2:float
-    }
+    //member this.toLine() =
+    //    match this with
+    //    | Pipe _ 
+    //    | Elbow _ 
+    //    | Reducer _ 
+    //    | EccentricReducer _
+    //    | Tee _ 
+    //    | ReducingTee _ 
+    //    | Flange _ 
+    //    | Bolt _
+    //    | Nut _
+    //    | Gasket _
+    //    | Washer _
+    //    | DoubleScrewBolt _
+    //    | BallValve            _
+    //    | Expansion            _
+    //    | Flowmeter            _
+    //    | MagneticFilter       _
+    //    | WaferButterflyValve  _
+    //    | WaferCheckValve      _
+    //        -> stringify this
+    //    | BallValveFlanges (data,row)
+    //    | BallValveSolo (data,row)
+    //    | ExpansionFlanges (data,row)
+    //    | ExpansionSolo (data,row)
+    //    | Flanges (data,row)
+    //    | FlowmeterFlanges (data,row)
+    //    | MagneticFilterFlanges (data,row)
+    //    | WaferButterflyValveFlanges (data,row)
+    //    | WaferButterflyValveSolo (data,row)
+    //    | WaferCheckValveFlanges (data,row)
+    //        -> 
+    //        let typ = this.GetType()
+    //        let unionCases = FSharpType.GetUnionCases(typ)
+    //        let tagReader = FSharpValue.PreComputeUnionTagReader typ
+    //        let tag = tagReader this
+    //        let name = unionCases.[tag].Name
+    //        name + stringify row
 
-type TeeRow =
-    {
-        DN:float
-    }
+    //    | GeneralComponent data -> data.toLine()
 
-type ReducingTeeRow =
-    {
-        DN1:float
-        DN2:float
-    }
+        //| _ -> failwith ""
 
-type FlangeRow =
-    {
-        DN: float
-    }
+//| Cross
+//| ReducingCross
 
-type ValveRow =
-    {
-        Name:string
-        DN: float
-    }
+//| Clip
+//| Hanger
+//| Support
+
+//| Adapter
+//| CableTray
+//| Conduit
+//| ConduitAdapter
+//| ConduitElbow
+//| DuctingTrunking
+//| EndConnector
+//| Equipment
+//| FlexCableConnector
+//| HybridComponents
+//| Nipple
+//| OLet
+//| RibbonCable
+//| Splice
+//| TeeAdapter
+//| Tube
+//| Union
+//| Unknown
+
+//| Valve
+//| FittingOther
+//| AssemblyFittings
 

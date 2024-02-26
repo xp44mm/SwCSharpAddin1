@@ -13,7 +13,7 @@ type Washer =
     }
 
     static member fromTsv () =
-        let path = Path.Combine(__SOURCE_DIRECTORY__,"washer.tsv")
+        let path = Path.Combine(Dir.databasePath,"washer.tsv")
         let tbl = Tsv.parseTsv path
         let headRow = Tsv.getFieldTitles tbl
 

@@ -2,8 +2,8 @@
 
 open System.IO
 
-let testPath = __SOURCE_DIRECTORY__
+let thisPath = __SOURCE_DIRECTORY__
 
-let solutionPath = DirectoryInfo(testPath).Parent.FullName
+let solutionPath = DirectoryInfo(thisPath).Parent.FullName
 
 //let projPath = Path.Combine(solutionPath,"FslexFsyacc")

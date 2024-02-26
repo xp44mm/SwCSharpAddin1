@@ -6,6 +6,7 @@ open SolidWorks.Interop.swconst
 open System
 open System.Diagnostics
 open System.IO
+open System.Text
 open System.Text.RegularExpressions
 
 open FSharp.SolidWorks
@@ -25,13 +26,12 @@ let rec getoutlines (level:int) (data:ComponentData) =
 
 // Macro Entry point
 let main (swApp: ISldWorks) =
-    let swRootModel = 
+    let swModel = 
         swApp.ActiveDoc :?> ModelDoc2
 
-    // Get it's root component
-    let swRootComp = swRootModel.ConfigurationManager.ActiveConfiguration.GetRootComponent3(true)
-
-    let rootData = ComponentData.from swRootComp swRootModel -1
+    let rootData = 
+        swModel
+        |> ComponentData.fromModel
 
     let outp = 
         rootData
@@ -42,58 +42,65 @@ let main (swApp: ISldWorks) =
     File.WriteAllText(path,outp)
     swApp.SendMsgToUser path
 
-let rec toLines (level:int) (data:RouteComp) =
-    let pad = String.replicate (level*2) " "
-    [
-        match data with
-        | Pipe _
-        | Elbow _ 
-        | Reducer _ 
-        | EccentricReducer _ 
-        | Tee _ 
-        | ReducingTee _ 
-        | Flange _ 
-        | Valve _ 
-        | Bolt _
-        | Nut _
-        | Gasket _
-            -> yield pad + data.toLine()
-        | Flanges(comp,fls) ->
-            yield $"{pad}+Flanges {stringify fls}"
-            match comp.SpecificModelDoc with
-            | ModelSpecific.ModelAssembly assy ->
-                for child in RouteComponentSpecies.getChildren data do
-                    yield! toLines (level+1) child
-            | _ -> ()
+//let rec toLines (level:int) (data:RouteComp) =
+//    let pad = String.replicate (level*2) " "
+//    [
+//        yield pad + data.toLine()
+//        match data with
+//        | Pipe _
+//        | Elbow _ 
+//        | Reducer _ 
+//        | EccentricReducer _ 
+//        | Tee _ 
+//        | ReducingTee _ 
+//        | Flange _ 
+//        | Bolt _
+//        | DoubleScrewBolt _
+//        | Nut _
+//        | Washer _
+//        | Gasket _
+//        | BallValve            _
+//        | Expansion            _
+//        | Flowmeter            _
+//        | MagneticFilter       _
+//        | WaferButterflyValve  _
+//        | WaferCheckValve      _
+//            -> ()
+//        | BallValveFlanges (comp,_)
+//        | BallValveSolo (comp,_)
+//        | ExpansionFlanges (comp,_)
+//        | ExpansionSolo (comp,_)
+//        | Flanges (comp,_)
+//        | FlowmeterFlanges (comp,_)
+//        | MagneticFilterFlanges (comp,_)
+//        | WaferButterflyValveFlanges (comp,_)
+//        | WaferButterflyValveSolo (comp,_)
+//        | WaferCheckValveFlanges (comp,_)
+//        | GeneralComponent comp ->
+//            match comp.SpecificModelDoc with
+//            | ModelSpecific.ModelAssembly assy ->
+//                for child in RouteComponentApp.getChildren data do
+//                    yield! toLines (level+1) child
+//            | _ -> ()
+//    ]
 
-        | GeneralComponent comp ->
-            yield $"{pad}+{comp.toLine()}"
-            match comp.SpecificModelDoc with
-            | ModelSpecific.ModelAssembly assy ->
-                for child in RouteComponentSpecies.getChildren data do
-                    yield! toLines (level+1) child
-            | _ -> ()
+//// Macro Entry point
+//let pipebom (swApp: ISldWorks) =
+//    let swRootModel = 
+//        swApp.ActiveDoc :?> ModelDoc2
 
-        | _ -> failwith ""
-    ]
+//    // Get it's root component
+//    let swRootComp = swRootModel.ConfigurationManager.ActiveConfiguration.GetRootComponent3(true)
 
-// Macro Entry point
-let pipebom (swApp: ISldWorks) =
-    let swRootModel = 
-        swApp.ActiveDoc :?> ModelDoc2
+//    let rootData = 
+//        ComponentData.from swRootComp swRootModel -1
+//        |> RouteComponentApp.map
 
-    // Get it's root component
-    let swRootComp = swRootModel.ConfigurationManager.ActiveConfiguration.GetRootComponent3(true)
+//    let outp = 
+//        rootData
+//        |> toLines 0
+//        |> String.concat "\n"
 
-    let rootData = 
-        ComponentData.from swRootComp swRootModel -1
-        |> RouteComponentSpecies.map
-
-    let outp = 
-        rootData
-        |> toLines 0
-        |> String.concat "\n"
-
-    let path = Path.Combine(Dir.CommandData,"pipebom.txt")
-    File.WriteAllText(path,outp)
-    swApp.SendMsgToUser path
+//    let path = Path.Combine(Dir.CommandData,"pipebom.txt")
+//    File.WriteAllText(path,outp,Encoding.UTF8)
+//    swApp.SendMsgToUser path

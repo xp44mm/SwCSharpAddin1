@@ -13,7 +13,7 @@
     <Compile Include="PlaneTest.fs" />
     <Compile Include="BitcodesTest.fs" />
     <Compile Include="CustomInfoTypeTest.fs" />
-    <Compile Include="RouteComponentSpeciesTest.fs" />
+    <Compile Include="ValueParserTest.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

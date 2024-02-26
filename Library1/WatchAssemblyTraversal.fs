@@ -17,7 +17,6 @@ open FSharp.SolidWorks
 
 // Macro Entry point
 let main (swApp: ISldWorks) =
-
     let swModel = swApp.ActiveDoc :?> ModelDoc2
     let swConfigMgr = swModel.ConfigurationManager
     // Get the active config
@@ -65,7 +64,7 @@ let TraverseComponent (nLevel:int) (swRootComp:Component2) (swRootModel:ModelDoc
 
     //根组件要手动展开
     //根组件的引用的模型文件为空，文件就是模型自己。
-    let rootData = ComponentData.from swRootComp swRootModel -1
+    let rootData = ComponentData.from(-1, swRootComp, swRootModel)
 
     loop nLevel rootData
     |> String.concat "\n"

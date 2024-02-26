@@ -475,12 +475,17 @@ namespace SwCSharpAddin1
                 callbackFunction: nameof(this.addManyCompToCoordSys)
                 );
 
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "管道材料明细表",
+            //    callbackFunction: nameof(this.pipeBom)
+            //    );
+
             //命令
             cmds.add(
-                hintOrTip: "管道材料明细表",
-                callbackFunction: nameof(this.pipeBom)
+                hintOrTip: "测试组件遍历",
+                callbackFunction: nameof(this.ComponentEasy)
                 );
-
 
 
             // 命令组
@@ -547,15 +552,10 @@ namespace SwCSharpAddin1
             PipeComponents.PipeUtils.main(this.iSwApp);
         }
 
-        public void pipeBom()
-        {
-            //SWRoutingLibUtils.ExportPipeData(iSwApp);
-
-            //var clss = new Library1.RecursiveTraverseAssembly(iSwApp);
-            //clss.Main();
-
-            PipeComponents.PipeUtils.pipebom(this.iSwApp);
-        }
+        //public void pipeBom()
+        //{
+        //    PipeComponents.PipeUtils.pipebom(this.iSwApp);
+        //}
 
         //public void Training2_3()
         //{
@@ -798,6 +798,11 @@ namespace SwCSharpAddin1
         public void addManyCompToCoordSys()
         {
             CoordinateSystem.addManyCompToCoordSys(this.iSwApp);
+        }
+
+        public void ComponentEasy()
+        {
+            ComponentEasyApp.main(this.iSwApp);
         }
 
         public bool Always() { return true; }

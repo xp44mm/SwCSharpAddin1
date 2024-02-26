@@ -40,6 +40,7 @@
 		<Compile Include="BlankRefGeom.fs" />
 		<Compile Include="CustomPropsApp.fs" />
 		<Compile Include="PipeUtils.fs" />
+		<Compile Include="ComponentEasyApp.fs" />
 	</ItemGroup>
 
 	<ItemGroup>

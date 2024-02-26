@@ -34,13 +34,13 @@ open FSharp.Idioms
 open FSharp.Idioms.Literal
 open FSharp.SolidWorks
 
-type RouteComponentSpeciesTest(output: ITestOutputHelper) =
+type ValueParserTest(output: ITestOutputHelper) =
     [<Fact>]
     member this.``01 - Pipe Identifier``() =        
         let x = "DN 50"
         let y = 
             //Double.Parse(Regex.Match(x,"^DN (\d+)$").Groups.[1].Value)
-            RouteComponentSpecies.parseDN x
+            ValueParser.parseDN x
         let e = 50.
         Should.equal e y
 
@@ -49,7 +49,7 @@ type RouteComponentSpeciesTest(output: ITestOutputHelper) =
         let x = "85.75mm"
         let y = 
             //Double.Parse(Regex.Match(x,"^(\d+(\.\d+)?)mm$").Groups.[1].Value)
-            RouteComponentSpecies.parseLength x
+            ValueParser.parseLength x
         let e = 85.75
         Should.equal e y
 
@@ -57,7 +57,7 @@ type RouteComponentSpeciesTest(output: ITestOutputHelper) =
     member this.``03 - parseElbow``() =        
         let x = "90° DN 50"
         let ag,dn = 
-            RouteComponentSpecies.parseElbow x
+            ValueParser.parseElbow x
         let eag = 90.
         let edn = 50.
         Should.equal eag ag
@@ -67,7 +67,7 @@ type RouteComponentSpeciesTest(output: ITestOutputHelper) =
     member this.``04 - parseDNxDN``() =        
         let x = "DN 65 x 50"
         let dn1,dn2 = 
-            RouteComponentSpecies.parseDNxDN x
+            ValueParser.parseDNxDN x
         let edn1 = 65.
         let edn2 = 50.
         Should.equal edn1 dn1

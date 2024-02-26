@@ -27,7 +27,7 @@ let studLength pn dn =
     //单侧螺柱伸出长度
     let extensionlength =
         gasket + flange.C + thread.t + washer.t + thread.p * 3.0 + thread.z
-
+    //中间对夹的长度
     fun wafer ->
         let y =
             wafer + extensionlength * 2.0

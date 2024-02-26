@@ -13,7 +13,7 @@ type ScrewFastener =
     }
 
     static member fromTsv() =
-        let path = Path.Combine(__SOURCE_DIRECTORY__,"screw fastener.tsv")
+        let path = Path.Combine(Dir.databasePath,"screw fastener.tsv")
         let tbl = Tsv.parseTsv path
         let headRow = Tsv.getFieldTitles tbl
 

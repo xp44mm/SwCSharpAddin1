@@ -14,7 +14,7 @@ type DirTest(output : ITestOutputHelper) =
     [<Fact>]
     member this.``01 - first test``() =
         output.WriteLine("testPath:")
-        output.WriteLine(Dir.testPath)
+        output.WriteLine(Dir.thisPath)
 
         output.WriteLine("solutionPath:")
         output.WriteLine(Dir.solutionPath)

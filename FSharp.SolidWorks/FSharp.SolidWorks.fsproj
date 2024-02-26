@@ -69,8 +69,12 @@
 		<Compile Include="ModelDoc2Utils.fs" />
 		<Compile Include="ModelSpecific.fs" />
 		<Compile Include="ComponentData.fs" />
+		<Compile Include="ComponentEasy.fs" />
+		<Compile Include="RouteCompFields.fs" />
 		<Compile Include="RouteComp.fs" />
+		<Compile Include="ValueParser.fs" />
 		<Compile Include="RouteComponentSpecies.fs" />
+		<Compile Include="RouteComponentApp.fs" />
 		<Compile Include="SldWorksUtils.fs" />
 		<Compile Include="CutList.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
