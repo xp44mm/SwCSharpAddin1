@@ -69,12 +69,12 @@ let OpenComponentModelToAddToAssembly (strCompModelname: string) (assemblyTitle:
     //|> SldWorksUtils.documentVisible false swDocumentTypes_e.swDocPART
 
     //Open the component. This must be open or the AddComponent method will fail
-    swApp
-    |> SldWorksUtils.openDoc6
-        strCompModelname
-        swDocumentTypes_e.swDocPART
-        swOpenDocOptions_e.swOpenDocOptions_Silent
-        ""
+    {
+        FileName = strCompModelname
+        Type = swDocumentTypes_e.swDocPART
+        Options = swOpenDocOptions_e.swOpenDocOptions_Silent
+        Configuration = ""
+    }.openDoc(swApp)
     |> ignore
 
     //swApp

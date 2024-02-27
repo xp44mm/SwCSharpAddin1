@@ -41,6 +41,7 @@
 		<Compile Include="CustomPropsApp.fs" />
 		<Compile Include="PipeUtils.fs" />
 		<Compile Include="ComponentEasyApp.fs" />
+		<Compile Include="ComponentTypeReader.fs" />
 	</ItemGroup>
 
 	<ItemGroup>

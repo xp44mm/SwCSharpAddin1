@@ -15,11 +15,15 @@ type 批量修改零件材质(swApp: ISldWorks) =
     let logfile = "d:/partmat.txt"
 
     let ChangeMaterialOfPart (filename: string) (matname: string) =
-        let path = Path.Combine( currentDir, filename + ".SLDPRT")
+        let path = Path.Combine(currentDir, filename + ".SLDPRT")
 
         let swModel =
-            swApp
-            |> SldWorksUtils.openDoc6 path swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+            {
+                FileName = path
+                Type = swDocumentTypes_e.swDocPART
+                Options = swOpenDocOptions_e.swOpenDocOptions_Silent
+                Configuration = ""
+            }.openDoc(swApp)
 
         // 修改所有配置的材质
         let vConfNameArr =

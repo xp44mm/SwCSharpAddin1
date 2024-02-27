@@ -1,54 +1,75 @@
 ﻿+罐区装配体.SLDASM(){} [] assembly
-   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0105A} [] part
-   +Pump.SLDPRT(GHZ-50DM-7.5KW-K-SSIC){P0102B} [] part
    +罐区建筑.SLDPRT(默认){} ["Description","";"Material","Material <not specified>";"Weight","2671561.371";"主管设计"," ";"代号","“图样代号”";"共X张","1";"单重","2671561.371";"名称","“图样名称”";"图幅"," ";"备注"," ";"审定"," ";"审核"," ";"工艺审查"," ";"批准"," ";"日期","2007,12,3";"替代"," ";"材料","Material <not specified>";"标准审查"," ";"校对"," ";"校核"," ";"版本"," ";"第X张","1";"设计","   ";"质量","2671561.371";"阶段标记A"," ";"阶段标记B"," ";"阶段标记S"," ";"零件号","  "] part
+   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0101B} [] part
+   +Pump.SLDPRT(GHZ-50DM-7.5KW-K-SSIC){P0102B} [] part
+   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0105B} [] part
+   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0106B} [] part
    +V0101B.SLDPRT(Default){} ["NozzleLength",120;"直径",4200;"高度",7300] part
    +V0101A.SLDPRT(Default){} ["NozzleLength",120;"直径",4200;"高度",7300] part
-   +V0102A.SLDPRT(Default){} ["NozzleLength",120;"直径",4200;"高度",7300] part
    +V0103B.SLDPRT(Default){} ["NozzleLength",120;"直径",4200;"高度",7300] part
-   +V0103A.SLDPRT(Default){} ["NozzleLength",120;"直径",4200;"高度",7300] part
-   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0101A} [] part
-   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0101B} [] part
    +Pump.SLDPRT(GHZ-50DM-7.5KW-K-SSIC){P0102A} [] part
+   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0106A} [] part
+   +V0103A.SLDPRT(Default){} ["NozzleLength",120;"直径",4200;"高度",7300] part
+   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0105A} [] part
+   +V0102A.SLDPRT(Default){} ["NozzleLength",120;"直径",4200;"高度",7300] part
+   +Pump.SLDPRT(GWZ-65DM-7.5KW-K-SSIC-EX){P0103A} [] part
+   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0101A} [] part
    +V0102B.SLDPRT(Default){} ["NozzleLength",120;"直径",4200;"高度",7300] part
-   +Pipe_5^罐区装配体.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 4){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","106.73mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","106.73mm"] part
-      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 3){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","161.46mm"] part
-      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","53.36mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","53.36mm"] part
+   +Sample Pipe.SLDASM(Default){} ["Material","PPH";"OuterDiameter","";"PN",1] route assembly
+      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 2){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","49mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","49mm"] part
+      +ball valve flanges A.SLDASM(DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","AssemblyFittings";"Nominal Pipe Size","25";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","25";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 3){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","163.36mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","163.36mm"] part
+      +PipeADN65_1^Sample Pipe.SLDPRT(DN 65){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","35.55mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","35.55mm"] part
+      +flange A.SLDPRT(DN 65){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +ball valve flanges A.SLDASM(DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","AssemblyFittings";"Nominal Pipe Size","25";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","25";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","40.05mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","40.05mm"] part
+      +reducer A.SLDPRT(DN 65 x 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Reducer";"RouteOnDrop",true] part
+      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 1){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","39.87mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","39.87mm"] part
+   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC-EX){P0104A} [] part
+   +Pipe_1^罐区装配体.SLDASM(Default){} ["OuterDiameter",""] route assembly
+      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","624.78mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","624.78mm"] part
       +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve solo A.SLDASM(DN 100){001} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +elbow LR A.SLDPRT(45° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +elbow LR A.SLDPRT(45° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +elbow LR A.SLDPRT(45° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
+      +reducing outlet tee A.SLDPRT(DN 100 x 50){} ["..",{"OuterDiameter":""};"Component Type","ReducingTee";"Nominal Pipe Size","100";"RouteOnDrop",true] part
       +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +elbow LR A.SLDPRT(45° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","213.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","213.46mm"] part
-      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","213.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","213.46mm"] part
-      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","36.38mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","36.38mm"] part
-      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","36.38mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","36.38mm"] part
-   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0105B} [] part
+      +ball valve flanges A.SLDASM(DN 50){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","50";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","50";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","624.78mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","624.78mm"] part
+      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 3){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","343mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","343mm"] part
+      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 7){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","118.61mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","118.61mm"] part
+      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 3){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","343mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","343mm"] part
+      +DN50^Pipe_1_罐区装配体.SLDPRT(DN 50, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","39.09mm";"Pipe Identifier","DN 50";"SWPipeLength","39.09mm"] part
+      +DN100^Pipe_1_罐区装配体.SLDPRT(DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","241.11mm";"Pipe Identifier","DN 100";"SWPipeLength","241.11mm"] part
+      +DN50_1^Pipe_1_罐区装配体.SLDPRT(DN 50){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","59.85mm";"Pipe Identifier","DN 50";"SWPipeLength","59.85mm"] part
+      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 6){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","353.69mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","353.69mm"] part
+      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 9){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","132.67mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","132.67mm"] part
+      +DN50^Pipe_1_罐区装配体.SLDPRT(DN 50, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","139.66mm";"Pipe Identifier","DN 50";"SWPipeLength","139.66mm"] part
+      +DN100^Pipe_1_罐区装配体.SLDPRT(DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","80.18mm";"Pipe Identifier","DN 100";"SWPipeLength","80.18mm"] part
+      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 8){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","182.87mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","182.87mm"] part
    +Pipe_2^罐区装配体.sldasm(Default){} ["OuterDiameter",""] route assembly
       +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
       +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
       +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
       +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
       +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
       +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
@@ -56,317 +77,296 @@
       +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
       +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
       +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 5){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.47mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","161.47mm"] part
       +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 9){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","3036.79mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","3036.79mm"] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","403.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","403.6mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 6){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","895.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","895.2mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","5799.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","5799.2mm"] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","403.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","403.6mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","403.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","403.6mm"] part
       +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 13){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","595.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","595.2mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 3){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","97.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","97.6mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 7){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","6059.07mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","6059.07mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 11){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","4926.41mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","4926.41mm"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","403.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","403.6mm"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 5){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.47mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","161.47mm"] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 14){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","690.51mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","690.51mm"] part
       +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 12){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","2155.83mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","2155.83mm"] part
       +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","403.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","403.6mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 5){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.47mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","161.47mm"] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","5799.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","5799.2mm"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","403.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","403.6mm"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 6){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","895.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","895.2mm"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 8){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","168mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","168mm"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 3){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","97.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","97.6mm"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","403.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","403.6mm"] part
       +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 3){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","97.6mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","97.6mm"] part
       +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","5799.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","5799.2mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 5){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.47mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","161.47mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 8){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","168mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","168mm"] part
-      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 14){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","690.51mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","690.51mm"] part
-   +magnetic filter & ball value - DN100.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +magnetic filter flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +magnetic filter.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true}] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^magnetic filter & ball value - DN100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","143mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","143mm"] part
-      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^magnetic filter & ball value - DN100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","143mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","143mm"] part
-   +magnetic filter & ball value - DN100.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +magnetic filter flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +magnetic filter.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true}] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^magnetic filter & ball value - DN100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","143mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","143mm"] part
-      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^magnetic filter & ball value - DN100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","143mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","143mm"] part
-   +Sample Pipe.SLDASM(Default){} ["Material","PPH";"OuterDiameter","";"PN",1] route assembly
-      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 1){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","39.87mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","39.87mm"] part
-      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","40.05mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","40.05mm"] part
-      +flange A.SLDPRT(DN 65){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve flanges A.SLDASM(DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","AssemblyFittings";"Nominal Pipe Size","25";"RouteOnDrop",true] assembly
-         +ball valve.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","25";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN65_1^Sample Pipe.SLDPRT(DN 65){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","35.55mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","35.55mm"] part
-      +ball valve flanges A.SLDASM(DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","AssemblyFittings";"Nominal Pipe Size","25";"RouteOnDrop",true] assembly
-         +ball valve.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","25";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 3){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","163.36mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","163.36mm"] part
-      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 2){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","49mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","49mm"] part
-      +reducer A.SLDPRT(DN 65 x 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Reducer";"RouteOnDrop",true] part
-   +Pump.SLDPRT(GWZ-65DM-7.5KW-K-SSIC-EX){P0103B} [] part
-   +PumpOutput-DN65x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +flange A.SLDPRT(DN 65){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +reducer A.SLDPRT(DN 100 x 65){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
-      +wafer check valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +wafer check valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Nominal Pipe Size","100"] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 7){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","6059.07mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","6059.07mm"] part
+      +PipeADN100^Pipe_2_罐区装配体.SLDPRT(Pipe A DN 100, 11){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","4926.41mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","4926.41mm"] part
+   +PumpSuction-65x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
       +expansion flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Nominal Pipe Size","100"] assembly
          +expansion.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Nominal Pipe Size","100"] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +flange A.SLDPRT(DN 65){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^PumpSuction-65x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","250.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","250.46mm"] part
+      +PipeADN65^PumpSuction-65x100.SLDPRT(Pipe A DN 65){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","113.5mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","113.5mm"] part
+      +reducer A.SLDPRT(DN 100 x 65){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
       +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +ball valve flanges A.SLDASM(DN 50){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","50";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","50";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 5){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","318.61mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","318.61mm"] part
-      +reducing outlet tee A.SLDPRT(DN 100 x 50){} ["..",{"OuterDiameter":""};"Component Type","ReducingTee";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","365.7mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","365.7mm"] part
-      +DN100^PumpOutput-DN65x100.SLDPRT(DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.69mm";"Pipe Identifier","DN 100";"SWPipeLength","161.69mm"] part
-      +DN50_1^PumpOutput-DN65x100.SLDPRT(DN 50){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","82.92mm";"Pipe Identifier","DN 50";"SWPipeLength","82.92mm"] part
-      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","277.57mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","277.57mm"] part
-      +PipeADN65^PumpOutput-DN65x100.SLDPRT(Pipe A DN 65){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","113.5mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","113.5mm"] part
-      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","255.68mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","255.68mm"] part
-      +DN100^PumpOutput-DN65x100.SLDPRT(DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","210.23mm";"Pipe Identifier","DN 100";"SWPipeLength","210.23mm"] part
-   +Pump.SLDPRT(GWZ-65DM-7.5KW-K-SSIC-EX){P0103A} [] part
-   +Sample Pipe.SLDASM(Default){} ["Material","PPH";"OuterDiameter","";"PN",1] route assembly
-      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 1){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","39.87mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","39.87mm"] part
-      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","40.05mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","40.05mm"] part
-      +flange A.SLDPRT(DN 65){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve flanges A.SLDASM(DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","AssemblyFittings";"Nominal Pipe Size","25";"RouteOnDrop",true] assembly
-         +ball valve.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","25";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN65_1^Sample Pipe.SLDPRT(DN 65){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","35.55mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","35.55mm"] part
-      +ball valve flanges A.SLDASM(DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","AssemblyFittings";"Nominal Pipe Size","25";"RouteOnDrop",true] assembly
-         +ball valve.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","25";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 3){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","163.36mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","163.36mm"] part
-      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 2){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","49mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","49mm"] part
-      +reducer A.SLDPRT(DN 65 x 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Reducer";"RouteOnDrop",true] part
-   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0106B} [] part
-   +Pipe_1^罐区装配体.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +DN50^Pipe_1_罐区装配体.SLDPRT(DN 50, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","139.66mm";"Pipe Identifier","DN 50";"SWPipeLength","139.66mm"] part
-      +DN100^Pipe_1_罐区装配体.SLDPRT(DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","80.18mm";"Pipe Identifier","DN 100";"SWPipeLength","80.18mm"] part
+      +PipeADN100^PumpSuction-65x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","85.28mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","85.28mm"] part
+   +Pipe_4^罐区装配体.SLDASM(Default){} ["OuterDiameter",""] route assembly
       +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","624.78mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","624.78mm"] part
-      +reducing outlet tee A.SLDPRT(DN 100 x 50){} ["..",{"OuterDiameter":""};"Component Type","ReducingTee";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +DN50^Pipe_1_罐区装配体.SLDPRT(DN 50, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","39.09mm";"Pipe Identifier","DN 50";"SWPipeLength","39.09mm"] part
-      +ball valve flanges A.SLDASM(DN 50){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","50";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","50";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","624.78mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","624.78mm"] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
       +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","351.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","351.4mm"] part
       +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 3){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","343mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","343mm"] part
-      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 7){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","118.61mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","118.61mm"] part
       +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 9){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","132.67mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","132.67mm"] part
-      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 3){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","343mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","343mm"] part
-      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 6){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","353.69mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","353.69mm"] part
-      +PipeADN100^Pipe_1_罐区装配体.SLDPRT(Pipe A DN 100, 8){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","182.87mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","182.87mm"] part
-      +DN100^Pipe_1_罐区装配体.SLDPRT(DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","241.11mm";"Pipe Identifier","DN 100";"SWPipeLength","241.11mm"] part
-      +DN50_1^Pipe_1_罐区装配体.SLDPRT(DN 50){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","59.85mm";"Pipe Identifier","DN 50";"SWPipeLength","59.85mm"] part
-   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC-EX){P0104A} [] part
-   +PumpOutput-DN65x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +flange A.SLDPRT(DN 65){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +reducer A.SLDPRT(DN 100 x 65){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
-      +wafer check valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +wafer check valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Nominal Pipe Size","100"] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
+      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","351.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","351.4mm"] part
+   +Pump.SLDPRT(GWZ-65DM-7.5KW-K-SSIC-EX){P0103B} [] part
+   +PumpInput-DN80x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
       +expansion flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Nominal Pipe Size","100"] assembly
          +expansion.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Nominal Pipe Size","100"] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^PumpInput-DN80x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","40.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","40.2mm"] part
+      +PipeADN100^PumpInput-DN80x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","281mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","281mm"] part
+      +reducer A.SLDPRT(DN 100 x 80){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
       +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+      +PipeADN80^PumpInput-DN80x100.SLDPRT(Pipe A DN 80){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","99.2mm";"Pipe Identifier","Pipe A DN 80";"SWPipeLength","99.2mm"] part
+      +flange A.SLDPRT(DN 80){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+   +PumpOutput-DN65x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
       +ball valve flanges A.SLDASM(DN 50){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","50";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","50";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +reducer A.SLDPRT(DN 100 x 65){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
+      +flange A.SLDPRT(DN 65){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
       +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 5){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","318.61mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","318.61mm"] part
+      +wafer check valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +wafer check valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Nominal Pipe Size","100"] part
       +reducing outlet tee A.SLDPRT(DN 100 x 50){} ["..",{"OuterDiameter":""};"Component Type","ReducingTee";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","365.7mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","365.7mm"] part
-      +DN100^PumpOutput-DN65x100.SLDPRT(DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.69mm";"Pipe Identifier","DN 100";"SWPipeLength","161.69mm"] part
-      +DN50_1^PumpOutput-DN65x100.SLDPRT(DN 50){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","82.92mm";"Pipe Identifier","DN 50";"SWPipeLength","82.92mm"] part
-      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","277.57mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","277.57mm"] part
-      +PipeADN65^PumpOutput-DN65x100.SLDPRT(Pipe A DN 65){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","113.5mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","113.5mm"] part
-      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","255.68mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","255.68mm"] part
       +DN100^PumpOutput-DN65x100.SLDPRT(DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","210.23mm";"Pipe Identifier","DN 100";"SWPipeLength","210.23mm"] part
-   +PumpInput-DN80x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +PipeADN80^PumpInput-DN80x100.SLDPRT(Pipe A DN 80){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","99.2mm";"Pipe Identifier","Pipe A DN 80";"SWPipeLength","99.2mm"] part
-      +PipeADN100^PumpInput-DN80x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","40.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","40.2mm"] part
-      +flange A.SLDPRT(DN 80){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +reducer A.SLDPRT(DN 100 x 80){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
+      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
       +expansion flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Nominal Pipe Size","100"] assembly
          +expansion.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Nominal Pipe Size","100"] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN65^PumpOutput-DN65x100.SLDPRT(Pipe A DN 65){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","113.5mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","113.5mm"] part
+      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","365.7mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","365.7mm"] part
+      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","277.57mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","277.57mm"] part
+      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","255.68mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","255.68mm"] part
+      +DN50_1^PumpOutput-DN65x100.SLDPRT(DN 50){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","82.92mm";"Pipe Identifier","DN 50";"SWPipeLength","82.92mm"] part
+      +DN100^PumpOutput-DN65x100.SLDPRT(DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.69mm";"Pipe Identifier","DN 100";"SWPipeLength","161.69mm"] part
+   +magnetic filter & ball value - DN100.SLDASM(Default){} ["OuterDiameter",""] route assembly
       +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^PumpInput-DN80x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","281mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","281mm"] part
-   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC){P0106A} [] part
-   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC-EX){P0104B} [] part
+      +magnetic filter flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +magnetic filter.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true}] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^magnetic filter & ball value - DN100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","143mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","143mm"] part
+      +PipeADN100^magnetic filter & ball value - DN100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","143mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","143mm"] part
+      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+   +Pipe_4^罐区装配体.SLDASM(Default){} ["OuterDiameter",""] route assembly
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
+      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","351.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","351.4mm"] part
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
+      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
+      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","351.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","351.4mm"] part
+   +bag filter.SLDPRT(bag6,DN100){} [] part
+   +magnetic filter & ball value - DN100.SLDASM(Default){} ["OuterDiameter",""] route assembly
+      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+      +magnetic filter flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +magnetic filter.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true}] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^magnetic filter & ball value - DN100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","143mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","143mm"] part
+      +PipeADN100^magnetic filter & ball value - DN100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","143mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","143mm"] part
+      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
    +Pipe_3^罐区装配体.sldasm(Default){} ["OuterDiameter",""] route assembly
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +elbow LR A.SLDPRT(30° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
       +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
       +elbow LR A.SLDPRT(60° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
       +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +elbow LR A.SLDPRT(30° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 25){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","112mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","112mm"] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 11){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","163.09mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","163.09mm"] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
       +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
       +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 8){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","122.44mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","122.44mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","109.16mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","109.16mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 17){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","109.86mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","109.86mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 23){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","3331.14mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","3331.14mm"] part
-      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 4){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","782.72mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","782.72mm"] part
       +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 5){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","970.05mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","970.05mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 24){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","115.16mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","115.16mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","1277.78mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","1277.78mm"] part
-      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 22){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","231.87mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","231.87mm"] part
-      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
-      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 13){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","414.42mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","414.42mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 25){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","112mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","112mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 26){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","135.81mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","135.81mm"] part
       +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 6){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","210.89mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","210.89mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 10){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","274.32mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","274.32mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 9){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","1517.91mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","1517.91mm"] part
-      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 18){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","943mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","943mm"] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
       +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 20){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","1463mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","1463mm"] part
       +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 16){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","245.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","245.2mm"] part
-   +PumpSuction-65x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +PipeADN65^PumpSuction-65x100.SLDPRT(Pipe A DN 65){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","113.5mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","113.5mm"] part
-      +PipeADN100^PumpSuction-65x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","250.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","250.46mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 9){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","1517.91mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","1517.91mm"] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
       +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^PumpSuction-65x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","85.28mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","85.28mm"] part
-      +expansion flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Nominal Pipe Size","100"] assembly
-         +expansion.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Nominal Pipe Size","100"] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +flange A.SLDPRT(DN 65){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +reducer A.SLDPRT(DN 100 x 65){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
-   +Pipe_4^罐区装配体.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
-      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 8){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","122.44mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","122.44mm"] part
+      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 22){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","231.87mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","231.87mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 4){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","782.72mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","782.72mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 24){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","115.16mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","115.16mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 17){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","109.86mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","109.86mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 25){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","112mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","112mm"] part
+      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","109.16mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","109.16mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","1277.78mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","1277.78mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 23){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","3331.14mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","3331.14mm"] part
+      +elbow LR A.SLDPRT(90° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 25){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","112mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","112mm"] part
+      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 13){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","414.42mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","414.42mm"] part
+      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","351.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","351.4mm"] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","351.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","351.4mm"] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 26){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","135.81mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","135.81mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 11){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","163.09mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","163.09mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 18){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","943mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","943mm"] part
+      +PipeADN100^Pipe_3_罐区装配体.SLDPRT(Pipe A DN 100, 10){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","274.32mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","274.32mm"] part
    +bag filter.SLDPRT(bag6,DN100){} [] part
-   +bag filter.SLDPRT(bag6,DN100){} [] part
+   +Pipe_5^罐区装配体.SLDASM(Default){} ["OuterDiameter",""] route assembly
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +elbow LR A.SLDPRT(45° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +ball valve solo A.SLDASM(DN 100){001} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 3){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","161.46mm"] part
+      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 4){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","106.73mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","106.73mm"] part
+      +elbow LR A.SLDPRT(45° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+      +elbow LR A.SLDPRT(45° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +elbow LR A.SLDPRT(45° DN 100){} ["..",{"OuterDiameter":""};"Component Type","Elbow";"IsogenSkey","ELBW";"Nominal Pipe Size","100"] part
+      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","213.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","213.46mm"] part
+      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","213.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","213.46mm"] part
+      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","36.38mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","36.38mm"] part
+      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","36.38mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","36.38mm"] part
+      +PipeADN100^Pipe_5_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","53.36mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","53.36mm"] part
+   +Sample Pipe.SLDASM(Default){} ["Material","PPH";"OuterDiameter","";"PN",1] route assembly
+      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 2){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","49mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","49mm"] part
+      +ball valve flanges A.SLDASM(DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","AssemblyFittings";"Nominal Pipe Size","25";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","25";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 3){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","163.36mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","163.36mm"] part
+      +PipeADN65_1^Sample Pipe.SLDPRT(DN 65){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","35.55mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","35.55mm"] part
+      +flange A.SLDPRT(DN 65){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +ball valve flanges A.SLDASM(DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","AssemblyFittings";"Nominal Pipe Size","25";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","25";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 25){} ["..",{"..":{"Material":"PPH","OuterDiameter":"","PN":1},"Component Type":"AssemblyFittings","Nominal Pipe Size":"25","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","40.05mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","40.05mm"] part
+      +reducer A.SLDPRT(DN 65 x 25){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Reducer";"RouteOnDrop",true] part
+      +PipeADN25_1^Sample Pipe.SLDPRT(Pipe A DN 25, 1){} ["..",{"Material":"PPH","OuterDiameter":"","PN":1};"Component Type","Pipe";"Length","39.87mm";"Pipe Identifier","Pipe A DN 25";"SWPipeLength","39.87mm"] part
+   +Pump.SLDPRT(GWZ-65DM-11KW-K-SSIC-EX){P0104B} [] part
    +PumpInput-DN80x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +PipeADN80^PumpInput-DN80x100.SLDPRT(Pipe A DN 80){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","99.2mm";"Pipe Identifier","Pipe A DN 80";"SWPipeLength","99.2mm"] part
-      +PipeADN100^PumpInput-DN80x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","40.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","40.2mm"] part
-      +flange A.SLDPRT(DN 80){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +reducer A.SLDPRT(DN 100 x 80){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
       +expansion flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Nominal Pipe Size","100"] assembly
          +expansion.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Nominal Pipe Size","100"] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+      +PipeADN100^PumpInput-DN80x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","40.2mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","40.2mm"] part
       +PipeADN100^PumpInput-DN80x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","281mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","281mm"] part
-   +PumpSuction-65x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +PipeADN65^PumpSuction-65x100.SLDPRT(Pipe A DN 65){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","113.5mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","113.5mm"] part
-      +PipeADN100^PumpSuction-65x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","250.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","250.46mm"] part
+      +reducer A.SLDPRT(DN 100 x 80){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
       +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-      +PipeADN100^PumpSuction-65x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","85.28mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","85.28mm"] part
+      +PipeADN80^PumpInput-DN80x100.SLDPRT(Pipe A DN 80){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","99.2mm";"Pipe Identifier","Pipe A DN 80";"SWPipeLength","99.2mm"] part
+      +flange A.SLDPRT(DN 80){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+   +PumpOutput-DN65x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
+      +ball valve flanges A.SLDASM(DN 50){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","50";"RouteOnDrop",true] assembly
+         +ball valve.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","50";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 50){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"50","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +reducer A.SLDPRT(DN 100 x 65){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
+      +flange A.SLDPRT(DN 65){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 5){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","318.61mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","318.61mm"] part
+      +wafer check valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +wafer check valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Nominal Pipe Size","100"] part
+      +reducing outlet tee A.SLDPRT(DN 100 x 50){} ["..",{"OuterDiameter":""};"Component Type","ReducingTee";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+      +DN100^PumpOutput-DN65x100.SLDPRT(DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","210.23mm";"Pipe Identifier","DN 100";"SWPipeLength","210.23mm"] part
+      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
+      +expansion flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Nominal Pipe Size","100"] assembly
+         +expansion.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Nominal Pipe Size","100"] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN65^PumpOutput-DN65x100.SLDPRT(Pipe A DN 65){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","113.5mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","113.5mm"] part
+      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","365.7mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","365.7mm"] part
+      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","277.57mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","277.57mm"] part
+      +PipeADN100^PumpOutput-DN65x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","255.68mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","255.68mm"] part
+      +DN50_1^PumpOutput-DN65x100.SLDPRT(DN 50){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","82.92mm";"Pipe Identifier","DN 50";"SWPipeLength","82.92mm"] part
+      +DN100^PumpOutput-DN65x100.SLDPRT(DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","161.69mm";"Pipe Identifier","DN 100";"SWPipeLength","161.69mm"] part
+   +PumpSuction-65x100.SLDASM(Default){} ["OuterDiameter",""] route assembly
       +expansion flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Nominal Pipe Size","100"] assembly
          +expansion.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Nominal Pipe Size","100"] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Nominal Pipe Size":"100"};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
       +flange A.SLDPRT(DN 65){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
+      +PipeADN100^PumpSuction-65x100.SLDPRT(Pipe A DN 100, 1){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","250.46mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","250.46mm"] part
+      +PipeADN65^PumpSuction-65x100.SLDPRT(Pipe A DN 65){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","113.5mm";"Pipe Identifier","Pipe A DN 65";"SWPipeLength","113.5mm"] part
       +reducer A.SLDPRT(DN 100 x 65){} ["..",{"OuterDiameter":""};"Component Type","Reducer";"RouteOnDrop",true] part
-   +Pipe_4^罐区装配体.SLDASM(Default){} ["OuterDiameter",""] route assembly
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
-      +ball valve flanges A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
+      +ball valve solo A.SLDASM(DN 100){} ["..",{"OuterDiameter":""};"Component Type","AssemblyFittings";"Nominal Pipe Size","100";"RouteOnDrop",true] assembly
          +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
          +ball valve.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Valve";"Nominal Pipe Size","100";"RouteOnDrop",true] part
-         +flange A.SLDPRT(DN 100){} ["..",{"..":{"OuterDiameter":""},"Component Type":"AssemblyFittings","Nominal Pipe Size":"100","RouteOnDrop":true};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +flange A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Flange";"IsogenSkey","FLSO";"RouteOnDrop",true] part
-      +straight tee A.SLDPRT(DN 100){} ["..",{"OuterDiameter":""};"Component Type","Tee";"RouteOnDrop",true] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","95.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","95.4mm"] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","351.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","351.4mm"] part
-      +PipeADN100^Pipe_4_罐区装配体.SLDPRT(Pipe A DN 100, 2){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","351.4mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","351.4mm"] part
+      +PipeADN100^PumpSuction-65x100.SLDPRT(Pipe A DN 100){} ["..",{"OuterDiameter":""};"Component Type","Pipe";"Length","85.28mm";"Pipe Identifier","Pipe A DN 100";"SWPipeLength","85.28mm"] part

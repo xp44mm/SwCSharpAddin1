@@ -84,8 +84,13 @@ let testCutLists (swApp: ISldWorks) =
 
     for fl in files do
         let swModel =
-            swApp 
-            |> SldWorksUtils.openDoc6 fl swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+            {
+                FileName = fl
+                Type = swDocumentTypes_e.swDocPART
+                Options = swOpenDocOptions_e.swOpenDocOptions_Silent
+                Configuration = ""
+            }.openDoc(swApp)
+
         let part = swModel :?> PartDoc
         if part.IsWeldment() then
             let mat,db = PartDocUtils.getMaterialPropertyName2 "" part

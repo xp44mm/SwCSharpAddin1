@@ -22,11 +22,13 @@ let TEMPLATEDIR = @"D:\崔胜利\My SolidWorks\Training Templates"
 let FILEDIR = @"D:\崔胜利\My SolidWorks\API Fundamentals\Lesson02 - Object Model Basics\Case Study"
 
 let connectToSolidWorks (swApp: ISldWorks) =
-    // check openDoc6
     let partDoc =
-        let prt = Path.Combine(FILEDIR, "Sample.SLDPRT")
-        swApp
-        |> SldWorksUtils.openDoc6 prt swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+        {
+            FileName = Path.Combine(FILEDIR, "Sample.SLDPRT")
+            Type = swDocumentTypes_e.swDocPART
+            Options = swOpenDocOptions_e.swOpenDocOptions_Silent
+            Configuration = ""
+        }.openDoc(swApp)
 
     // check loadFile4
     let ImportedModelDoc =

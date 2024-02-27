@@ -33,29 +33,6 @@ let tank1 = "立式平底罐"
 let tank2 = "立式圆底罐"
 let workPath = @"D:\崔胜利\凯帝隆\湖北武穴锂宝\solidworks3\"
 
-let openDoc (fileName:string) (swApp: ISldWorks) =
-    let mutable errors = 0
-    let mutable warnings = 0
-    let modelDoc = swApp.OpenDoc6(
-        FileName      = Path.Combine(Dir.DesignLibrary,fileName+".SLDPRT"),
-        Type          = int swDocumentTypes_e.swDocPART,
-        Options       = int swOpenDocOptions_e.swOpenDocOptions_Silent,
-        Configuration = "",
-        Errors        = &errors,
-        Warnings      = &warnings
-        )
-    if modelDoc <> null && errors = 0 && warnings = 0 then
-        modelDoc
-    else
-        [
-            if errors > 0 then
-                sprintf "openDoc6: %A" (enum<swFileLoadError_e> errors)
-            if warnings > 0 then
-                sprintf "openDoc6: %A" (enum<swFileLoadWarning_e> warnings)
-        ]
-        |> String.concat " and "
-        |> failwith
-
 let activateDoc name (swApp: ISldWorks) =
     let mutable errors = 0
     let res =
@@ -67,7 +44,7 @@ let activateDoc name (swApp: ISldWorks) =
     if errors = 0 then
         res
     else
-        failwith $"{enum<swActivateDocError_e>errors}"
+        failwith $"{enum<swActivateDocError_e> errors}"
 
 //https://help.solidworks.com/2023/english/api/sldworksapi/SolidWorks.Interop.sldworks~SolidWorks.Interop.sldworks.IModelDocExtension~SaveAs3.html
 let saveAs (filename:string) (swModel:IModelDoc2) =
@@ -85,10 +62,10 @@ let saveAs (filename:string) (swModel:IModelDoc2) =
     |> ignore
 
     if errors <> 0 then
-        failwith $"{enum<swFileSaveError_e>errors}"
+        failwith $"{enum<swFileSaveError_e> errors}"
 
     if warnings <> 0 then
-        failwith $"{enum<swFileSaveWarning_e>warnings}"
+        failwith $"{enum<swFileSaveWarning_e> warnings}"
 
 let save (swModel:IModelDoc2) =
     let mutable errors = 0
@@ -167,7 +144,8 @@ let generate (swApp: ISldWorks) =
             loop1 swModel tail
 
     let tanks1,tanks2 = loadData()
-    let temp1 = openDoc tank1 swApp
+    let temp1 = 
+        OpenDocExecutor.from(tank1).openDoc swApp
     loop1 temp1 tanks1
 
     let swModel = swApp.ActiveDoc :?> IModelDoc2
@@ -194,7 +172,7 @@ let generate (swApp: ISldWorks) =
             save swModel
             loop2 swModel tail
 
-    let temp2 = openDoc tank2 swApp
+    let temp2 = OpenDocExecutor.from(tank2).openDoc swApp
     loop2 temp2 tanks2
 
     let swModel = swApp.ActiveDoc :?> IModelDoc2

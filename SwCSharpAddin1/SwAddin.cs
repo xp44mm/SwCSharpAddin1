@@ -487,6 +487,11 @@ namespace SwCSharpAddin1
                 callbackFunction: nameof(this.ComponentEasy)
                 );
 
+            //命令
+            cmds.add(
+                hintOrTip: "读取组件类型",
+                callbackFunction: nameof(this.ComponentTypeReader_main)
+                );
 
             // 命令组
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
@@ -803,6 +808,11 @@ namespace SwCSharpAddin1
         public void ComponentEasy()
         {
             ComponentEasyApp.main(this.iSwApp);
+        }
+
+        public void ComponentTypeReader_main()
+        {
+            ComponentTypeReader.main(this.iSwApp);
         }
 
         public bool Always() { return true; }

@@ -73,3 +73,9 @@ type ValueParserTest(output: ITestOutputHelper) =
         Should.equal edn1 dn1
         Should.equal edn2 dn2
 
+    [<Fact>]
+    member this.``05 - path test``() =
+        let x = @"D:\Application Data\SolidWorks\SW Design Library\routing\ASME\flanges A.SLDASM"
+        let y = Path.GetExtension(x).[1..]
+        output.WriteLine(y)
+        Should.equal y "SLDASM"

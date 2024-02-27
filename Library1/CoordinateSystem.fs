@@ -105,12 +105,12 @@ let collectCoordSysMateRefs (swApp: ISldWorks) =
 let OpenComponentModelToAddToAssembly (fileName: string, configName:string) (assemblyTitle: string) (swApp: ISldWorks) =
     //Open the component. This must be open or the AddComponent method will fail
     let compModel =
-        swApp
-        |> SldWorksUtils.openDoc6
-            fileName
-            swDocumentTypes_e.swDocPART
-            swOpenDocOptions_e.swOpenDocOptions_Silent
-            configName
+        {
+            FileName = fileName
+            Type = swDocumentTypes_e.swDocPART
+            Options = swOpenDocOptions_e.swOpenDocOptions_Silent
+            Configuration = configName
+        }.openDoc(swApp)
 
     // Shows the named configuration by switching to that configuration and making it the active configuration.
     compModel.ShowConfiguration2 configName

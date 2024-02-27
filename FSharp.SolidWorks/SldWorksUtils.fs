@@ -19,34 +19,6 @@ let activeDoc (swApp: ISldWorks) =
     swApp.ActiveDoc
     :?> ModelDoc2
 
-///https://help.solidworks.com/2023/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.isldworks~opendoc6.html
-let openDoc6
-    (fileName:string) (docType:swDocumentTypes_e) (options:swOpenDocOptions_e) (config:string)
-    (swApp: ISldWorks) =
-    let mutable errors = 0
-    let mutable warnings = 0
-    let modelDoc = swApp.OpenDoc6(
-        FileName      = fileName,
-        Type          = int docType,
-        Options       = int options,
-        Configuration = config,
-        Errors        = &errors,
-        Warnings      = &warnings 
-        )
-
-    let eWarnings = enum<swFileLoadWarning_e> warnings
-    if modelDoc <> null && errors = 0 && (warnings = 0 || eWarnings = swFileLoadWarning_e.swFileLoadWarning_AlreadyOpen) then
-        modelDoc
-    else
-        [
-            if errors > 0 then 
-                sprintf "%A" (enum<swFileLoadError_e> errors)
-            if warnings > 0 then 
-                sprintf "%A" eWarnings
-        ]
-        |> String.concat " & "
-        |> (+) "openDoc6 util:\n"
-        |> failwith
 
 let documentVisible (visible:bool) (documentType:swDocumentTypes_e) (swApp: ISldWorks) =
     swApp.DocumentVisible(visible, int documentType)

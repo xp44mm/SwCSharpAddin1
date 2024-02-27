@@ -77,9 +77,12 @@ let NewModel_DRW (swApp: ISldWorks) =
 
     let drawName = swModel.GetTitle()
     let partDoc =
-        let filename = Path.Combine(FILEDIR, "BlockwithDesignTable.SLDPRT")
-        swApp
-        |> SldWorksUtils.openDoc6 filename swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+        {
+            FileName = Path.Combine(FILEDIR, "BlockwithDesignTable.SLDPRT")
+            Type = swDocumentTypes_e.swDocPART
+            Options = swOpenDocOptions_e.swOpenDocOptions_Silent
+            Configuration = ""
+        }.openDoc(swApp)
 
     let partName = partDoc.GetTitle()
 
@@ -149,9 +152,12 @@ let NewPartDoc (swApp: ISldWorks) =
 
 let NewAssemblyDoc (swApp: ISldWorks) =
     let partDoc =
-        let prt = Path.Combine(FILEDIR, "Sample.SLDPRT")        
-        swApp
-        |> SldWorksUtils.openDoc6 prt swDocumentTypes_e.swDocPART swOpenDocOptions_e.swOpenDocOptions_Silent ""
+        {
+            FileName = Path.Combine(FILEDIR, "Sample.SLDPRT")   
+            Type = swDocumentTypes_e.swDocPART
+            Options = swOpenDocOptions_e.swOpenDocOptions_Silent
+            Configuration = ""
+        }.openDoc(swApp)
             
     let swAssy = 
         let temp = Path.Combine(TEMPLATEDIR,"Assembly_MM.asmdot")

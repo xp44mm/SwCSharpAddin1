@@ -32,6 +32,7 @@ type ComponentEasy =
     }
 
     static member from (comp: ComponentData) =
+        let types = set [""]
         let rec loop (parentProps:Map<string,Json>) (swcomp: ComponentData) =
             let props = 
                 if parentProps.IsEmpty then
@@ -54,7 +55,6 @@ type ComponentEasy =
                             loop props child
                         )
                         |> Array.toList
-
                     ComponentEasyAssembly(isRoute,children)
 
             {
@@ -76,7 +76,7 @@ type ComponentEasy =
         let props =
             this.props
             |> Map.toList
-            |> List.map(fun (name,j)-> $"{stringify name},{FSharp.Idioms.Json.print j}")
+            |> List.map(fun(name,j) -> $"{stringify name},{FSharp.Idioms.Json.print j}")
             |> String.concat ";"
             |> sprintf "[%s]"
 
