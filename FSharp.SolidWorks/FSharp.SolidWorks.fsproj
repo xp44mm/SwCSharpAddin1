@@ -75,6 +75,7 @@
 		<Compile Include="RouteComp.fs" />
 		<Compile Include="ValueParser.fs" />
 		<Compile Include="RouteComponentSpecies.fs" />
+		<Compile Include="RouteWrapperConstructor.fs" />
 		<Compile Include="RouteComponentApp.fs" />
 		<Compile Include="SldWorksUtils.fs" />
 		<Compile Include="OpenDocExecutor.fs" />
@@ -89,13 +90,6 @@
 
 	<ItemGroup>
 	  <PackageReference Include="FSharp.Idioms" Version="1.4.13" />
-	</ItemGroup>
-
-
-
-
-	<ItemGroup>
-	  <ProjectReference Include="..\FlangeAssemblyBOM\FlangeAssemblyBOM.fsproj" />
 	</ItemGroup>
 
 

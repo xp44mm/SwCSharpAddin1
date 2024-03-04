@@ -9,8 +9,49 @@ open System
 open System.Diagnostics
 open System.IO
 open System.Text.RegularExpressions
-open FlangeAssemblyBOM
 open FSharp.SolidWorks.RouteComponentSpecies
+
+let modelTitles = [
+    "flanges.SLDASM"
+    "ball valve flanges.SLDASM"
+    "ball valve solo.SLDASM"
+
+    "wafer butterfly valve flanges.SLDASM"
+    "wafer butterfly valve solo.SLDASM"
+    "wafer check valve flanges.SLDASM"
+
+    "expansion joint flanges.SLDASM"
+    "expansion joint solo.SLDASM"
+
+    "magnetic filter flanges.SLDASM"
+    "flowmeter flanges.SLDASM"
+
+    "automatic ball valve flanges.SLDASM"
+    "automatic ball valve solo.SLDASM"
+    "automatic wafer butterfly valve flanges.SLDASM"
+    "automatic wafer butterfly valve solo.SLDASM"
+    "single flanged joint.SLDASM"
+
+
+    "pipe.SLDPRT"
+
+    "automatic ball valve.SLDPRT"
+    "automatic wafer butterfly valve.SLDPRT"
+    "elbow LR.SLDPRT"
+    "straight tee.SLDPRT"
+    "flange.SLDPRT"
+    "reducer.SLDPRT"
+    "eccentric reducer.SLDPRT"
+    "reducing outlet tee.SLDPRT"
+    "ball valve.SLDPRT"
+    "wafer butterfly valve.SLDPRT"
+    "wafer check valve.SLDPRT"
+    "expansion joint.SLDPRT"
+    "flowmeter.SLDPRT"
+    "magnetic filter.SLDPRT"
+
+
+]
 
 let map (data:ComponentData) =
     [

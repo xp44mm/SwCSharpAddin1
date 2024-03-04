@@ -14,7 +14,7 @@ open FSharp.Idioms.Literal
 open FSharp.Reflection
 
 type ComponentEasySpecific =
-    | ComponentEasyAssembly of isRoute:bool * children:ComponentEasy list
+    | ComponentEasyAssembly of isRoute: bool * children: ComponentEasy list
     | ComponentEasyPart
 
     member this.toLine() =
@@ -24,24 +24,15 @@ type ComponentEasySpecific =
 
 type ComponentEasy =
     {
-        title:string
-        refconfig:string
-        refid:string
-        props:Map<string,Json>
+        title: string
+        refconfig: string
+        refid: string
+        props: Map<string,Json>
         specific: ComponentEasySpecific
     }
 
     static member from (comp: ComponentData) =
-        let types = set [""]
-        let rec loop (parentProps:Map<string,Json>) (swcomp: ComponentData) =
-            let props = 
-                if parentProps.IsEmpty then
-                    swcomp.Props
-                else
-                    parentProps
-                    |> Map.toList
-                    |> Json.Object
-                    |> Map.add ".." <| swcomp.Props
+        let rec loop (swcomp: ComponentData) =
                 
             let specific =
                 match swcomp.SpecificModelDoc with
@@ -51,9 +42,7 @@ type ComponentEasy =
                     let isRoute = swcomp.RouteAssemblyDistance = 0
                     let children =
                         swcomp.getChildren()
-                        |> Array.map(fun child ->
-                            loop props child
-                        )
+                        |> Array.map(fun child -> loop child)
                         |> Array.toList
                     ComponentEasyAssembly(isRoute,children)
 
@@ -61,10 +50,10 @@ type ComponentEasy =
                 title     = swcomp.ModelDoc2.GetTitle()
                 refconfig = swcomp.Component2.ReferencedConfiguration
                 refid     = swcomp.Component2.ComponentReference
-                props     = props
+                props     = swcomp.Props
                 specific  = specific
             }
-        loop Map.empty comp
+        loop comp
 
     static member fromModel(root: ModelDoc2) =
         root

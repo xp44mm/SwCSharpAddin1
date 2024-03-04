@@ -1,4 +1,4 @@
-﻿namespace FSharp.SolidWorks
+﻿namespace rec FSharp.SolidWorks
 
 open FSharp.SolidWorks.RouteCompFields
 
@@ -16,118 +16,58 @@ open FSharp.Idioms
 open FSharp.Idioms.Jsons
 
 type RouteComp =
-    // 装配体
-    | ComponentEasyAssembly of ComponentEasy * children: RouteComp list
-    | ComponentEasyPart of ComponentEasy
-
+    | RouteAssembly
+    | RawComponent
     //一般管件
-    | Pipe  of dn:float * pn:float * material:string * length:float
-    | Elbow of dn:float * pn:float * material:string * angle:float
+    | Pipe  of dn:float * length:float
+    | Elbow of dn:float * angle:float
 
-    | Reducer          of dn1:float * dn2:float * pn:float * material:string
-    | EccentricReducer of dn1:float * dn2:float * pn:float * material:string
-    | ReducingTee      of dn1:float * dn2:float * pn:float * material:string
+    | Tee    of dn:float
+    | Flange of dn:float
 
-    | Tee    of dn:float * pn:float * material:string
-    | Flange of dn:float * pn:float * material:string
+    | Reducer          of dn1:float * dn2:float
+    | EccentricReducer of dn1:float * dn2:float
+    | ReducingTee      of dn1:float * dn2:float
 
     // 配件fittings
-    | BallValve           of dn:float * pn:float * material:string
-    | Expansion           of dn:float * pn:float * material:string
-    | Flowmeter           of dn:float * pn:float * material:string
-    | MagneticFilter      of dn:float * pn:float * material:string
-    | WaferButterflyValve of dn:float * pn:float * material:string
-    | WaferCheckValve     of dn:float * pn:float * material:string
+    | BallValve of dn:float
+    //| AutomaticBallValve of dn:float
+    | WaferButterflyValve of dn:float
+    //| AutomaticWaferButterflyValve of dn:float
+    | WaferCheckValve     of dn:float
+    | Expansion           of dn:float
+    | Flowmeter           of dn:float
+    | MagneticFilter      of dn:float
 
     // 装配体配件AssemblyFittings
-    | BallValveFlanges           of dn:float * pn:float * children:RouteComp list
-    | BallValveSolo              of dn:float * pn:float * children:RouteComp list
-    | ExpansionFlanges           of dn:float * pn:float * children:RouteComp list
-    | ExpansionSolo              of dn:float * pn:float * children:RouteComp list
-    | Flanges                    of dn:float * pn:float * children:RouteComp list
-    | FlowmeterFlanges           of dn:float * pn:float * children:RouteComp list
-    | MagneticFilterFlanges      of dn:float * pn:float * children:RouteComp list
-    | WaferButterflyValveFlanges of dn:float * pn:float * children:RouteComp list
-    | WaferButterflyValveSolo    of dn:float * pn:float * children:RouteComp list
-    | WaferCheckValveFlanges     of dn:float * pn:float * children:RouteComp list
+    | SingleFlange               of children:RouteWrapper list
+    | Flanges                    of children:RouteWrapper list
+    | BallValveFlanges           of children:RouteWrapper list
+    | BallValveSolo              of children:RouteWrapper list
+    | WaferButterflyValveFlanges of children:RouteWrapper list
+    | WaferButterflyValveSolo    of children:RouteWrapper list
 
-    // 附件accessories
-    | Gasket of dn:float * pn:float * material:string * count:int
-    | Nut of m: float * material:string * count:int
-    | Washer of m: float * material:string * count:int
-    | Bolt of m:float * l:float * material:string * count:int
-    | DoubleScrewBolt of m:float * l:float * material:string * count:int
+    //| AutomaticBallValveFlanges           of children:RouteWrapper list
+    //| AutomaticBallValveSolo              of children:RouteWrapper list
+    //| AutomaticWaferButterflyValveFlanges of children:RouteWrapper list
+    //| AutomaticWaferButterflyValveSolo    of children:RouteWrapper list
 
-    //member this.toLine() =
-    //    match this with
-    //    | Pipe _ 
-    //    | Elbow _ 
-    //    | Reducer _ 
-    //    | EccentricReducer _
-    //    | Tee _ 
-    //    | ReducingTee _ 
-    //    | Flange _ 
-    //    | Bolt _
-    //    | Nut _
-    //    | Gasket _
-    //    | Washer _
-    //    | DoubleScrewBolt _
-    //    | BallValve            _
-    //    | Expansion            _
-    //    | Flowmeter            _
-    //    | MagneticFilter       _
-    //    | WaferButterflyValve  _
-    //    | WaferCheckValve      _
-    //        -> stringify this
-    //    | BallValveFlanges (data,row)
-    //    | BallValveSolo (data,row)
-    //    | ExpansionFlanges (data,row)
-    //    | ExpansionSolo (data,row)
-    //    | Flanges (data,row)
-    //    | FlowmeterFlanges (data,row)
-    //    | MagneticFilterFlanges (data,row)
-    //    | WaferButterflyValveFlanges (data,row)
-    //    | WaferButterflyValveSolo (data,row)
-    //    | WaferCheckValveFlanges (data,row)
-    //        -> 
-    //        let typ = this.GetType()
-    //        let unionCases = FSharpType.GetUnionCases(typ)
-    //        let tagReader = FSharpValue.PreComputeUnionTagReader typ
-    //        let tag = tagReader this
-    //        let name = unionCases.[tag].Name
-    //        name + stringify row
+    | WaferCheckValveFlanges     of children:RouteWrapper list
+    | ExpansionFlanges           of children:RouteWrapper list
+    | ExpansionSolo              of children:RouteWrapper list
+    | FlowmeterFlanges           of children:RouteWrapper list
+    | MagneticFilterFlanges      of children:RouteWrapper list
 
-    //    | GeneralComponent data -> data.toLine()
+    //// 附件accessories
+    //| Gasket of dn:float * count:int
+    //| Nut of m: float * count:int
+    //| Washer of m: float * count:int
+    //| Bolt of m:float * l:float * count:int
+    //| StudBolt of m:float * l:float * count:int
 
-        //| _ -> failwith ""
-
-//| Cross
-//| ReducingCross
-
-//| Clip
-//| Hanger
-//| Support
-
-//| Adapter
-//| CableTray
-//| Conduit
-//| ConduitAdapter
-//| ConduitElbow
-//| DuctingTrunking
-//| EndConnector
-//| Equipment
-//| FlexCableConnector
-//| HybridComponents
-//| Nipple
-//| OLet
-//| RibbonCable
-//| Splice
-//| TeeAdapter
-//| Tube
-//| Union
-//| Unknown
-
-//| Valve
-//| FittingOther
-//| AssemblyFittings
+type RouteWrapper =
+    {
+        comp: ComponentEasy
+        route: RouteComp
+    }
 

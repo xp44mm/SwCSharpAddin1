@@ -10,7 +10,6 @@ open System
 open System.Diagnostics
 open System.IO
 open System.Text.RegularExpressions
-open FlangeAssemblyBOM
 open FSharp.SolidWorks.ValueParser
 open FSharp.Idioms.OrdinalIgnoreCase
 

@@ -346,10 +346,11 @@ let getLibraryFeatureData (swApp: ISldWorks) =
                 match enum<swSketchSegments_e>(skSeg.GetType()) with
                 | swSketchSegments_e.swSketchLINE ->
                     let swSkLine = skSeg :?> SketchLine
-                    let angle = swSkLine.Angle
+                    //方位角
+                    let orientation = swSkLine.Angle
                     let skPt = swSkLine.GetStartPoint2():?> SketchPoint
                     let pt = MathUtilityExtend.getGlobalCoordinates skPt swMathUtility
-                    angle,pt
+                    orientation,pt
                 | _ -> failwith ""
             )
 
