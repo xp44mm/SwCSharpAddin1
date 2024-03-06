@@ -42,11 +42,12 @@
 		<Compile Include="PipeUtils.fs" />
 		<Compile Include="ComponentEasyApp.fs" />
 		<Compile Include="ComponentTypeReader.fs" />
+		<Compile Include="RouteWrapperApp.fs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="FSharp.Idioms" Version="1.4.13" />
-	  <PackageReference Include="UnquotedJson" Version="1.0.17" />
+	  <PackageReference Include="FSharp.Idioms" Version="1.4.14" />
+	  <PackageReference Include="UnquotedJson" Version="1.0.18" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -27,18 +27,17 @@ type ComponentEasy =
         title: string
         refconfig: string
         refid: string
-        props: Map<string,Json>
+        props: Map<string,string*string>
         specific: ComponentEasySpecific
     }
 
     static member from (comp: ComponentData) =
         let rec loop (swcomp: ComponentData) =
-                
             let specific =
                 match swcomp.SpecificModelDoc with
                 | ModelDrawing _ -> failwith ""
                 | ModelPart _ -> ComponentEasyPart
-                | ModelAssembly assy ->
+                | ModelAssembly _ ->
                     let isRoute = swcomp.RouteAssemblyDistance = 0
                     let children =
                         swcomp.getChildren()
@@ -47,7 +46,7 @@ type ComponentEasy =
                     ComponentEasyAssembly(isRoute,children)
 
             {
-                title     = swcomp.ModelDoc2.GetTitle()
+                title     = Path.GetFileNameWithoutExtension(swcomp.ModelDoc2.GetTitle())
                 refconfig = swcomp.Component2.ReferencedConfiguration
                 refid     = swcomp.Component2.ComponentReference
                 props     = swcomp.Props
@@ -65,13 +64,10 @@ type ComponentEasy =
         let props =
             this.props
             |> Map.toList
-            |> List.map(fun(name,j) -> $"{stringify name},{FSharp.Idioms.Json.print j}")
-            |> String.concat ";"
-            |> sprintf "[%s]"
 
         [
             s0
-            props
+            stringify props
             this.specific.toLine()
         ]
         |> List.filter((<>) "")

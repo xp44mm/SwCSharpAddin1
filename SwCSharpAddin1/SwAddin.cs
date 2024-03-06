@@ -493,6 +493,12 @@ namespace SwCSharpAddin1
                 callbackFunction: nameof(this.ComponentTypeReader_main)
                 );
 
+            //命令
+            cmds.add(
+                hintOrTip: "输出管道js数据",
+                callbackFunction: nameof(this.RouteWrapper)
+                );
+
             // 命令组
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
@@ -814,6 +820,12 @@ namespace SwCSharpAddin1
         {
             ComponentTypeReader.main(this.iSwApp);
         }
+
+        public void RouteWrapper()
+        {
+            RouteWrapperApp.main(this.iSwApp);
+        }
+
 
         public bool Always() { return true; }
     }

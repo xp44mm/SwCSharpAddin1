@@ -67,17 +67,15 @@
 		<Compile Include="AssemblyDocUtils.fs" />
 		<Compile Include="PartDocUtils.fs" />
 		<Compile Include="ModelDoc2Utils.fs" />
+		<Compile Include="SldWorksUtils.fs" />
 		<Compile Include="ModelSpecific.fs" />
 		<Compile Include="ComponentData.fs" />
 		<Compile Include="ComponentEasy.fs" />
 		<Compile Include="RoutePropUtils.fs" />
-		<Compile Include="RouteCompFields.fs" />
-		<Compile Include="RouteComp.fs" />
+		<Compile Include="RouteComponent.fs" />
 		<Compile Include="ValueParser.fs" />
-		<Compile Include="RouteComponentSpecies.fs" />
-		<Compile Include="RouteWrapperConstructor.fs" />
+		<Compile Include="RouteComponentConstructor.fs" />
 		<Compile Include="RouteComponentApp.fs" />
-		<Compile Include="SldWorksUtils.fs" />
 		<Compile Include="OpenDocExecutor.fs" />
 		<Compile Include="CutList.fs" />
 		<Compile Include="CommandManagerUtils.fs" />
@@ -89,7 +87,7 @@
 
 
 	<ItemGroup>
-	  <PackageReference Include="FSharp.Idioms" Version="1.4.13" />
+	  <PackageReference Include="FSharp.Idioms" Version="1.4.14" />
 	</ItemGroup>
 
 

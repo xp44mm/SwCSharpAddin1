@@ -5,14 +5,14 @@ open SolidWorks.Interop.swconst
 open System
 open System.IO
 
+open FSharp.Idioms
 open FSharp.Idioms.Literal
-open FSharp.Idioms.Jsons
 
 type ComponentData =
     {
         Component2: Component2
         ModelDoc2: ModelDoc2
-        Props:Map<string,Json> // <name,type*value>
+        Props:Map<string,string*string> // <name,type*value>
         SpecificModelDoc: ModelSpecific
         RouteAssemblyDistance: int // 管道装配体不能嵌套，-1代表没有route，0代表本组件,1代表父组件是route，2代表祖父组件。
 
@@ -22,13 +22,13 @@ type ComponentData =
         let props =
             ModelDoc2Utils.readPropsAll comp.ReferencedConfiguration model
             |> List.map(fun (name,tp,v) -> 
-                let j =
-                    match tp with
-                    | "Text" -> Json.String v
-                    | "Number" -> Json.Number (Double.Parse v)
-                    | "YesOrNo" -> if v = "Yes" then Json.True else Json.False
-                    | _ -> failwith $"{name},{tp},{v}"
-                name, j
+                //let j =
+                //    match tp with
+                //    | "Text" -> Json.String v
+                //    | "Number" -> Json.Number (Double.Parse v)
+                //    | "YesOrNo" -> if v = "Yes" then Json.True else Json.False
+                //    | _ -> failwith $"{name},{tp},{v}"
+                name, (tp,v)
                 )
             |> Map.ofList
         let spc = ModelSpecific.from model

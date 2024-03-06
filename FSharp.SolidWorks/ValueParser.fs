@@ -9,11 +9,10 @@ open System
 open System.Diagnostics
 open System.IO
 open System.Text.RegularExpressions
-open FSharp.Idioms.Jsons
 
-let isCompTypeOf (compName:string) (props:Map<string,Json>) =
+let isCompTypeOf (compName:string) (props:Map<string,string*string>) =
     props.ContainsKey "Component Type" &&
-    StringComparer.OrdinalIgnoreCase.Equals(props.["Component Type"].stringText, compName)
+    StringComparer.OrdinalIgnoreCase.Equals(snd props.["Component Type"], compName)
 
 let parseDN x =
     Double.Parse(Regex.Match(x,"^DN (\d+)$").Groups.[1].Value)

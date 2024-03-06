@@ -1,6 +1,7 @@
 ﻿module rec FSharp.SolidWorks.RouteComponentApp
 
 open FSharp.Idioms
+open FSharp.Idioms.Jsons
 open FSharp.Idioms.Literal
 
 open SolidWorks.Interop.sldworks
@@ -9,164 +10,203 @@ open System
 open System.Diagnostics
 open System.IO
 open System.Text.RegularExpressions
-open FSharp.SolidWorks.RouteComponentSpecies
 
-let modelTitles = [
-    "flanges.SLDASM"
-    "ball valve flanges.SLDASM"
-    "ball valve solo.SLDASM"
+let rec tojson (route:RouteComponent) =
+    match route.specific with
+    | RouteAssembly (title:string, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "RouteAssembly"
+            nameof title, Json.String title
+            nameof children, Json.Array (List.map tojson children)
+        ]
+    | ComponentAssembly (title:string, refconfig:string, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "ComponentAssembly"
+            nameof title, Json.String title
+            nameof refconfig, Json.String refconfig
+            nameof children, Json.Array (List.map tojson children)
+        ]
 
-    "wafer butterfly valve flanges.SLDASM"
-    "wafer butterfly valve solo.SLDASM"
-    "wafer check valve flanges.SLDASM"
+    | ComponentPart (title:string, refconfig:string) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "ComponentPart"
+            nameof title, Json.String title
+            nameof refconfig, Json.String refconfig
+        ]
+    | Pipe (dn:float, length:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "Pipe"
+            nameof dn, Json.Number dn
+            nameof length, Json.Number length
+        ]
 
-    "expansion joint flanges.SLDASM"
-    "expansion joint solo.SLDASM"
+    | Elbow (dn:float, angle:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "Elbow"
+            nameof dn, Json.Number dn
+            nameof angle, Json.Number angle
+        ]
 
-    "magnetic filter flanges.SLDASM"
-    "flowmeter flanges.SLDASM"
+    | Tee (dn:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "Tee"
+            nameof dn, Json.Number dn
+        ]
 
-    "automatic ball valve flanges.SLDASM"
-    "automatic ball valve solo.SLDASM"
-    "automatic wafer butterfly valve flanges.SLDASM"
-    "automatic wafer butterfly valve solo.SLDASM"
-    "single flanged joint.SLDASM"
+    | Flange (dn:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "Flange"
+            nameof dn, Json.Number dn
+        ]
+
+    | Reducer (dn1:float, dn2:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "Reducer"
+            nameof dn1, Json.Number dn1
+            nameof dn2, Json.Number dn2
+        ]
+
+    | EccentricReducer (dn1:float, dn2:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "EccentricReducer"
+            nameof dn1, Json.Number dn1
+            nameof dn2, Json.Number dn2
+        ]
+
+    | ReducingTee (dn1:float, dn2:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "ReducingTee"
+            nameof dn1, Json.Number dn1
+            nameof dn2, Json.Number dn2
+        ]
+
+    | BallValve (dn:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "BallValve"
+            nameof dn, Json.Number dn
+        ]
+
+    | WaferButterflyValve (dn:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "WaferButterflyValve"
+            nameof dn, Json.Number dn
+        ]
+    | WaferCheckValve (dn:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "WaferCheckValve"
+            nameof dn, Json.Number dn
+        ]
+    | Expansion (dn:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "Expansion"
+            nameof dn, Json.Number dn
+        ]
+    | Flowmeter (dn:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "Flowmeter"
+            nameof dn, Json.Number dn
+        ]
+    | MagneticFilter (dn:float) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "MagneticFilter"
+            nameof dn, Json.Number dn
+        ]
+
+    | SingleFlange (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "SingleFlange"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+
+    | Flanges (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "Flanges"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+
+    | BallValveFlanges (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "BallValveFlanges"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+    | BallValveSolo (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "BallValveSolo"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+    | WaferButterflyValveFlanges (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "WaferButterflyValveFlanges"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+    | WaferButterflyValveSolo (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "WaferButterflyValveSolo"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+    | WaferCheckValveFlanges (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "WaferCheckValveFlanges"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+    | ExpansionFlanges (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "ExpansionFlanges"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+    | ExpansionSolo (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "ExpansionSolo"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+    | FlowmeterFlanges (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "FlowmeterFlanges"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
+    | MagneticFilterFlanges (dn:float, children:RouteComponent list) ->
+        Json.Object [
+            nameof route.refid, Json.String route.refid
+            "kind", Json.String "MagneticFilterFlanges"
+            nameof dn, Json.Number dn
+            nameof children, Json.Array (List.map tojson children)
+        ]
 
 
-    "pipe.SLDPRT"
 
-    "automatic ball valve.SLDPRT"
-    "automatic wafer butterfly valve.SLDPRT"
-    "elbow LR.SLDPRT"
-    "straight tee.SLDPRT"
-    "flange.SLDPRT"
-    "reducer.SLDPRT"
-    "eccentric reducer.SLDPRT"
-    "reducing outlet tee.SLDPRT"
-    "ball valve.SLDPRT"
-    "wafer butterfly valve.SLDPRT"
-    "wafer check valve.SLDPRT"
-    "expansion joint.SLDPRT"
-    "flowmeter.SLDPRT"
-    "magnetic filter.SLDPRT"
-
-
-]
-
-let map (data:ComponentData) =
-    [
-        //tryPipe
-        //tryElbow
-        //tryReducer
-        //tryEccentricReducer
-        //tryTee
-        //tryReducingTee
-        //tryFlange
-        //tryBallValve
-        //tryExpansion
-        //tryFlowmeter
-        //tryMagneticFilter
-        //tryWaferButterflyValve
-        //tryWaferCheckValve
-        //tryBallValveFlanges
-        //tryBallValveSolo
-        //tryExpansionFlanges
-        //tryExpansionSolo
-        //tryFlanges
-        //tryFlowmeterFlanges
-        //tryMagneticFilterFlanges
-        //tryWaferButterflyValveFlanges
-        //tryWaferButterflyValveSolo
-        //tryWaferCheckValveFlanges
-        //tryRouteAssembly
-        //fallback
-    ]
-    |> List.pick(fun fn ->
-        fn data
-    )
-
-//let getChildren(this: RouteComp) =
-//    match this with
-//    | Flanges(data,{ DN = dn }) ->
-//        let flange, screw = FlangePair.getTbl 10.0 dn
-//        let m = flange.M
-//        let l = FlangePair.boltLength 10.0 dn
-//        let c = flange.N
-//        [|
-//            yield!
-//                data.getChildren()
-//                |> Array.map(fun child ->
-//                    map child
-//                )
-//            Bolt(m,l,c)
-//            Nut(m,c)
-//            Gasket(dn,1)
-//        |]
-
-//    | BallValveFlanges (data,{ DN = dn })
-//    | BallValveSolo (data,{ DN = dn })
-//    | ExpansionFlanges (data,{ DN = dn })
-//    | ExpansionSolo (data,{ DN = dn })
-//    | FlowmeterFlanges (data,{ DN = dn })
-//    | MagneticFilterFlanges (data,{ DN = dn })
-//        ->
-//        let flange, screw = FlangePair.getTbl 10.0 dn
-//        let m = flange.M
-//        let l = FlangePair.boltLength 10.0 dn
-//        let c = flange.N
-//        [|
-//            yield!
-//                data.getChildren()
-//                |> Array.map(fun child ->
-//                    map child
-//                )
-//            Bolt(m,l,c*2)
-//            Nut(m,c*2)
-//            Gasket(dn,2)
-//        |]
-//    | WaferButterflyValveFlanges (data,{ DN = dn })
-//    | WaferButterflyValveSolo (data,{ DN = dn }) 
-//        ->
-//        let flange, screw = FlangePair.getTbl 10.0 dn
-//        let valve = WaferButterflyValve.toMap().[dn]
-//        let m = flange.M
-//        let l = Wafer.studLength 10.0 dn valve.Length
-
-//        let c = flange.N
-//        [|
-//            yield!
-//                data.getChildren()
-//                |> Array.map(fun child ->
-//                    map child
-//                )
-//            DoubleScrewBolt(m,l,c*2)
-//            Nut(m,c*2)
-//            Gasket(dn,2)
-//        |]
-
-//    | WaferCheckValveFlanges (data,{ DN = dn })
-//        ->
-//        let flange, screw = FlangePair.getTbl 10.0 dn
-//        let checkValve = WaferCheckValve.toMap().[dn]
-//        let m = flange.M
-//        let l = Wafer.studLength 10.0 dn checkValve.Length
-
-//        let c = flange.N
-//        [|
-//            yield!
-//                data.getChildren()
-//                |> Array.map(fun child ->
-//                    map child
-//                )
-//            DoubleScrewBolt(m,l,c*2)
-//            Nut(m,c*2)
-//            Gasket(dn,2)
-//        |]
-
-//    | GeneralComponent data ->
-//        data.getChildren()
-//        |> Array.map(fun child ->
-//            map child
-//        )
-
-//    | _ -> failwith ""
