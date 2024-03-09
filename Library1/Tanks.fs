@@ -60,7 +60,7 @@ type Tank =
         | LegTank tank -> tank.toJson()
 
     static member from (json:Json) =
-        if json.ContainsKey "BottomHeight" then
+        if json.hasProperty "BottomHeight" then
             TankY.from json
             |> LegTank
         else
@@ -73,7 +73,7 @@ type PlaneData =
         distance: double
     }
 
-    member this.toJson() = Json.read<PlaneData> this
+    member this.toJson() = Json.from<PlaneData> this
 
-    static member from (json:Json) = Json.write<PlaneData> json
+    static member from (json:Json) = Json.To<PlaneData> json
 

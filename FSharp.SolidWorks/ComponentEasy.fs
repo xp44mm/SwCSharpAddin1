@@ -27,6 +27,7 @@ type ComponentEasy =
         title: string
         refconfig: string
         refid: string
+        isVirtual: bool
         props: Map<string,string*string>
         specific: ComponentEasySpecific
     }
@@ -49,6 +50,7 @@ type ComponentEasy =
                 title     = Path.GetFileNameWithoutExtension(swcomp.ModelDoc2.GetTitle())
                 refconfig = swcomp.Component2.ReferencedConfiguration
                 refid     = swcomp.Component2.ComponentReference
+                isVirtual = swcomp.Component2.IsVirtual
                 props     = swcomp.Props
                 specific  = specific
             }

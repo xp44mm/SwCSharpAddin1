@@ -42,7 +42,7 @@ type NozzleLocation =
     static member from (json:Json) = 
         match json with
         | Json.Object _ ->
-            if json.ContainsKey "elevation" then
+            if json.hasProperty "elevation" then
                 WallNozzle(json.["elevation"].floatValue,json.["angle"].floatValue,json.["slope"].floatValue,json.["offset"].floatValue)
             else
                 RoofNozzle(json.["x"].floatValue,json.["y"].floatValue,json.["angle"].floatValue,json.["radius"].floatValue)
@@ -60,7 +60,7 @@ type Nozzle =
             "code",Json.String this.code
             "PN",Json.Number this.PN
             "DN",Json.Number this.DN
-            yield! this.location.toJson().fields
+            yield! this.location.toJson().getEntries()
         ]
 
     static member from (json:Json) = 

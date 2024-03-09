@@ -10,6 +10,7 @@ open System.Text
 open System.Text.RegularExpressions
 
 open FSharp.SolidWorks
+open FSharp.Idioms
 open FSharp.Idioms.Literal
 
 let rec getlines (level:int) (data:ComponentEasy) =
@@ -36,6 +37,8 @@ let main (swApp: ISldWorks) =
         |> getlines 0
         |> String.concat "\n"
 
-    let path = Path.Combine(Dir.CommandData,"component easy.txt")
-    File.WriteAllText(path,outp,Encoding.UTF8)
+    let json = Json.from root
+    let js = Json.print json
+    let path = Path.Combine(Dir.CommandData,"component easy.json")
+    File.WriteAllText(path,js,Encoding.UTF8)
     swApp.SendMsgToUser path
