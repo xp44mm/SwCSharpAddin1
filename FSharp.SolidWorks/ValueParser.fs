@@ -10,9 +10,9 @@ open System.Diagnostics
 open System.IO
 open System.Text.RegularExpressions
 
-let isCompTypeOf (compName:string) (props:Map<string,string*string>) =
+let isCompTypeOf (compName:string) (props:Map<string,string>) =
     props.ContainsKey "Component Type" &&
-    StringComparer.OrdinalIgnoreCase.Equals(snd props.["Component Type"], compName)
+    StringComparer.OrdinalIgnoreCase.Equals(props.["Component Type"], compName)
 
 let parseDN x =
     Double.Parse(Regex.Match(x,"^DN (\d+)$").Groups.[1].Value)

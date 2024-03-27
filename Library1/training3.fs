@@ -1,4 +1,4 @@
-﻿module training3
+﻿module training3 //Setting System Options and Document Defaults
 
 open System
 open System.Runtime.InteropServices
@@ -17,9 +17,8 @@ open SolidWorksTools
 open SolidWorksTools.File
 open FSharp.SolidWorks
 
-
 let systemOptions(swApp: ISldWorks) =
-    let sysPref = SwUserPreference(swApp)
+    let sysPref = SysUserPreference(swApp)
 
     sysPref.swInputDimValOnCreate <- true
 
@@ -55,10 +54,6 @@ let systemOptions(swApp: ISldWorks) =
     //
     // 0 = Slow
     // 100 = Fast
-    //swApp
-    //|> SldWorksUtils.setUserPreferenceIntegerValue
-    //    swUserPreferenceIntegerValue_e.swViewRotationMouseSpeed 50
-    //|> ignore
 
     sysPref.swViewRotationMouseSpeed <- 50
 
@@ -94,3 +89,33 @@ let documentProperties (swApp: ISldWorks) =
     |> sprintf "%b"
     |> swApp.SendMsgToUser
 
+
+
+
+////命令
+//cmds.add(
+//    hintString: "第3章之系统选项",
+//    toolTip: "",
+//    callbackFunction: nameof(this.Training3_systemOptions),
+//    enableMethod: nameof(this.Always),
+//    menuTBOption: swCommandItemType_e.swMenuItem
+//    );
+
+////命令
+//cmds.add(
+//    hintString: "第3章之文档属性",
+//    toolTip: "",
+//    callbackFunction: nameof(this.Training3_documentProperties),
+//    enableMethod: nameof(this.Always),
+//    menuTBOption: swCommandItemType_e.swMenuItem
+//    );
+
+//public void Training3_systemOptions()
+//{
+//    training3.systemOptions(this.iSwApp);
+//}
+
+//public void Training3_documentProperties()
+//{
+//    training3.documentProperties(this.iSwApp);
+//}

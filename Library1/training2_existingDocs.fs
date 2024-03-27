@@ -164,6 +164,76 @@ let CreateLayer (swApp: ISldWorks) =
 
 
 
+    
+            ////命令
+            //cmds.add(
+            //    hintString: "New DrawingDoc",
+            //    toolTip: "步骤29~31",
+            //    callbackFunction: nameof(this.Training2_existingDocs_connectToSolidWorks),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "ToolbarAndCustomProperty",
+            //    toolTip: "步骤33~35",
+            //    callbackFunction: nameof(this.Training2_existingDocs_ToolbarAndCustomProperty),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "第2章步骤36~38",
+            //    toolTip: "",
+            //    callbackFunction: nameof(this.Training2_existingDocs_MirrorPart),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "第2章步骤39~41",
+            //    toolTip: "",
+            //    callbackFunction: nameof(this.Training2_existingDocs_InsertCavity),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "第2章步骤42~44",
+            //    toolTip: "",
+            //    callbackFunction: nameof(this.Training2_existingDocs_CreateLayer),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+        //public void Training2_existingDocs_connectToSolidWorks()
+        //{
+        //    training2_existingDocs.connectToSolidWorks(this.iSwApp);
+        //}
+
+        //public void Training2_existingDocs_ToolbarAndCustomProperty()
+        //{
+        //    training2_existingDocs.ToolbarAndCustomProperty(this.iSwApp);
+        //}
+
+        //public void Training2_existingDocs_MirrorPart()
+        //{
+        //    training2_existingDocs.MirrorPart(this.iSwApp);
+        //}
+
+        //public void Training2_existingDocs_InsertCavity()
+        //{
+        //    training2_existingDocs.InsertCavity(this.iSwApp);
+        //}
+
+        //public void Training2_existingDocs_CreateLayer()
+        //{
+        //    training2_existingDocs.CreateLayer(this.iSwApp);
+        //}
 
 
 

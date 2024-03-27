@@ -38,7 +38,10 @@
 
 
 	<ItemGroup>
-		<Compile Include="EnumUtils.fs" />
+		<Compile Include="SysUserPreference.fs" />
+		<Compile Include="DocUserPreference.fs" />
+		<Compile Include="RoutingUserPreference.fs" />
+		<Compile Include="CommentUtils.fs" />
 		<Compile Include="CustomInfoType.fs" />
 		<Compile Include="CustomPropertyManagerUtils.fs" />
 		<Compile Include="ParameterUtils.fs" />
@@ -60,7 +63,6 @@
 		<Compile Include="MathUtilityUtils.fs" />
 		<Compile Include="MathPointUtils.fs" />
 		<Compile Include="Component2Utils.fs" />
-		<Compile Include="UserPreference.fs" />
 		<Compile Include="ConfigurationUtils.fs" />
 		<Compile Include="AddComponent5Params.fs" />
 		<Compile Include="AddMate5Params.fs" />
@@ -71,7 +73,6 @@
 		<Compile Include="ModelSpecific.fs" />
 		<Compile Include="ComponentData.fs" />
 		<Compile Include="ComponentEasy.fs" />
-		<Compile Include="RoutePropUtils.fs" />
 		<Compile Include="RouteComponent.fs" />
 		<Compile Include="ValueParser.fs" />
 		<Compile Include="RouteComponentConstructor.fs" />

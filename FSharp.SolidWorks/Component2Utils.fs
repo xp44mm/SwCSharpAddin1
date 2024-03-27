@@ -7,15 +7,15 @@ open System
 open System.Diagnostics
 open System.IO
 
-let getModelDoc2 (swComp:Component2) = 
-    swComp.GetModelDoc2() 
-    :?> ModelDoc2
+let tryGetModelDoc2 (swComp:Component2) = 
+    match swComp.GetModelDoc2() :?> ModelDoc2 with
+    | null -> None
+    | swModel -> Some swModel
 
 ///第一层特征
 let getFeatureSeq (swComp: Component2) =
     swComp.FirstFeature()
     |> FeatureUtils.getFeatureSeq
-
 
 let getChildren (swComp:Component2) =
     swComp.GetChildren()
@@ -23,11 +23,11 @@ let getChildren (swComp:Component2) =
     |> Array.map(fun o -> o :?> Component2)
 
 let renderComponent2 (swComp:Component2) =
-        [
-            swComp.DisplayTitle
-            $"({swComp.ReferencedConfiguration})"
-            "{" + swComp.ComponentReference + "}"
-        ]
-        |> String.concat ""
-        |> (+) "+"
+    [
+        swComp.DisplayTitle
+        $"({swComp.ReferencedConfiguration})"
+        "{" + swComp.ComponentReference + "}"
+    ]
+    |> String.concat ""
+    |> (+) "+"
 

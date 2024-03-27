@@ -63,3 +63,69 @@ let generate (swApp: ISldWorks) =
 
             feat.ModifyDefinition(extrudeFeatureData, swModel, null)
             |> ignore
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第7章1节",
+            //    callbackFunction: nameof(this.Training7_Preselection)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第7章3节",
+            //    callbackFunction: nameof(this.Training7_BodyFaceTraversal)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第7章4节1~2",
+            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_msg)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第7章4节之压缩圆角",
+            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_suppress)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第7章4节之隐藏设计树所有特征",
+            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_setUIState)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第7章4节之设计树指定位置的特征",
+            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_featureByPositionReverse)
+            //    );
+
+        //public void Training7_Preselection()
+        //{
+        //    Preselection.generate(this.iSwApp);
+        //}
+
+        //public void Training7_BodyFaceTraversal()
+        //{
+        //    BodyFaceTraversal.main(this.iSwApp);
+        //}
+
+        //public void Training7_FeatMgrTraversal_msg()
+        //{
+        //    FeatMgrTraversal.msg(this.iSwApp);
+        //}
+
+        //public void Training7_FeatMgrTraversal_suppress()
+        //{
+        //    FeatMgrTraversal.suppress(this.iSwApp);
+        //}
+
+        //public void Training7_FeatMgrTraversal_setUIState()
+        //{
+        //    FeatMgrTraversal.setUIState(this.iSwApp);
+        //}
+
+        //public void Training7_FeatMgrTraversal_featureByPositionReverse()
+        //{
+        //    FeatMgrTraversal.featureByPositionReverse(this.iSwApp);
+        //}

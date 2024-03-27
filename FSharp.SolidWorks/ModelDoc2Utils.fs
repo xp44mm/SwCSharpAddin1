@@ -14,7 +14,6 @@ open SolidWorks.Interop.swconst
 open SolidWorksTools
 open SolidWorksTools.File
 open FSharp.SolidWorks
-//open FSharp.Literals
 
 //' Save to do: int to enum
 let save3 (opts:swSaveAsOptions_e) (swModel: IModelDoc2) =
@@ -92,12 +91,7 @@ let getConfigurationNames (swModel:IModelDoc2) =
 
 let readPropsAll (config: string) (swModel:IModelDoc2) =
     let mgr = swModel.Extension.CustomPropertyManager("")
-
-    //this.ModelDoc2.ShowConfiguration2 config
-    //|> ignore
-
     let mgrc = swModel.Extension.CustomPropertyManager(config)
-
     [
         yield! CustomPropertyManagerUtils.getAllTypesValues mgr
         yield! CustomPropertyManagerUtils.getAllTypesValues mgrc

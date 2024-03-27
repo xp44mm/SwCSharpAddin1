@@ -18,28 +18,27 @@ open SolidWorksTools.File
 let getFeatureSeq (featObj: obj) =
     let rec loop (o:obj) =
         seq {
-            match o with
+            match o :?> Feature with
             | null -> ()
-            | :? Feature as f ->
+            | f ->
                 yield f
                 yield! loop (f.GetNextFeature())
-            | _ -> failwith $"{o.GetType()}"
+            //| _ -> failwith $"{o.GetType()}"
         }
     loop featObj
 
 let getSubFeatureSeq (parent: Feature) =
     let rec loop (featObj:obj) =
         seq {
-            match featObj with
+            match featObj :?> Feature with
             | null -> ()
-            | :? Feature as f ->
+            | f ->
                 yield f
                 yield! loop (f.GetNextSubFeature())
-            | _ -> failwith $"{featObj.GetType()}"
+            //| _ -> failwith $"{featObj.GetType()}"
         }
     parent.GetFirstSubFeature()
     |> loop
-
 
 let setSuppression2 (suppressionState: swFeatureSuppressionAction_e) (config_opt: swInConfigurationOpts_e) (config_names: string[]) (swFeat: IFeature) =
     swFeat.SetSuppression2(

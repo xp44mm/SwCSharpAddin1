@@ -166,3 +166,69 @@ let CustomPropsConfig (swApp: ISldWorks) =
             $"{massprops.[4] * 100.0 * 100.0}"
     )
 
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第8章",
+            //    callbackFunction: nameof(this.Training8_CustomProps_main)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第8章属性遍历",
+            //    callbackFunction: nameof(this.Training8_CustomPropertyTraversal)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第8章属性在配置特定",
+            //    callbackFunction: nameof(this.Training8_CustomPropsConfig)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第8章文件摘要信息",
+            //    callbackFunction: nameof(this.Training8_CustomFileSummary)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第8章文档特性",
+            //    callbackFunction: nameof(this.Training8_DocumentAttributes)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第8章CNCDrilling",
+            //    callbackFunction: nameof(this.Training8_CNCDrilling)
+            //    );
+
+        //public void Training8_CustomProps_main()
+        //{
+        //    CustomProps.main(this.iSwApp);
+        //}
+
+        //public void Training8_CustomPropertyTraversal()
+        //{
+        //    CustomProps.CustomPropertyTraversal(this.iSwApp);
+        //}
+
+        //public void Training8_CustomPropsConfig()
+        //{
+        //    CustomProps.CustomPropsConfig(this.iSwApp);
+        //}
+
+        //public void Training8_CustomFileSummary()
+        //{
+        //    CustomFileSummary.main(this.iSwApp);
+        //}
+
+        //public void Training8_DocumentAttributes()
+        //{
+        //    DocumentAttributes.main(this.iSwApp);
+        //}
+
+        //public void Training8_CNCDrilling()
+        //{
+        //    Training8.CNCDrilling.main(this.iSwApp);
+        //}

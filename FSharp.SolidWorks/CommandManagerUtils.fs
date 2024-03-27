@@ -21,12 +21,7 @@ let getIDsFromRegistry (cmdGroupId:int) (iCmdMgr:ICommandManager) =
 
 ///命令组：菜单，工具栏共用
 let createCommandGroup2
-    (userID                : int            )
-    (title                 : string         )
-    (toolTip               : string         )
-    (hint                  : string         )
-    (ignorePreviousVersion : bool           )
-    (cmdMgr                : ICommandManager)
+    (userID : int ) (title : string ) (toolTip : string ) (hint : string ) (ignorePreviousVersion : bool ) (cmdMgr : ICommandManager)
     =
     let mutable err = 1
     try

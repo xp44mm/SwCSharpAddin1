@@ -18,7 +18,8 @@ let rec getlines (level:int) (data:ComponentEasy) =
     [
         yield $"{pad}+{data.toLine()}"
         match data.specific with
-        | ComponentEasyAssembly (i,children) ->
+        | ComponentEasyAssembly children 
+        | ComponentEasyRouteAssembly children ->
             for child in children do
                 yield! getlines (level+1) child
         | _ -> ()

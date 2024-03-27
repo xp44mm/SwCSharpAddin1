@@ -17,24 +17,24 @@ open SolidWorksTools.File
         
 ///https://help.solidworks.com/2023/english/api/swconst/SOLIDWORKS.Interop.swconst~SOLIDWORKS.Interop.swconst.swCustomInfoGetResult_e.html
 let GetUpdatedProperty (fieldName:string) (cusPropMgr:ICustomPropertyManager) =
-        let mutable value = ""
-        let mutable resolvedValue = ""
-        let mutable wasResolved = false
-        let mutable linkToProperty = false
-        let i =
-            cusPropMgr.Get6(
-                FieldName = fieldName,
-                UseCached = false,
-                ValOut = &value,
-                ResolvedValOut = &resolvedValue,
-                WasResolved = &wasResolved,
-                LinkToProperty = &linkToProperty
-            )
-            |> enum<swCustomInfoGetResult_e>
-        if not wasResolved || i <> swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue then
-            failwithf "%A" i
-        else
-            value,resolvedValue
+    let mutable value = ""
+    let mutable resolvedValue = ""
+    let mutable wasResolved = false
+    let mutable linkToProperty = false
+    let i =
+        cusPropMgr.Get6(
+            FieldName = fieldName,
+            UseCached = false,
+            ValOut = &value,
+            ResolvedValOut = &resolvedValue,
+            WasResolved = &wasResolved,
+            LinkToProperty = &linkToProperty
+        )
+        |> enum<swCustomInfoGetResult_e>
+    if not wasResolved || i <> swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue then
+        failwithf "%A" i
+    else
+        value,resolvedValue
 
 let getNames (custPrpMgr: ICustomPropertyManager) =
     match custPrpMgr.GetNames() with
@@ -46,11 +46,11 @@ let getNames (custPrpMgr: ICustomPropertyManager) =
 
 /// 获取不区分大小写的自定义属性名称集合
 let getCustomPropertyNames (custPrpMgr: ICustomPropertyManager) =
-        let hs = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        custPrpMgr
-        |> getNames
-        |> Array.iter(fun e -> hs.Add e |> ignore)
-        hs
+    let hs = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    custPrpMgr
+    |> getNames
+    |> Array.iter(fun e -> hs.Add e |> ignore)
+    hs
 
 /// 
 let contains (prpName: string) (custPrpMgr: ICustomPropertyManager) =

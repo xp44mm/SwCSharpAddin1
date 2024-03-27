@@ -130,256 +130,6 @@ namespace SwCSharpAddin1
             //收集命令项目
             var cmds = new CommandItemCollection();
 
-            ////命令
-            //cmds.add(
-            //    hintString: "training1",
-            //    toolTip: "第1章示例",
-            //    callbackFunction: nameof(this.Training1),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "connect to sw",
-            //    toolTip: "图2-7",
-            //    callbackFunction: nameof(this.Training2_3),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "new part",
-            //    toolTip: "图2-12",
-            //    callbackFunction: nameof(this.Training2_NewModel_Part),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "new assy",
-            //    toolTip: "图2-12",
-            //    callbackFunction: nameof(this.Training2_NewModel_ASM),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "new drw",
-            //    toolTip: "图2-12",
-            //    callbackFunction: nameof(this.Training2_NewModel_DRW),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "New PartDoc",
-            //    toolTip: "图2-18",
-            //    callbackFunction: nameof(this.Training2_NewPartDoc),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "New AssemblyDoc",
-            //    toolTip: "图2-18",
-            //    callbackFunction: nameof(this.Training2_NewAssemblyDoc),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "New DrawingDoc",
-            //    toolTip: "图2-18",
-            //    callbackFunction: nameof(this.Training2_NewDrawingDoc),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "New DrawingDoc",
-            //    toolTip: "步骤29~31",
-            //    callbackFunction: nameof(this.Training2_existingDocs_connectToSolidWorks),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "ToolbarAndCustomProperty",
-            //    toolTip: "步骤33~35",
-            //    callbackFunction: nameof(this.Training2_existingDocs_ToolbarAndCustomProperty),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "第2章步骤36~38",
-            //    toolTip: "",
-            //    callbackFunction: nameof(this.Training2_existingDocs_MirrorPart),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "第2章步骤39~41",
-            //    toolTip: "",
-            //    callbackFunction: nameof(this.Training2_existingDocs_InsertCavity),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "第2章步骤42~44",
-            //    toolTip: "",
-            //    callbackFunction: nameof(this.Training2_existingDocs_CreateLayer),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "第3章之系统选项",
-            //    toolTip: "",
-            //    callbackFunction: nameof(this.Training3_systemOptions),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "第3章之文档属性",
-            //    toolTip: "",
-            //    callbackFunction: nameof(this.Training3_documentProperties),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintString: "第4章之零件材料",
-            //    toolTip: "",
-            //    callbackFunction: nameof(this.Training4_PartMaterial),
-            //    enableMethod: nameof(this.Always),
-            //    menuTBOption: swCommandItemType_e.swMenuItem
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第4章之矩形拉伸",
-            //    callbackFunction: nameof(this.Training4_rectExtrusion)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第4章之矩形旋转",
-            //    callbackFunction: nameof(this.Training4_rectRevolve)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第4章之圆形拉伸",
-            //    callbackFunction: nameof(this.Training4_circleExtrusion)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第4章之圆形旋转",
-            //    callbackFunction: nameof(this.Training4_circleRevolve)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第5章",
-            //    callbackFunction: nameof(this.Training5_AddComponentsAndMate)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第6章",
-            //    callbackFunction: nameof(this.Training6)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第7章1节",
-            //    callbackFunction: nameof(this.Training7_Preselection)
-            //    );
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第7章3节",
-            //    callbackFunction: nameof(this.Training7_BodyFaceTraversal)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第7章4节1~2",
-            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_msg)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第7章4节之压缩圆角",
-            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_suppress)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第7章4节之隐藏设计树所有特征",
-            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_setUIState)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第7章4节之设计树指定位置的特征",
-            //    callbackFunction: nameof(this.Training7_FeatMgrTraversal_featureByPositionReverse)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第8章",
-            //    callbackFunction: nameof(this.Training8_CustomProps_main)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第8章属性遍历",
-            //    callbackFunction: nameof(this.Training8_CustomPropertyTraversal)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第8章属性在配置特定",
-            //    callbackFunction: nameof(this.Training8_CustomPropsConfig)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第8章文件摘要信息",
-            //    callbackFunction: nameof(this.Training8_CustomFileSummary)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第8章文档特性",
-            //    callbackFunction: nameof(this.Training8_DocumentAttributes)
-            //    );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第8章CNCDrilling",
-            //    callbackFunction: nameof(this.Training8_CNCDrilling)
-            //    );
 
             //命令
             cmds.add(
@@ -499,7 +249,19 @@ namespace SwCSharpAddin1
                 callbackFunction: nameof(this.RouteWrapper)
                 );
 
-            // 命令组
+            //命令
+            cmds.add(
+                hintOrTip: "设置系统选项",
+                callbackFunction: nameof(this.SystemOptionsSetting_main)
+                );
+            
+            //命令
+            cmds.add(
+                hintOrTip: "注释示例",
+                callbackFunction: nameof(this.CommentExample_main)
+                );
+
+            // *****命令组*****
             var cmdGroup = CommandManagerUtils.createCommandGroup2(
                     userID: cmdGroupID,
                     title: "CuiShengLi",
@@ -530,29 +292,6 @@ namespace SwCSharpAddin1
         }
 
 
-        //public void Training1()
-        //{
-        //    training1.exec(this.iSwApp);
-        //    //iSwApp.SendMsgToUser("这是占位的命令");
-
-        //    //trainingcylinder.main(iSwApp);
-
-        //    //training2.cmdConnect(iSwApp);
-        //    //training2.cmdNewModel_Part(iSwApp);
-
-        //    //training4.testPartMat(iSwApp);
-        //    //training4.rectangularExtrude(iSwApp);
-        //    //training4.circularExtrude(iSwApp);
-        //    //training4.testDrawCirc(iSwApp);
-        //    //training4.testCircleContourRevolve(iSwApp);
-        //    //training5.testSelectFace(this.iSwApp);
-
-        //    //SldWorksUtils.testCutLists(iSwApp);
-        //    //SldWorksUtils.detectCutLists(iSwApp);
-        //    //SldWorksUtils.setPartWeldment(iSwApp);
-
-        //}
-
         public void PipeUtils_main()
         {
             //SWRoutingLibUtils.ExportPipeData(iSwApp);
@@ -563,174 +302,14 @@ namespace SwCSharpAddin1
             PipeComponents.PipeUtils.main(this.iSwApp);
         }
 
+        public void SystemOptionsSetting_main()
+        {
+            SystemOptionsSetting.main(this.iSwApp);
+        }
+
         //public void pipeBom()
         //{
         //    PipeComponents.PipeUtils.pipebom(this.iSwApp);
-        //}
-
-        //public void Training2_3()
-        //{
-        //    training2.connectToSolidWorks(this.iSwApp);
-        //}
-
-        //public void Training2_NewModel_Part()
-        //{
-        //    training2.NewModel_Part(this.iSwApp);
-        //}
-
-        //public void Training2_NewModel_ASM()
-        //{
-        //    training2.NewModel_ASM(this.iSwApp);
-        //}
-
-        //public void Training2_NewModel_DRW()
-        //{
-        //    training2.NewModel_DRW(this.iSwApp);
-        //}
-
-        //public void Training2_NewPartDoc()
-        //{
-        //    training2.NewPartDoc(this.iSwApp);
-        //}
-
-        //public void Training2_NewAssemblyDoc()
-        //{
-        //    training2.NewAssemblyDoc(this.iSwApp);
-        //}
-
-        //public void Training2_NewDrawingDoc()
-        //{
-        //    training2.NewDrawingDoc(this.iSwApp);
-        //}
-
-        //public void Training2_existingDocs_connectToSolidWorks()
-        //{
-        //    training2_existingDocs.connectToSolidWorks(this.iSwApp);
-        //}
-
-        //public void Training2_existingDocs_ToolbarAndCustomProperty()
-        //{
-        //    training2_existingDocs.ToolbarAndCustomProperty(this.iSwApp);
-        //}
-
-        //public void Training2_existingDocs_MirrorPart()
-        //{
-        //    training2_existingDocs.MirrorPart(this.iSwApp);
-        //}
-
-        //public void Training2_existingDocs_InsertCavity()
-        //{
-        //    training2_existingDocs.InsertCavity(this.iSwApp);
-        //}
-
-        //public void Training2_existingDocs_CreateLayer()
-        //{
-        //    training2_existingDocs.CreateLayer(this.iSwApp);
-        //}
-
-        //public void Training3_systemOptions()
-        //{
-        //    training3.systemOptions(this.iSwApp);
-        //}
-
-        //public void Training3_documentProperties()
-        //{
-        //    training3.documentProperties(this.iSwApp);
-        //}
-
-        //public void Training4_PartMaterial()
-        //{
-        //    training4.PartMaterial(this.iSwApp);
-        //}
-
-        //public void Training4_rectExtrusion ()
-        //{
-        //    training4.rectExtrusion(this.iSwApp);
-        //}
-
-        //public void Training4_rectRevolve()
-        //{
-        //    training4.rectRevolve(this.iSwApp);
-        //}
-
-        //public void Training4_circleExtrusion()
-        //{
-        //    training4_circle.circleExtrusion(this.iSwApp);
-        //}
-
-        //public void Training4_circleRevolve()
-        //{
-        //    training4_circle.circleRevolve(this.iSwApp);
-        //}
-
-        //public void Training5_AddComponentsAndMate()
-        //{
-        //    training5.AddComponentsAndMate(this.iSwApp);
-        //}
-
-        //public void Training6()
-        //{
-        //    training6.main(this.iSwApp);
-        //}
-
-        //public void Training7_Preselection()
-        //{
-        //    Preselection.generate(this.iSwApp);
-        //}
-
-        //public void Training7_BodyFaceTraversal()
-        //{
-        //    BodyFaceTraversal.main(this.iSwApp);
-        //}
-
-        //public void Training7_FeatMgrTraversal_msg()
-        //{
-        //    FeatMgrTraversal.msg(this.iSwApp);
-        //}
-
-        //public void Training7_FeatMgrTraversal_suppress()
-        //{
-        //    FeatMgrTraversal.suppress(this.iSwApp);
-        //}
-
-        //public void Training7_FeatMgrTraversal_setUIState()
-        //{
-        //    FeatMgrTraversal.setUIState(this.iSwApp);
-        //}
-
-        //public void Training7_FeatMgrTraversal_featureByPositionReverse()
-        //{
-        //    FeatMgrTraversal.featureByPositionReverse(this.iSwApp);
-        //}
-
-        //public void Training8_CustomProps_main()
-        //{
-        //    CustomProps.main(this.iSwApp);
-        //}
-
-        //public void Training8_CustomPropertyTraversal()
-        //{
-        //    CustomProps.CustomPropertyTraversal(this.iSwApp);
-        //}
-
-        //public void Training8_CustomPropsConfig()
-        //{
-        //    CustomProps.CustomPropsConfig(this.iSwApp);
-        //}
-
-        //public void Training8_CustomFileSummary()
-        //{
-        //    CustomFileSummary.main(this.iSwApp);
-        //}
-
-        //public void Training8_DocumentAttributes()
-        //{
-        //    DocumentAttributes.main(this.iSwApp);
-        //}
-
-        //public void Training8_CNCDrilling()
-        //{
-        //    Training8.CNCDrilling.main(this.iSwApp);
         //}
 
         public void AppendexD_WatchAssemblyTraversal()
@@ -826,6 +405,10 @@ namespace SwCSharpAddin1
             RouteWrapperApp.main(this.iSwApp);
         }
 
+        public void CommentExample_main()
+        {
+            CommentExample.main(this.iSwApp);
+        }
 
         public bool Always() { return true; }
     }

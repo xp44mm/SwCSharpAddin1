@@ -148,3 +148,13 @@ let main(swApp: ISldWorks) =
         ()
     
     )
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第6章",
+            //    callbackFunction: nameof(this.Training6)
+            //    );
+
+        //public void Training6()
+        //{
+        //    training6.main(this.iSwApp);
+        //}

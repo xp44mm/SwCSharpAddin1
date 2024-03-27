@@ -43,6 +43,8 @@
 		<Compile Include="ComponentEasyApp.fs" />
 		<Compile Include="ComponentTypeReader.fs" />
 		<Compile Include="RouteWrapperApp.fs" />
+		<Compile Include="SystemOptionsSetting.fs" />
+		<Compile Include="CommentExample.fs" />
 	</ItemGroup>
 
 	<ItemGroup>

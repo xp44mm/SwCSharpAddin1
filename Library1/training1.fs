@@ -65,3 +65,35 @@ let exec (swApp: ISldWorks) =
         useAutoSelect = true
         startCond = FeatureManagerUtils.StartCondition.SketchPlane
     }
+
+////命令
+//cmds.add(
+//    hintString: "training1",
+//    toolTip: "第1章示例",
+//    callbackFunction: nameof(this.Training1),
+//    enableMethod: nameof(this.Always),
+//    menuTBOption: swCommandItemType_e.swMenuItem
+//    );
+
+//public void Training1()
+//{
+//    training1.exec(this.iSwApp);
+//    //iSwApp.SendMsgToUser("这是占位的命令");
+
+//    //trainingcylinder.main(iSwApp);
+
+//    //training2.cmdConnect(iSwApp);
+//    //training2.cmdNewModel_Part(iSwApp);
+
+//    //training4.testPartMat(iSwApp);
+//    //training4.rectangularExtrude(iSwApp);
+//    //training4.circularExtrude(iSwApp);
+//    //training4.testDrawCirc(iSwApp);
+//    //training4.testCircleContourRevolve(iSwApp);
+//    //training5.testSelectFace(this.iSwApp);
+
+//    //SldWorksUtils.testCutLists(iSwApp);
+//    //SldWorksUtils.detectCutLists(iSwApp);
+//    //SldWorksUtils.setPartWeldment(iSwApp);
+
+//}

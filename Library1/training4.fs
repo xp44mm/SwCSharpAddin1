@@ -1,4 +1,4 @@
-﻿module training4 // PartAutomation1
+﻿module training4 // Part Automation
 
 open System
 open System.Runtime.InteropServices
@@ -29,7 +29,7 @@ let newPart (swApp: ISldWorks) =
 
     docPref.swUnitsLinear swUserPreferenceOption_e.swDetailingNoOptionSpecified <- (int swLengthUnit_e.swMM)
     //Turn off dimension dialogs
-    let p = SwUserPreference(swApp)
+    let p = SysUserPreference(swApp)
     p.swInputDimValOnCreate <- false
 
     swModel
@@ -274,6 +274,65 @@ let rectRevolve (swApp: ISldWorks) =
 
     swModel.ViewZoomtofit2()
 
+
+        //public void Training4_PartMaterial()
+        //{
+        //    training4.PartMaterial(this.iSwApp);
+        //}
+
+        //public void Training4_rectExtrusion ()
+        //{
+        //    training4.rectExtrusion(this.iSwApp);
+        //}
+
+        //public void Training4_rectRevolve()
+        //{
+        //    training4.rectRevolve(this.iSwApp);
+        //}
+
+        //public void Training4_circleExtrusion()
+        //{
+        //    training4_circle.circleExtrusion(this.iSwApp);
+        //}
+
+        //public void Training4_circleRevolve()
+        //{
+        //    training4_circle.circleRevolve(this.iSwApp);
+        //}
+
+
+            ////命令
+            //cmds.add(
+            //    hintString: "第4章之零件材料",
+            //    toolTip: "",
+            //    callbackFunction: nameof(this.Training4_PartMaterial),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第4章之矩形拉伸",
+            //    callbackFunction: nameof(this.Training4_rectExtrusion)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第4章之矩形旋转",
+            //    callbackFunction: nameof(this.Training4_rectRevolve)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第4章之圆形拉伸",
+            //    callbackFunction: nameof(this.Training4_circleExtrusion)
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第4章之圆形旋转",
+            //    callbackFunction: nameof(this.Training4_circleRevolve)
+            //    );
 
 
 

@@ -25,6 +25,7 @@ type OpenDocExecutor =
         Options       : swOpenDocOptions_e
         Configuration : string
     }
+
     static member from(
         fileName: string, ?configuration: string, ?options: swOpenDocOptions_e
         )=

@@ -1,0 +1,13 @@
+﻿Pipe 0mm DN 65 PN 1 PPH,55
+Pipe 0mm DN 25 PN 1 PPH,576
+Elbow 90degree DN 25 PN 1 PPH,1
+Flange DN 25 PN 1 PPH,4
+Flange DN 65 PN 1 PPH,1
+Reducer DN 65 x 25 PN 1 PPH,1
+BallValve DN 25 PN 1 PPH,2
+Gasket DN 25 PN 1,4
+Gasket DN 65 PN 1,1
+Bolt M 12 x 55, 0,16
+Bolt M 16 x 70, 0,4
+Nut M 12, 0,16
+Nut M 16, 0,4

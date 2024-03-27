@@ -14,6 +14,9 @@
     <Compile Include="BitcodesTest.fs" />
     <Compile Include="CustomInfoTypeTest.fs" />
     <Compile Include="ValueParserTest.fs" />
+    <Compile Include="EnumTest.fs" />
+    <Compile Include="SystemOptionsCodeGenerator.fs" />
+    <Compile Include="DocumentPropertiesCodeGenerator.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

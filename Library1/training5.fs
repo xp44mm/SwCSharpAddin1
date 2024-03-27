@@ -319,3 +319,14 @@ let AddComponentsAndMate (swApp: ISldWorks) =
     swApp.SendMsgToUser "success"
     with ex ->
         swApp.SendMsgToUser $"{ex.Message}"
+
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "第5章",
+            //    callbackFunction: nameof(this.Training5_AddComponentsAndMate)
+            //    );
+
+        //public void Training5_AddComponentsAndMate()
+        //{
+        //    training5.AddComponentsAndMate(this.iSwApp);
+        //}

@@ -189,3 +189,101 @@ let NewDrawingDoc (swApp: ISldWorks) =
     //swDrw.EditTemplate()
     swDrw.EditSheet()
     ()
+    
+            ////命令
+            //cmds.add(
+            //    hintString: "connect to sw",
+            //    toolTip: "图2-7",
+            //    callbackFunction: nameof(this.Training2_3),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "new part",
+            //    toolTip: "图2-12",
+            //    callbackFunction: nameof(this.Training2_NewModel_Part),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "new assy",
+            //    toolTip: "图2-12",
+            //    callbackFunction: nameof(this.Training2_NewModel_ASM),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "new drw",
+            //    toolTip: "图2-12",
+            //    callbackFunction: nameof(this.Training2_NewModel_DRW),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "New PartDoc",
+            //    toolTip: "图2-18",
+            //    callbackFunction: nameof(this.Training2_NewPartDoc),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "New AssemblyDoc",
+            //    toolTip: "图2-18",
+            //    callbackFunction: nameof(this.Training2_NewAssemblyDoc),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+            ////命令
+            //cmds.add(
+            //    hintString: "New DrawingDoc",
+            //    toolTip: "图2-18",
+            //    callbackFunction: nameof(this.Training2_NewDrawingDoc),
+            //    enableMethod: nameof(this.Always),
+            //    menuTBOption: swCommandItemType_e.swMenuItem
+            //    );
+
+        //public void Training2_3()
+        //{
+        //    training2.connectToSolidWorks(this.iSwApp);
+        //}
+
+        //public void Training2_NewModel_Part()
+        //{
+        //    training2.NewModel_Part(this.iSwApp);
+        //}
+
+        //public void Training2_NewModel_ASM()
+        //{
+        //    training2.NewModel_ASM(this.iSwApp);
+        //}
+
+        //public void Training2_NewModel_DRW()
+        //{
+        //    training2.NewModel_DRW(this.iSwApp);
+        //}
+
+        //public void Training2_NewPartDoc()
+        //{
+        //    training2.NewPartDoc(this.iSwApp);
+        //}
+
+        //public void Training2_NewAssemblyDoc()
+        //{
+        //    training2.NewAssemblyDoc(this.iSwApp);
+        //}
+
+        //public void Training2_NewDrawingDoc()
+        //{
+        //    training2.NewDrawingDoc(this.iSwApp);
+        //}

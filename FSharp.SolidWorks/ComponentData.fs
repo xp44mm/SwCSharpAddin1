@@ -8,66 +8,80 @@ open System.IO
 open FSharp.Idioms
 open FSharp.Idioms.Literal
 
+type ComponentDataSpecific =
+    | ComponentDataRouteAssembly of AssemblyDoc
+    | ComponentDataAssembly of AssemblyDoc
+    | ComponentDataPart of PartDoc
+
+    static member from (swModel:ModelDoc2) =
+        match ModelSpecific.from swModel with
+        | ModelAssembly assy ->
+            if assy.IsRouteAssembly() then
+                ComponentDataRouteAssembly assy
+            else 
+                ComponentDataAssembly assy
+        | ModelPart part -> ComponentDataPart part
+        | ModelDrawing _ -> failwith "never"
+
+    member this.toLine() =
+        match this with
+        | ComponentDataPart _ -> "Part"
+        | ComponentDataAssembly _ -> "Assembly"
+        | ComponentDataRouteAssembly _ -> "Route"
+
 type ComponentData =
     {
         Component2: Component2
         ModelDoc2: ModelDoc2
-        Props:Map<string,string*string> // <name,type*value>
-        SpecificModelDoc: ModelSpecific
-        RouteAssemblyDistance: int // 管道装配体不能嵌套，-1代表没有route，0代表本组件,1代表父组件是route，2代表祖父组件。
-
+        Props: Map<string,string*string> // <name,type*value>
+        Comments: list<Component2*string>
+        Specific: ComponentDataSpecific
     }
 
-    static member from(parentRouteDistance:int, comp: Component2, model: ModelDoc2) =
+    static member from(comp: Component2, model: ModelDoc2) =
         let props =
             ModelDoc2Utils.readPropsAll comp.ReferencedConfiguration model
-            |> List.map(fun (name,tp,v) -> 
-                //let j =
-                //    match tp with
-                //    | "Text" -> Json.String v
-                //    | "Number" -> Json.Number (Double.Parse v)
-                //    | "YesOrNo" -> if v = "Yes" then Json.True else Json.False
-                //    | _ -> failwith $"{name},{tp},{v}"
-                name, (tp,v)
-                )
+            |> List.map(fun (name,tp,v) -> name, (tp,v) )
             |> Map.ofList
-        let spc = ModelSpecific.from model
-        let routeDist =
-            match spc with
-            | ModelDrawing _ -> failwith ""
-            | ModelPart prt ->
-                if parentRouteDistance < 0 then
-                    -1 
-                else 
-                    parentRouteDistance + 1
-            | ModelAssembly assy ->
-                if assy.IsRouteAssembly() then 
-                    0 
-                elif parentRouteDistance < 0 then 
-                    -1 
-                else parentRouteDistance + 1
+        let comments =
+            model.FirstFeature()
+            |> FeatureUtils.getFeatureSeq
+            |> CommentUtils.tryGetCommentFolder
+            |> Option.map (fun folder ->
+                folder
+                |> CommentUtils.tryGetComments
+                |> Option.map List.ofArray
+                |> Option.defaultValue []
+                )
+            |> Option.defaultValue []
+
+        let spc = ComponentDataSpecific.from model
+
         {
             Component2 = comp
             ModelDoc2 = model
             Props = props
-            SpecificModelDoc = spc
-            RouteAssemblyDistance = routeDist
+            Comments = comments
+            Specific = spc
         }
 
     static member fromModel(root: ModelDoc2) =
         // Get it's root component
-        let swRootComp = root.ConfigurationManager.ActiveConfiguration.GetRootComponent3(true)
-        ComponentData.from(-1, swRootComp, root)
+        let config = root.ConfigurationManager.ActiveConfiguration
+        let swRootComp = config.GetRootComponent3(true)
+        ComponentData.from(swRootComp, root)
+
     member this.getChildren() =
         this.Component2.GetChildren()
         :?> obj[]
-        |> Array.map(fun o -> 
-            let child = o :?> Component2
-            let childModel = child.GetModelDoc2() :?> ModelDoc2
-            child,childModel
+        |> Array.map(fun o ->  o :?> Component2)
+        |> Array.choose(fun child ->
+            child
+            |> Component2Utils.tryGetModelDoc2
+            |> Option.map(fun childModel -> child,childModel)
             )
         |> Array.map(fun (comp,model) ->
-            ComponentData.from(this.RouteAssemblyDistance, comp, model) 
+            ComponentData.from(comp, model)
         )
 
     member this.toLine() =
@@ -83,22 +97,18 @@ type ComponentData =
             ]
             |> String.concat ""
 
-        let typ =
-            match this.SpecificModelDoc with
-            | ModelDrawing _ -> failwith ""
-            | ModelPart prt ->
-                "Part"
-            | ModelAssembly assy ->
-                if this.RouteAssemblyDistance = 0 then
-                    "Route"
-                else
-                    "Assembly"
-
+        let comments = 
+            this.Comments
+            |> List.map(fun (comp,text)  ->
+                $"{comp.Name2},{text}"
+            )
+            |> stringify
+            
         [
             s0
-            typ
-            this.RouteAssemblyDistance.ToString()
+            this.Specific.toLine()
             stringify (Map.toList this.Props)
+            comments
         ]
         |> List.filter((<>) "")
         |> String.concat " "

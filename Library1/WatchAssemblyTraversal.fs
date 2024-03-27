@@ -52,19 +52,20 @@ let TraverseComponent (nLevel:int) (swRootComp:Component2) (swRootModel:ModelDoc
     let rec loop (nLevel:int) (data:ComponentData) =
         let sPadStr = String.replicate (nLevel*2) " "
         [
-            match data.SpecificModelDoc with
-            | ModelSpecific.ModelPart part ->
+            match data.Specific with
+            | ComponentDataPart part ->
                 yield $"{sPadStr}+{Component2Utils.renderComponent2 data.Component2}"
-            | ModelSpecific.ModelAssembly assy ->
+            | ComponentDataAssembly assy
+            | ComponentDataRouteAssembly assy ->            
                 yield $"{sPadStr}+{Component2Utils.renderComponent2 data.Component2}"
                 for child in data.getChildren() do
                     yield! loop (nLevel+1) child
-            | _ -> failwith ""
+
         ]
 
     //根组件要手动展开
     //根组件的引用的模型文件为空，文件就是模型自己。
-    let rootData = ComponentData.from(-1, swRootComp, swRootModel)
+    let rootData = ComponentData.from(swRootComp, swRootModel)
 
     loop nLevel rootData
     |> String.concat "\n"

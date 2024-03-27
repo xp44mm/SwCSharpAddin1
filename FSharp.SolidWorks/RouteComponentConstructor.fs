@@ -120,11 +120,11 @@ let toroute (easy: ComponentEasy) =
                 if isCompTypeOf "Pipe" data.props then
                     let dn =
                         data.props.["Pipe Identifier"]
-                        |> snd
+                        //|> snd
                         |> parseDN
                     let length =
                         data.props.["Length"]
-                        |> snd
+                        //|> snd
                         |> parseLength
 
                     {
@@ -145,7 +145,7 @@ let toroute (easy: ComponentEasy) =
                         specific = ComponentPart(data.title,data.refconfig)
                     }
 
-        | ComponentEasyAssembly (false, children) ->
+        | ComponentEasyAssembly children ->
             let children = 
                 children
                 |> List.map(fun child -> loop child)
@@ -230,7 +230,7 @@ let toroute (easy: ComponentEasy) =
                     refid    = data.refid
                     specific = ComponentAssembly(data.title,data.refconfig, children)
                 }
-        | ComponentEasyAssembly (true, children) ->
+        | ComponentEasyRouteAssembly children ->
             let children = 
                 children
                 |> List.map(fun child -> loop child)
