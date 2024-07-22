@@ -35,20 +35,20 @@ let getNormal (placementPlane:RefPlane) (swMathUtility:MathUtility) =
 let getGlobalCoordinates (swSkPt:SketchPoint) (swMathUtility:MathUtility) =
     let swSketch = swSkPt.GetSketch()
 
-    //'get the sketch to model transform (by inversing the model to sketch transform)
+    // get the sketch to model transform (by inversing the model to sketch transform)
     let swTransform = swSketch.ModelToSketchTransform.Inverse() :?> MathTransform
 
-    //'create math point from the coordinate
+    // create math point from the coordinate
     let swMathPt = 
         swMathUtility.CreatePoint [| swSkPt.X; swSkPt.Y; swSkPt.Z |]
         :?> MathPoint
 
-    //'multiple transform to move the point
+    // multiple transform to move the point
     let swMathPt = 
-        swMathPt.MultiplyTransform(swTransform) 
+        swMathPt.MultiplyTransform(swTransform)
         :?> MathPoint
 
-    //'read new coordinate values
+    // read new coordinate values
     swMathPt.ArrayData :?> float[]
 
 

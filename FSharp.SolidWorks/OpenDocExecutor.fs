@@ -25,27 +25,35 @@ type OpenDocExecutor =
         Options       : swOpenDocOptions_e
         Configuration : string
     }
+    static member just(fileName, docType, options, configuration) =
+        {
+            FileName      = fileName
+            Type          = docType
+            Options       = options
+            Configuration = configuration
+        }
 
-    static member from(
-        fileName: string, ?configuration: string, ?options: swOpenDocOptions_e
-        )=
-        let configuration = defaultArg configuration ""
-        let options = defaultArg options swOpenDocOptions_e.swOpenDocOptions_Silent
+    static member from(fileName: string, configuration: string, options: swOpenDocOptions_e)=
+        //let configuration = defaultArg configuration ""
+        //let options = defaultArg options swOpenDocOptions_e.swOpenDocOptions_Silent
 
-        let typ =
-            let e = (Path.GetExtension fileName).[1..]
-            if e == "SLDASM" then
+        let docType =
+            let e = Path.GetExtension fileName
+            if e == ".SLDASM" then
                 swDocumentTypes_e.swDocASSEMBLY
-            elif e == "SLDPRT" then
+            elif e == ".SLDPRT" then
                 swDocumentTypes_e.swDocPART
             else
                 swDocumentTypes_e.swDocNONE
         {
             FileName = fileName
-            Type = typ
-            Options= options
+            Type = docType
+            Options = options
             Configuration = configuration
         }
+
+    static member from (fileName: string, configName:string) =
+        OpenDocExecutor.from(fileName,configName,swOpenDocOptions_e.swOpenDocOptions_Silent)
 
     member this.openDoc(swApp: ISldWorks) =
         let mutable errors = 0
@@ -58,17 +66,28 @@ type OpenDocExecutor =
             Errors        = &errors,
             Warnings      = &warnings 
             )
-        if modelDoc <> null && errors = 0 && warnings = 0 then
+        if modelDoc <> null && errors = 0 
+            //&& warnings = 0 
+        then
             modelDoc
         else
             [
                 if errors > 0 then
                     enum<swFileLoadError_e> errors
                     |> sprintf "%A"
-                if warnings > 0 then
-                    enum<swFileLoadWarning_e> warnings
-                    |> sprintf "%A"
+                //if warnings > 0 then
+                //    enum<swFileLoadWarning_e> warnings
+                //    |> sprintf "%A"
             ]
             |> String.concat " & "
             |> (+) $"{stringify this}\n"
             |> failwith
+
+    member this.OpenDocAndShowConfiguration (swApp: ISldWorks) =
+        let swModel = this.openDoc swApp
+
+        // Shows the named configuration by switching to that configuration and making it the active configuration.
+        swModel.ShowConfiguration2 this.Configuration
+        |> ignore
+
+        swModel

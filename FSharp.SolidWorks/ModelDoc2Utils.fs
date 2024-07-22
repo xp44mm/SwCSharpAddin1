@@ -96,3 +96,11 @@ let readPropsAll (config: string) (swModel:IModelDoc2) =
         yield! CustomPropertyManagerUtils.getAllTypesValues mgr
         yield! CustomPropertyManagerUtils.getAllTypesValues mgrc
     ]
+
+let getProps (config: string) (swModel:IModelDoc2) =
+    ["";config]
+    |> List.collect(fun cfg ->        
+        swModel.Extension.CustomPropertyManager cfg
+        |> CustomPropertyManagerUtils.getProps
+        |> List.ofArray
+    )

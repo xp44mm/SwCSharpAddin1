@@ -145,7 +145,7 @@ let generate (swApp: ISldWorks) =
 
     let tanks1,tanks2 = loadData()
     let temp1 = 
-        OpenDocExecutor.from(tank1).openDoc swApp
+        OpenDocExecutor.from(tank1,"",swOpenDocOptions_e.swOpenDocOptions_Silent).openDoc swApp
     loop1 temp1 tanks1
 
     let swModel = swApp.ActiveDoc :?> IModelDoc2
@@ -172,12 +172,13 @@ let generate (swApp: ISldWorks) =
             save swModel
             loop2 swModel tail
 
-    let temp2 = OpenDocExecutor.from(tank2).openDoc swApp
+    let temp2 = OpenDocExecutor.from(tank2,"",swOpenDocOptions_e.swOpenDocOptions_Silent).openDoc swApp
     loop2 temp2 tanks2
 
     let swModel = swApp.ActiveDoc :?> IModelDoc2
     swModel.GetPathName()
     |> swApp.CloseDoc
+
 
 /// 从tsv文件读取参考平面数据
 let loadPlanes() =
@@ -201,73 +202,6 @@ let loadPlanes() =
         )
     | _ -> failwith "schema mismatch"
 
-/// tsv read：批量绘制参考平面
-let tsvPlanes () =
-    let text =
-        if Clipboard.ContainsText(TextDataFormat.UnicodeText) then
-            Clipboard.GetText(TextDataFormat.UnicodeText)
-        else failwith "Clipboard.ContainsText"
-
-    text
-    |> Tsv.parseText
-    |> Array.map (fun fs ->
-        match fs with
-        | [|plane;dist|] ->
-            plane, Double.Parse dist
-        | _ -> failwith "schema mismatch"
-    )
-
-///批量创建参考平面并用改用名称距离
-let createPlanes (swApp: ISldWorks) =
-    let swModel = swApp.ActiveDoc :?> IModelDoc2
-
-    let createPlane (plane:string) (dist:float) =
-        let tag =
-            match plane with
-            | "Top Plane" -> "EL"
-            | "Front Plane" -> "F"
-            | "Right Plane" -> "R"
-            | _ -> failwith ""
-        //
-        swModel.ClearSelection2 true
-        swModel.Extension.SelectByID2(
-            Name = plane,
-            Type = "PLANE",
-            X = 0.0,
-            Y = 0.0,
-            Z = 0.0,
-            Append = false,
-            Mark = 0,
-            Callout = null,
-            SelectOption = int swSelectOption_e.swSelectOptionDefault)
-        |> ignore
-
-        swModel.FeatureManager.InsertRefPlane(
-            FirstConstraint = int (
-                [
-                    swRefPlaneReferenceConstraints_e.swRefPlaneReferenceConstraint_Distance
-                    if dist < 0 then
-                        swRefPlaneReferenceConstraints_e.swRefPlaneReferenceConstraint_OptionFlip
-                ]
-                |> Seq.reduce(|||)
-                ),
-            FirstConstraintAngleOrDistance = Math.Abs dist/1e3,
-            SecondConstraint = 0,
-            SecondConstraintAngleOrDistance = 0,
-            ThirdConstraint = 0,
-            ThirdConstraintAngleOrDistance = 0)
-        |> ignore
-
-        let swFeature =
-            swModel.FeatureByPositionReverse(Num=0)
-            :?> Feature
-
-        swFeature.Name <- $"{tag}{dist}"
-
-    tsvPlanes ()
-    |> Array.iter(fun (plane, dist) ->
-        createPlane plane dist
-    )
 
 let getLibraryFeatureData (swApp: ISldWorks) =
     let swMathUtility = swApp.GetMathUtility() :?> MathUtility

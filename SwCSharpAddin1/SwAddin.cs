@@ -130,23 +130,18 @@ namespace SwCSharpAddin1
             //收集命令项目
             var cmds = new CommandItemCollection();
 
-
-            //命令
-            cmds.add(
-                hintOrTip: "附录D装配体遍历",
-                callbackFunction: nameof(this.AppendexD_WatchAssemblyTraversal)
-                );
-
             //命令
             cmds.add(
                 hintOrTip: "箱子",
                 callbackFunction: nameof(this.Salon_tank)
                 );
+
             //命令
             cmds.add(
                 hintOrTip: "提取箱子数据",
                 callbackFunction: nameof(this.Salon_tankinfo)
                 );
+
             //命令
             cmds.add(
                 hintOrTip: "批量生成箱子",
@@ -156,7 +151,7 @@ namespace SwCSharpAddin1
             //命令
             cmds.add(
                 hintOrTip: "批量创建参考平面",
-                callbackFunction: nameof(this.Asia_createPlanes)
+                callbackFunction: nameof(this.Harbor_createPlanes)
                 );
 
             ////命令
@@ -185,8 +180,8 @@ namespace SwCSharpAddin1
 
             //命令
             cmds.add(
-                hintOrTip: "坐标系",
-                callbackFunction: nameof(this.获取坐标系)
+                hintOrTip: "获取坐标系信息",
+                callbackFunction: nameof(this.Harbor_getAllOfCoordinateSystems)
                 );
 
             //命令
@@ -201,11 +196,11 @@ namespace SwCSharpAddin1
                 callbackFunction: nameof(this.blankSelectedFeatures)
                 );
 
-            //命令
-            cmds.add(
-                hintOrTip: "unblank selectecd features",
-                callbackFunction: nameof(this.显示特征)
-                );
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "unblank selectecd features",
+            //    callbackFunction: nameof(this.显示特征)
+            //    );
 
             //命令
             cmds.add(
@@ -222,31 +217,7 @@ namespace SwCSharpAddin1
             //命令
             cmds.add(
                 hintOrTip: "添加组件并坐标系配合",
-                callbackFunction: nameof(this.addManyCompToCoordSys)
-                );
-
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "管道材料明细表",
-            //    callbackFunction: nameof(this.pipeBom)
-            //    );
-
-            //命令
-            cmds.add(
-                hintOrTip: "测试组件遍历",
-                callbackFunction: nameof(this.ComponentEasy)
-                );
-
-            //命令
-            cmds.add(
-                hintOrTip: "读取组件类型",
-                callbackFunction: nameof(this.ComponentTypeReader_main)
-                );
-
-            //命令
-            cmds.add(
-                hintOrTip: "输出管道js数据",
-                callbackFunction: nameof(this.RouteWrapper)
+                callbackFunction: nameof(this.Harbor_manyComp)
                 );
 
             //命令
@@ -257,8 +228,8 @@ namespace SwCSharpAddin1
             
             //命令
             cmds.add(
-                hintOrTip: "注释示例",
-                callbackFunction: nameof(this.CommentExample_main)
+                hintOrTip: "Component Archive App",
+                callbackFunction: nameof(this.ComponentArchive)
                 );
 
             // *****命令组*****
@@ -292,30 +263,11 @@ namespace SwCSharpAddin1
         }
 
 
-        public void PipeUtils_main()
-        {
-            //SWRoutingLibUtils.ExportPipeData(iSwApp);
-
-            //var clss = new Library1.RecursiveTraverseAssembly(iSwApp);
-            //clss.Main();
-
-            PipeComponents.PipeUtils.main(this.iSwApp);
-        }
-
         public void SystemOptionsSetting_main()
         {
             SystemOptionsSetting.main(this.iSwApp);
         }
 
-        //public void pipeBom()
-        //{
-        //    PipeComponents.PipeUtils.pipebom(this.iSwApp);
-        //}
-
-        public void AppendexD_WatchAssemblyTraversal()
-        {
-            WatchAssemblyTraversal.main(this.iSwApp);
-        }
 
         public void Salon_tank()
         {
@@ -330,9 +282,9 @@ namespace SwCSharpAddin1
             Asia.generate(this.iSwApp);
         }
 
-        public void Asia_createPlanes()
+        public void Harbor_createPlanes()
         {
-            Asia.createPlanes(this.iSwApp);
+            Harbor.createPlanes(this.iSwApp);
         }
 
         //public void 圆柱配合参考()
@@ -355,9 +307,9 @@ namespace SwCSharpAddin1
             FacesWithFeature.tankInfo(this.iSwApp);
         }
 
-        public void 获取坐标系()
+        public void Harbor_getAllOfCoordinateSystems()
         {
-            CoordinateSystem.getAllOfCoordinateSystems(this.iSwApp);
+            Harbor.getAllOfCoordinateSystems(this.iSwApp);
         }
 
         public void 收集所有坐标系并生成配合参考()
@@ -385,29 +337,14 @@ namespace SwCSharpAddin1
             CustomPropsApp.writeCustomProps(this.iSwApp);
         }
 
-        public void addManyCompToCoordSys()
+        public void Harbor_manyComp()
         {
-            CoordinateSystem.addManyCompToCoordSys(this.iSwApp);
+            Harbor.manyComp(this.iSwApp);
         }
 
-        public void ComponentEasy()
+        public void ComponentArchive()
         {
-            ComponentEasyApp.main(this.iSwApp);
-        }
-
-        public void ComponentTypeReader_main()
-        {
-            ComponentTypeReader.main(this.iSwApp);
-        }
-
-        public void RouteWrapper()
-        {
-            RouteWrapperApp.main(this.iSwApp);
-        }
-
-        public void CommentExample_main()
-        {
-            CommentExample.main(this.iSwApp);
+            ComponentArchiveApp.main(this.iSwApp);
         }
 
         public bool Always() { return true; }

@@ -9,6 +9,17 @@ open System.IO
 open System.Text
 
 open FSharp.SolidWorks
+            ////命令
+            //cmds.add(
+            //    hintOrTip: "附录D装配体遍历",
+            //    callbackFunction: nameof(this.AppendexD_WatchAssemblyTraversal)
+            //    );
+
+        //public void AppendexD_WatchAssemblyTraversal()
+        //{
+        //    WatchAssemblyTraversal.main(this.iSwApp);
+        //}
+
 
 // This code demonstrates how to traverse an assembly and create a list of
 // All of its components. You could use this code to create a bill of materials.
@@ -49,14 +60,13 @@ let TraverseModelFeatures (nLevel:int) (swModel :ModelDoc2) =
 // this recursively traverses all of the components in an
 // assembly and prints their name to the immediate window
 let TraverseComponent (nLevel:int) (swRootComp:Component2) (swRootModel:ModelDoc2) =
-    let rec loop (nLevel:int) (data:ComponentData) =
+    let rec loop (nLevel:int) (data:ComponentModel) =
         let sPadStr = String.replicate (nLevel*2) " "
         [
             match data.Specific with
-            | ComponentDataPart part ->
+            | ComponentModelPart part ->
                 yield $"{sPadStr}+{Component2Utils.renderComponent2 data.Component2}"
-            | ComponentDataAssembly assy
-            | ComponentDataRouteAssembly assy ->            
+            | ComponentModelAssembly assy ->
                 yield $"{sPadStr}+{Component2Utils.renderComponent2 data.Component2}"
                 for child in data.getChildren() do
                     yield! loop (nLevel+1) child
@@ -65,7 +75,7 @@ let TraverseComponent (nLevel:int) (swRootComp:Component2) (swRootModel:ModelDoc
 
     //根组件要手动展开
     //根组件的引用的模型文件为空，文件就是模型自己。
-    let rootData = ComponentData.from(swRootComp, swRootModel)
+    let rootData = ComponentModel.from(swRootComp, swRootModel)
 
     loop nLevel rootData
     |> String.concat "\n"

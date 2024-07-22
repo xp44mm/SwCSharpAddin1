@@ -3,12 +3,51 @@
 open FSharp.Idioms
 open FSharp.Idioms.Jsons
 open System
+open FSharp.SolidWorks
 
 //水平管嘴：侧壁，水平，向心，垂直箱壁elev,angle
 //斜坡管嘴：侧壁，向心，斜坡 elev,angle,slope
 //偏移管嘴：侧壁，偏心，斜坡 elev,angle,slope,offset
 //斜坡elev：轴线与外壁交点的elev
 //斜坡，偏移伸出长度：端点在侧壁向外偏出伸出长度的虚拟柱面上。
+
+type NozzlePlace = 
+    | RadiusNozzle of
+        elevation:float *
+        angle:float
+        //slope:float *
+        //offset:float
+    | TopNozzle of
+        elevation:float *
+        x:float *
+        y:float
+
+    | BottomNozzle of elevation:float 
+
+    | OtherNozzle
+
+    static member from (origin:float[],zAxis:float[]) = 
+        let elev = origin.[1]
+        let ishorizon = zAxis.[1] = 0. // z axis dy = 0
+
+        if ishorizon then           
+            let angle = Polar.angle origin.[0] origin.[2]
+            let zangle = Polar.angle zAxis.[0] zAxis.[2]
+            let isradius = angle = zangle
+            let length = sqrt ( origin.[0]**2.0 + origin.[2] ** 2.0 )
+            if isradius then
+                RadiusNozzle(elev,zangle)
+            else
+                OtherNozzle
+        elif zAxis.[0] = 0.0 && zAxis.[2] = 0.0 then
+            if zAxis.[1] > 0 then
+                TopNozzle(elev,origin.[0],-origin.[2])
+            else
+                if origin.[0] = 0.0 && origin.[2] = 0.0 then
+                    BottomNozzle(elev)
+                else OtherNozzle
+
+        else OtherNozzle
 
 type NozzleLocation = 
     | WallNozzle of

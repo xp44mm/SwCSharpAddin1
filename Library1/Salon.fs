@@ -23,7 +23,7 @@ open FSharp.SolidWorks.FeatureExtrusion3
 let WorkPath = @"D:\崔胜利\凯帝隆\湖北武穴锂宝\solidworks2\"
 let pipeLength = 120.0
 
-//获取箱罐的属性
+/// 获取箱罐的属性
 let tankinfo (swApp: ISldWorks) =
     let swModel = swApp.ActiveDoc :?> IModelDoc2
     let CusPropMgr = swModel.Extension.CustomPropertyManager("")
@@ -46,7 +46,7 @@ let tankinfo (swApp: ISldWorks) =
 
     swApp.SendMsgToUser $"{filename}\n{props}"
 
-//从头绘制一个箱罐
+/// 绘制一个箱罐
 let tank (swApp: ISldWorks) =
     let filename = "V0101A"
     let dia = 4200.0

@@ -75,5 +75,5 @@ type PlaneData =
 
     member this.toJson() = Json.from<PlaneData> this
 
-    static member from (json:Json) = Json.To<PlaneData> json
+    static member from (json:Json) = Json.cast<PlaneData> json
 

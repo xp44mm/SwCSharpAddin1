@@ -1,4 +1,5 @@
-﻿module RouteWrapperApp
+﻿module ComponentArchiveApp
+
 
 open SolidWorks.Interop.sldworks
 open SolidWorks.Interop.swconst
@@ -13,19 +14,16 @@ open FSharp.SolidWorks
 open FSharp.Idioms
 open FSharp.Idioms.Literal
 
-
 let main (swApp: ISldWorks) =
     let swModel = 
         swApp.ActiveDoc :?> ModelDoc2
 
     let root = 
         swModel
-        |> ComponentEasy.fromModel
-        |> RouteComponentConstructor.toroute
-    let outp = 
-        root
-        |> RouteComponentApp.tojson
-        |> Json.print
-    let path = Path.Combine(Dir.CommandData,"route.json")
-    File.WriteAllText(path,outp,Encoding.UTF8)
+        |> ComponentArchive.from
+
+    let json = ComponentArchiveJson.from root
+    let js = Json.print json
+    let path = Path.Combine(Dir.CommandData,"component archive.json")
+    File.WriteAllText(path,js,Encoding.UTF8)
     swApp.SendMsgToUser path

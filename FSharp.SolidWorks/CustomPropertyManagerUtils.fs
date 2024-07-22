@@ -57,6 +57,23 @@ let contains (prpName: string) (custPrpMgr: ICustomPropertyManager) =
     let prpNames = getCustomPropertyNames custPrpMgr
     prpNames.Contains prpName
 
+///获得属性名值对
+let getProps (cusPropMgr:CustomPropertyManager) =
+    cusPropMgr
+    |> getNames 
+    |> Array.map(fun name ->
+        //let typ =
+        //    cusPropMgr.GetType2(name) 
+        //    |> enum<swCustomInfoType_e>
+        //    |> CustomInfoType.getCore
+
+        let value =
+            cusPropMgr 
+            |> GetUpdatedProperty name 
+            |> snd
+        name,value
+    )
+
 let getAllTypesValues (cusPropMgr:CustomPropertyManager) =
     cusPropMgr
     |> getNames 
@@ -84,11 +101,11 @@ let pickResolvedValOut (fieldNames: seq<string>) (custPrpMgr: ICustomPropertyMan
     match custPrpNames.Count with
     | 1 -> GetUpdatedProperty (Seq.head custPrpNames) custPrpMgr
     | c -> 
-        let AllNames = 
+        let allNames = 
             custPrpMgr.GetNames()
             :?> string[]
             |> Array.toList
-        failwith $"{c}!=1,\n{fieldNames |> Seq.toList}\n{AllNames}"
+        failwith $"{c}!=1,\n{fieldNames |> Seq.toList}\n{allNames}"
 
 let add3
     fieldName
@@ -104,8 +121,7 @@ let set2 fieldName fieldValue (custPrpMgr:ICustomPropertyManager) =
     let SetStatus = custPrpMgr.Set2(fieldName, fieldValue)
     ()
 
-let count (custPrpMgr: ICustomPropertyManager) =
-    custPrpMgr.Count
+let count (custPrpMgr: ICustomPropertyManager) = custPrpMgr.Count
 
 
 

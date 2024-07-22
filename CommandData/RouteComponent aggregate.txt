@@ -7,7 +7,5 @@ Reducer DN 65 x 25 PN 1 PPH,1
 BallValve DN 25 PN 1 PPH,2
 Gasket DN 25 PN 1,4
 Gasket DN 65 PN 1,1
-Bolt M 12 x 55, 0,16
-Bolt M 16 x 70, 0,4
-Nut M 12, 0,16
-Nut M 16, 0,4
+Bolt M 0 x 0, 0,0
+Nut M 0, 0,0

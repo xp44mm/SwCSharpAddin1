@@ -3,6 +3,7 @@
 		<TargetFramework>net481</TargetFramework>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<WarnOn>3390;$(WarnOn)</WarnOn>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 
@@ -32,12 +33,16 @@
 			<EmbedInteropTypes>False</EmbedInteropTypes>
 			<Private>False</Private>
 		</Reference>
+		<Reference Include="System.Windows.Forms" />
 	</ItemGroup>
 
 
 
 
 	<ItemGroup>
+		<Compile Include="Clipboard.fs" />
+		<Compile Include="CommandManagerUtils.fs" />
+		<Compile Include="CommandItemCollection.fs" />
 		<Compile Include="SysUserPreference.fs" />
 		<Compile Include="DocUserPreference.fs" />
 		<Compile Include="RoutingUserPreference.fs" />
@@ -70,32 +75,30 @@
 		<Compile Include="PartDocUtils.fs" />
 		<Compile Include="ModelDoc2Utils.fs" />
 		<Compile Include="SldWorksUtils.fs" />
+		<Compile Include="DocActivator.fs" />
 		<Compile Include="ModelSpecific.fs" />
-		<Compile Include="ComponentData.fs" />
-		<Compile Include="ComponentEasy.fs" />
-		<Compile Include="RouteComponent.fs" />
-		<Compile Include="ValueParser.fs" />
-		<Compile Include="RouteComponentConstructor.fs" />
-		<Compile Include="RouteComponentApp.fs" />
+		<Compile Include="ComponentModel.fs" />
+		<Compile Include="ComponentArchive.fs" />
+		<Compile Include="ComponentArchiveJson.fs" />
 		<Compile Include="OpenDocExecutor.fs" />
 		<Compile Include="CutList.fs" />
-		<Compile Include="CommandManagerUtils.fs" />
-		<Compile Include="CommandItemCollection.fs" />
 		<Compile Include="MathUtilityExtend.fs" />
+		<Compile Include="Polar.fs" />
 	</ItemGroup>
 
 
 
 
 	<ItemGroup>
-	  <PackageReference Include="FSharp.Idioms" Version="1.4.15" />
+	  <PackageReference Include="FSharp.Idioms" Version="1.4.21" />
+	  <PackageReference Include="UnquotedJson" Version="1.0.21" />
 	</ItemGroup>
 
 
 
 
 	<ItemGroup>
-	  <PackageReference Update="FSharp.Core" Version="8.0.200" />
+	  <PackageReference Update="FSharp.Core" Version="8.0.301" />
 	</ItemGroup>
 
 

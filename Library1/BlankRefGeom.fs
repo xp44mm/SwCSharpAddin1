@@ -25,7 +25,7 @@ open System.Windows.Forms
 open UnquotedJson
 open Tanks
 open Nozzles
-
+// todo: 一键隐藏所有草图，一键隐藏所有平面
 let switchBlank (action) (swModel:IModelDoc2) (swApp: ISldWorks) =
     let swSelMgr =
         swModel.SelectionManager

@@ -157,29 +157,34 @@ let EstablishCylindricalFaceCollection (circularEdgeCollection: Edge[]) =
 //the math classes are your friend! :)
 let EstablishPointsCollection (circularCurveCollection:Curve[]) (swCompTransform:MathTransform) (swApp: ISldWorks) =
     let getPoint (circularCurve:Curve) =
+        //Fill the Circle Params array with the Circle information from the curve.
         let circleParams =
-            circularCurve.CircleParams :?> float[] //Fill the Circle Params array with the Circle information from the curve.
+            circularCurve.CircleParams :?> float[]
 
-        let arrayData =                                  //Create a 3 element array to pass into the constructor of the math point object
+        //Create a 3 element array to pass into the constructor of the math point object
+        let arrayData =                                  
             circleParams.[0..2]
 
         let swMathUtility =
             swApp
             |> SldWorksUtils.getMathUtility
 
-        let swMathPoint =                       //use the center point locations to create a Solidworks MathPoint object
+        //use the center point locations to create a Solidworks MathPoint object
+        let swMathPoint =                       
             //use the math point class to store these points
             swMathUtility
-            |> MathUtilityUtils.createPoint(arrayData)         //Create the mathpoint using the location data
-            //:?> MathPoint
+            |> MathUtilityUtils.createPoint(arrayData)  //Create the mathpoint using the location data
 
+        //Now multiply the math point by the Target component's transform.
         let swMathPoint =
             swMathPoint
-            |> MathPointUtils.multiplyTransform(swCompTransform) //Now multiply the math point by the Target component//s transform.
-            //:?> MathPoint
+            |> MathPointUtils.multiplyTransform(swCompTransform) 
+
         swMathPoint
+
+    //For every circular curve get it's center point and multiply by the transform and add it to the collection.
     [|
-        for circularCurve in circularCurveCollection do //For every circular curve get it's center point and multiply by the transform and add it to the collection.
+        for circularCurve in circularCurveCollection do 
             getPoint circularCurve
     |]
 
@@ -320,13 +325,13 @@ let AddComponentsAndMate (swApp: ISldWorks) =
     with ex ->
         swApp.SendMsgToUser $"{ex.Message}"
 
-            ////命令
-            //cmds.add(
-            //    hintOrTip: "第5章",
-            //    callbackFunction: nameof(this.Training5_AddComponentsAndMate)
-            //    );
+////命令
+//cmds.add(
+//    hintOrTip: "第5章",
+//    callbackFunction: nameof(this.Training5_AddComponentsAndMate)
+//    );
 
-        //public void Training5_AddComponentsAndMate()
-        //{
-        //    training5.AddComponentsAndMate(this.iSwApp);
-        //}
+//public void Training5_AddComponentsAndMate()
+//{
+//    training5.AddComponentsAndMate(this.iSwApp);
+//}
